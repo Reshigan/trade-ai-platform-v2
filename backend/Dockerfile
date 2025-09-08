@@ -6,8 +6,14 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci --only=production
+# Set npm config to increase timeout and retry options
+RUN npm config set fetch-retry-mintimeout 20000 && \
+    npm config set fetch-retry-maxtimeout 120000 && \
+    npm config set fetch-retries 5 && \
+    npm config set network-timeout 300000
+
+# Install dependencies with fallback to regular npm install
+RUN npm ci --only=production || npm install --only=production
 
 # Copy source code
 COPY . .
