@@ -13,10 +13,10 @@ RUN npm config set fetch-retry-mintimeout 20000 && \
     npm config set network-timeout 300000 && \
     npm config set registry https://registry.npmjs.org/
 
-# Install dependencies with multiple attempts
+# Install dependencies with multiple attempts using legacy-peer-deps
 RUN for i in $(seq 1 5); do \
       echo "Attempt $i to install dependencies..." && \
-      npm install --omit=dev && exit 0 || \
+      npm install --omit=dev --legacy-peer-deps && exit 0 || \
       echo "Attempt $i failed, waiting before retry..." && \
       sleep 5; \
     done && \
