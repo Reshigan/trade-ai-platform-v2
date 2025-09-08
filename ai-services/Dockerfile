@@ -12,8 +12,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Copy requirements file
 COPY requirements.txt .
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Install Python dependencies with retry logic
+RUN for i in $(seq 1 5); do \
+      echo "Attempt $i to install dependencies..." && \
+      pip install --no-cache-dir -r requirements.txt && exit 0 || \
+      echo "Attempt $i failed, waiting before retry..." && \
+      sleep 5; \
+    done && \
+    echo "All attempts failed" && \
+    exit 1
 
 # Copy application code
 COPY . .

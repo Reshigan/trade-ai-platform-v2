@@ -37,7 +37,7 @@ ARG REACT_APP_MONITORING_URL
 ARG CACHEBUST=1
 
 # Build the application (with CI=false to prevent treating warnings as errors)
-RUN CI=false npm run build --legacy-peer-deps
+RUN CI=false npm --legacy-peer-deps run build
 
 # Production stage
 FROM nginx:alpine
