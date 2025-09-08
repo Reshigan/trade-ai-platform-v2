@@ -1,5 +1,5 @@
 # Build stage
-FROM node:16-alpine AS builder
+FROM node:16.14-alpine AS builder
 
 WORKDIR /app
 
@@ -36,8 +36,11 @@ ARG REACT_APP_AI_API_URL
 ARG REACT_APP_MONITORING_URL
 ARG CACHEBUST=1
 
+# Install react-scripts globally to avoid version conflicts
+RUN npm install -g react-scripts@5.0.1
+
 # Build the application (with CI=false to prevent treating warnings as errors)
-RUN CI=false npm --legacy-peer-deps run build
+RUN CI=false GENERATE_SOURCEMAP=false npm --legacy-peer-deps run build
 
 # Production stage
 FROM nginx:alpine

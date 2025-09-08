@@ -1,5 +1,5 @@
 # Build stage
-FROM node:16-alpine AS builder
+FROM node:16.14-alpine AS builder
 
 WORKDIR /app
 
@@ -27,7 +27,7 @@ RUN for i in $(seq 1 5); do \
 COPY . .
 
 # Production stage
-FROM node:16-alpine
+FROM node:16.14-alpine
 
 WORKDIR /app
 
