@@ -114,10 +114,12 @@ trade-ai/
 
 ### Option 1: Using Docker Compose (Recommended)
 
+For detailed Docker deployment instructions, see the [Docker Quick Start Guide](DOCKER_QUICKSTART.md).
+
 ```bash
 # Clone the repository
-git clone https://github.com/Reshigan/trade-ai-github.git
-cd trade-ai-github
+git clone https://github.com/Reshigan/trade-ai-platform-v2.git
+cd trade-ai-platform-v2
 
 # Create environment file
 cp .env.example .env
@@ -286,18 +288,27 @@ npm test
 
 ## 📦 Deployment
 
-### Docker Deployment
+For comprehensive deployment instructions, see the [Deployment Guide](docs/DEPLOYMENT.md).
+
+### Docker Deployment (Recommended)
 ```bash
 # Build and run with Docker Compose
 docker-compose up -d
 ```
+
+For detailed Docker deployment instructions, see the [Docker Quick Start Guide](DOCKER_QUICKSTART.md).
+
+### Kubernetes Deployment
+For production environments with high availability and scalability requirements, Kubernetes deployment is available. See the [Deployment Guide](docs/DEPLOYMENT.md) for details.
 
 ### Manual Deployment
 1. Build the frontend: `cd frontend && npm run build`
 2. Set up MongoDB and Redis
 3. Configure environment variables
 4. Start the backend: `cd backend && npm start`
-5. Serve the frontend build with a web server
+5. Start the AI services: `cd ai-services && python src/prediction_api.py`
+6. Start the monitoring service: `cd monitoring && python monitoring_service.py`
+7. Serve the frontend build with a web server
 
 ## 🔒 Security Features
 
