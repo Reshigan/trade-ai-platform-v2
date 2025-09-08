@@ -26,7 +26,7 @@ function App() {
       <CssBaseline />
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', my: 4 }}>
-          <img src="/logo.svg" alt="Trade AI Logo" style={{ width: 200, marginBottom: 24 }} />
+          <img src="/images/logo.svg" alt="Trade AI Logo" style={{ width: 200, marginBottom: 24 }} />
           <Typography variant="h3" component="h1" gutterBottom>
             Trade AI Platform
           </Typography>
