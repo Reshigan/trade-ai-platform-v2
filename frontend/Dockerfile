@@ -13,15 +13,18 @@ RUN npm config set fetch-retry-mintimeout 20000 && \
     npm config set network-timeout 300000 && \
     npm config set registry https://registry.npmjs.org/
 
-# Install dependencies with multiple attempts using legacy-peer-deps
+# Install dependencies with multiple attempts using legacy-peer-deps and force
 RUN for i in $(seq 1 5); do \
       echo "Attempt $i to install dependencies..." && \
-      npm install --legacy-peer-deps && exit 0 || \
+      npm install --legacy-peer-deps --force && exit 0 || \
       echo "Attempt $i failed, waiting before retry..." && \
       sleep 5; \
     done && \
     echo "All attempts failed" && \
     exit 1
+
+# Install specific versions of problematic dependencies
+RUN npm install --legacy-peer-deps --force ajv-keywords@3.5.2 schema-utils@3.1.1 terser-webpack-plugin@5.3.1
 
 # Copy source code
 COPY . .
