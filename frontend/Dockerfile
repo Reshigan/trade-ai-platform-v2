@@ -6,21 +6,22 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Use a custom script to install dependencies with retries
-RUN echo '#!/bin/sh
-for i in 1 2 3 4 5; do
-  echo "Attempt $i to install dependencies..."
-  npm config set fetch-retry-mintimeout 20000
-  npm config set fetch-retry-maxtimeout 120000
-  npm config set fetch-retries 5
-  npm config set network-timeout 300000
-  npm config set registry https://registry.npmjs.org/
-  npm install && exit 0
-  echo "Attempt $i failed, waiting before retry..."
-  sleep 5
-done
-echo "All attempts failed"
-exit 1' > /tmp/install.sh && chmod +x /tmp/install.sh && /tmp/install.sh
+# Configure npm for better reliability
+RUN npm config set fetch-retry-mintimeout 20000 && \
+    npm config set fetch-retry-maxtimeout 120000 && \
+    npm config set fetch-retries 5 && \
+    npm config set network-timeout 300000 && \
+    npm config set registry https://registry.npmjs.org/
+
+# Install dependencies with multiple attempts
+RUN for i in $(seq 1 5); do \
+      echo "Attempt $i to install dependencies..." && \
+      npm install && exit 0 || \
+      echo "Attempt $i failed, waiting before retry..." && \
+      sleep 5; \
+    done && \
+    echo "All attempts failed" && \
+    exit 1
 
 # Copy source code
 COPY . .
