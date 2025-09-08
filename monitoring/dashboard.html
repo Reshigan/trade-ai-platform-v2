@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trade AI Monitoring Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .navbar-brand img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            border: none;
+        }
+        .card-header {
+            background-color: #fff;
+            border-bottom: 1px solid #eee;
+            font-weight: 600;
+            border-radius: 10px 10px 0 0 !important;
+        }
+        .metric-card {
+            text-align: center;
+            padding: 20px;
+        }
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+        .metric-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .status-indicator {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+        }
+        .status-up {
+            background-color: #28a745;
+        }
+        .status-down {
+            background-color: #dc3545;
+        }
+        .alert-card {
+            border-left: 5px solid;
+            margin-bottom: 10px;
+        }
+        .alert-critical {
+            border-left-color: #dc3545;
+        }
+        .alert-warning {
+            border-left-color: #ffc107;
+        }
+        .alert-info {
+            border-left-color: #17a2b8;
+        }
+        .alert-resolved {
+            border-left-color: #28a745;
+            opacity: 0.7;
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+        .refresh-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 10;
+        }
+        .time-range {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        .time-range .btn-group {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .sidebar {
+            background-color: #2563eb;
+            color: white;
+            min-height: 100vh;
+        }
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 0.8rem 1rem;
+            margin: 0.2rem 0;
+            border-radius: 5px;
+        }
+        .sidebar .nav-link:hover {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .sidebar .nav-link.active {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .sidebar .nav-link i {
+            margin-right: 10px;
+        }
+        .sidebar-heading {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.6);
+            padding: 1rem;
+            margin-bottom: 0;
+        }
+        .logo-container {
+            padding: 1.5rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 1rem;
+        }
+        .logo-container img {
+            height: 40px;
+        }
+        .logo-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-left: 10px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-2 px-0 sidebar">
+                <div class="logo-container d-flex align-items-center">
+                    <img src="../assets/logo.svg" alt="Trade AI Logo">
+                    <span class="logo-text">Trade AI</span>
+                </div>
+                <p class="sidebar-heading">Monitoring</p>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#dashboard" data-bs-toggle="tab">
+                            <i class="bi bi-speedometer2"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services" data-bs-toggle="tab">
+                            <i class="bi bi-hdd-stack"></i> Services
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#alerts" data-bs-toggle="tab">
+                            <i class="bi bi-exclamation-triangle"></i> Alerts
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#metrics" data-bs-toggle="tab">
+                            <i class="bi bi-graph-up"></i> Metrics
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#settings" data-bs-toggle="tab">
+                            <i class="bi bi-gear"></i> Settings
+                        </a>
+                    </li>
+                </ul>
+                
+                <p class="sidebar-heading mt-4">System</p>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="window.location.href='../index.html'">
+                            <i class="bi bi-house"></i> Main Application
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="window.open('/api/docs', '_blank')">
+                            <i class="bi bi-file-earmark-code"></i> API Documentation
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-md-10 ms-auto px-4 py-3">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2>Monitoring Dashboard</h2>
+                    <div>
+                        <span class="badge bg-success me-2" id="connection-status">Connected</span>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="refreshAllData()">
+                            <i class="bi bi-arrow-clockwise"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="tab-content">
+                    <!-- Dashboard Tab -->
+                    <div class="tab-pane fade show active" id="dashboard">
+                        <!-- System Metrics Overview -->
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="card metric-card">
+                                    <div class="metric-label">CPU Usage</div>
+                                    <div class="metric-value" id="cpu-usage">0%</div>
+                                    <div class="progress" style="height: 5px;">
+                                        <div class="progress-bar" id="cpu-progress" role="progressbar" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card metric-card">
+                                    <div class="metric-label">Memory Usage</div>
+                                    <div class="metric-value" id="memory-usage">0%</div>
+                                    <div class="progress" style="height: 5px;">
+                                        <div class="progress-bar" id="memory-progress" role="progressbar" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card metric-card">
+                                    <div class="metric-label">Disk Usage</div>
+                                    <div class="metric-value" id="disk-usage">0%</div>
+                                    <div class="progress" style="height: 5px;">
+                                        <div class="progress-bar" id="disk-progress" role="progressbar" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card metric-card">
+                                    <div class="metric-label">Network Traffic</div>
+                                    <div class="metric-value" id="network-traffic">0 KB/s</div>
+                                    <div class="d-flex justify-content-between">
+                                        <small>↑ <span id="network-sent">0 KB/s</span></small>
+                                        <small>↓ <span id="network-received">0 KB/s</span></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Service Status -->
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <span>Service Status</span>
+                                        <button class="btn btn-sm btn-outline-secondary" onclick="refreshServiceStatus()">
+                                            <i class="bi bi-arrow-clockwise"></i>
+                                        </button>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Service</th>
+                                                        <th>Status</th>
+                                                        <th>Response Time</th>
+                                                        <th>Last Checked</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="service-status-table">
+                                                    <!-- Service status will be populated here -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Active Alerts -->
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <span>Active Alerts</span>
+                                        <button class="btn btn-sm btn-outline-secondary" onclick="refreshAlerts()">
+                                            <i class="bi bi-arrow-clockwise"></i>
+                                        </button>
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="active-alerts-container">
+                                            <!-- Active alerts will be populated here -->
+                                            <div class="text-center text-muted py-3" id="no-alerts-message">
+                                                <i class="bi bi-check-circle" style="font-size: 2rem;"></i>
+                                                <p class="mt-2">No active alerts</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- System Metrics Chart -->
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <span>System Metrics History</span>
+                                        <div class="btn-group btn-group-sm" role="group">
+                                            <button type="button" class="btn btn-outline-secondary active" onclick="updateTimeRange('1h')">1h</button>
+                                            <button type="button" class="btn btn-outline-secondary" onclick="updateTimeRange('6h')">6h</button>
+                                            <button type="button" class="btn btn-outline-secondary" onclick="updateTimeRange('24h')">24h</button>
+                                            <button type="button" class="btn btn-outline-secondary" onclick="updateTimeRange('7d')">7d</button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart-container">
+                                            <canvas id="metrics-chart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Services Tab -->
+                    <div class="tab-pane fade" id="services">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <span>Service Status</span>
+                                <button class="btn btn-sm btn-outline-secondary" onclick="refreshServiceStatus()">
+                                    <i class="bi bi-arrow-clockwise"></i>
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Service</th>
+                                                <th>Status</th>
+                                                <th>Response Time</th>
+                                                <th>Last Checked</th>
+                                                <th>Endpoint</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="service-status-table-full">
+                                            <!-- Service status will be populated here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card mt-4">
+                            <div class="card-header">Service Response Time History</div>
+                            <div class="card-body">
+                                <div class="chart-container">
+                                    <canvas id="response-time-chart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Alerts Tab -->
+                    <div class="tab-pane fade" id="alerts">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <span>Active Alerts</span>
+                                <button class="btn btn-sm btn-outline-secondary" onclick="refreshAlerts()">
+                                    <i class="bi bi-arrow-clockwise"></i>
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <div id="active-alerts-container-full">
+                                    <!-- Active alerts will be populated here -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card mt-4">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <span>Alert History</span>
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <button type="button" class="btn btn-outline-secondary active" onclick="updateAlertHistory('24h')">24h</button>
+                                    <button type="button" class="btn btn-outline-secondary" onclick="updateAlertHistory('7d')">7d</button>
+                                    <button type="button" class="btn btn-outline-secondary" onclick="updateAlertHistory('30d')">30d</button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Timestamp</th>
+                                                <th>Metric</th>
+                                                <th>Threshold</th>
+                                                <th>Value</th>
+                                                <th>Status</th>
+                                                <th>Resolved At</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="alert-history-table">
+                                            <!-- Alert history will be populated here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Metrics Tab -->
+                    <div class="tab-pane fade" id="metrics">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">CPU Usage</div>
+                                    <div class="card-body">
+                                        <div class="chart-container">
+                                            <canvas id="cpu-chart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">Memory Usage</div>
+                                    <div class="card-body">
+                                        <div class="chart-container">
+                                            <canvas id="memory-chart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">Disk Usage</div>
+                                    <div class="card-body">
+                                        <div class="chart-container">
+                                            <canvas id="disk-chart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">Network Traffic</div>
+                                    <div class="card-body">
+                                        <div class="chart-container">
+                                            <canvas id="network-chart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card mt-4">
+                            <div class="card-header">Metrics Export</div>
+                            <div class="card-body">
+                                <form>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="mb-3">
+                                                <label for="export-start-date" class="form-label">Start Date</label>
+                                                <input type="datetime-local" class="form-control" id="export-start-date">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="mb-3">
+                                                <label for="export-end-date" class="form-label">End Date</label>
+                                                <input type="datetime-local" class="form-control" id="export-end-date">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="mb-3">
+                                                <label for="export-format" class="form-label">Format</label>
+                                                <select class="form-select" id="export-format">
+                                                    <option value="csv">CSV</option>
+                                                    <option value="json">JSON</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-primary" onclick="exportMetrics()">Export Metrics</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Settings Tab -->
+                    <div class="tab-pane fade" id="settings">
+                        <div class="card">
+                            <div class="card-header">Monitoring Configuration</div>
+                            <div class="card-body">
+                                <form id="config-form">
+                                    <div class="mb-3">
+                                        <label for="system-check-interval" class="form-label">System Check Interval (seconds)</label>
+                                        <input type="number" class="form-control" id="system-check-interval" min="10" max="3600">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="service-check-interval" class="form-label">Service Check Interval (seconds)</label>
+                                        <input type="number" class="form-control" id="service-check-interval" min="30" max="3600">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="retention-days" class="form-label">Data Retention (days)</label>
+                                        <input type="number" class="form-control" id="retention-days" min="1" max="365">
+                                    </div>
+                                    
+                                    <h5 class="mt-4">Alert Configuration</h5>
+                                    <div id="alerts-config">
+                                        <!-- Alert configurations will be populated here -->
+                                    </div>
+                                    
+                                    <button type="button" class="btn btn-outline-primary mt-3" onclick="addAlertConfig()">
+                                        <i class="bi bi-plus"></i> Add Alert
+                                    </button>
+                                    
+                                    <div class="mt-4">
+                                        <button type="button" class="btn btn-primary" onclick="saveConfig()">Save Configuration</button>
+                                        <button type="button" class="btn btn-outline-secondary ms-2" onclick="loadConfig()">Reset</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // API endpoint
+        const API_BASE_URL = 'http://localhost:8080';
+        
+        // Charts
+        let metricsChart;
+        let cpuChart;
+        let memoryChart;
+        let diskChart;
+        let networkChart;
+        let responseTimeChart;
+        
+        // Global variables
+        let currentTimeRange = '1h';
+        let lastNetworkSent = 0;
+        let lastNetworkReceived = 0;
+        let lastTimestamp = null;
+        
+        // Initialize the dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCharts();
+            refreshAllData();
+            
+            // Set up periodic refresh
+            setInterval(refreshCurrentMetrics, 10000); // Every 10 seconds
+            setInterval(refreshServiceStatus, 30000);  // Every 30 seconds
+            setInterval(refreshAlerts, 30000);         // Every 30 seconds
+            
+            // Initialize date pickers for export
+            const now = new Date();
+            const yesterday = new Date(now);
+            yesterday.setDate(yesterday.getDate() - 1);
+            
+            document.getElementById('export-end-date').value = now.toISOString().slice(0, 16);
+            document.getElementById('export-start-date').value = yesterday.toISOString().slice(0, 16);
+            
+            // Load configuration
+            loadConfig();
+        });
+        
+        function refreshAllData() {
+            refreshCurrentMetrics();
+            refreshMetricsHistory();
+            refreshServiceStatus();
+            refreshAlerts();
+            refreshAlertHistory();
+        }
+        
+        function refreshCurrentMetrics() {
+            fetch(`${API_BASE_URL}/metrics/current`)
+                .then(response => response.json())
+                .then(data => {
+                    updateMetricDisplay('cpu-usage', data.cpu_usage);
+                    updateMetricDisplay('memory-usage', data.memory_usage);
+                    updateMetricDisplay('disk-usage', data.disk_usage);
+                    
+                    // Calculate network rate
+                    if (lastTimestamp) {
+                        const timeDiff = (new Date(data.timestamp) - new Date(lastTimestamp)) / 1000; // in seconds
+                        
+                        if (timeDiff > 0) {
+                            const sentRate = (data.network_sent - lastNetworkSent) / timeDiff;
+                            const receivedRate = (data.network_received - lastNetworkReceived) / timeDiff;
+                            
+                            document.getElementById('network-sent').textContent = formatBytes(sentRate) + '/s';
+                            document.getElementById('network-received').textContent = formatBytes(receivedRate) + '/s';
+                            document.getElementById('network-traffic').textContent = formatBytes(sentRate + receivedRate) + '/s';
+                        }
+                    }
+                    
+                    // Update last values
+                    lastNetworkSent = data.network_sent;
+                    lastNetworkReceived = data.network_received;
+                    lastTimestamp = data.timestamp;
+                    
+                    // Update connection status
+                    document.getElementById('connection-status').textContent = 'Connected';
+                    document.getElementById('connection-status').className = 'badge bg-success me-2';
+                })
+                .catch(error => {
+                    console.error('Error fetching current metrics:', error);
+                    document.getElementById('connection-status').textContent = 'Disconnected';
+                    document.getElementById('connection-status').className = 'badge bg-danger me-2';
+                });
+        }
+        
+        function refreshMetricsHistory() {
+            // Calculate time range
+            const endTime = new Date().toISOString();
+            let startTime;
+            
+            switch (currentTimeRange) {
+                case '1h':
+                    startTime = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+                    break;
+                case '6h':
+                    startTime = new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString();
+                    break;
+                case '24h':
+                    startTime = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+                    break;
+                case '7d':
+                    startTime = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+                    break;
+                default:
+                    startTime = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+            }
+            
+            fetch(`${API_BASE_URL}/metrics/history?start_time=${startTime}&end_time=${endTime}`)
+                .then(response => response.json())
+                .then(data => {
+                    updateMetricsCharts(data.metrics);
+                })
+                .catch(error => {
+                    console.error('Error fetching metrics history:', error);
+                });
+        }
+        
+        function refreshServiceStatus() {
+            fetch(`${API_BASE_URL}/services/status`)
+                .then(response => response.json())
+                .then(data => {
+                    updateServiceStatusTable(data.services);
+                })
+                .catch(error => {
+                    console.error('Error fetching service status:', error);
+                });
+        }
+        
+        function refreshAlerts() {
+            fetch(`${API_BASE_URL}/alerts/active`)
+                .then(response => response.json())
+                .then(data => {
+                    updateActiveAlerts(data.alerts);
+                })
+                .catch(error => {
+                    console.error('Error fetching active alerts:', error);
+                });
+        }
+        
+        function refreshAlertHistory() {
+            // Get alert history for the last 24 hours by default
+            const endTime = new Date().toISOString();
+            const startTime = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+            
+            fetch(`${API_BASE_URL}/alerts/history?start_time=${startTime}&end_time=${endTime}`)
+                .then(response => response.json())
+                .then(data => {
+                    updateAlertHistoryTable(data.alerts);
+                })
+                .catch(error => {
+                    console.error('Error fetching alert history:', error);
+                });
+        }
+        
+        function updateMetricDisplay(elementId, value) {
+            const element = document.getElementById(elementId);
+            const progressElement = document.getElementById(elementId.replace('usage', 'progress'));
+            
+            if (element && progressElement) {
+                element.textContent = `${value.toFixed(1)}%`;
+                progressElement.style.width = `${value}%`;
+                
+                // Update progress bar color based on value
+                if (value < 70) {
+                    progressElement.className = 'progress-bar bg-success';
+                } else if (value < 90) {
+                    progressElement.className = 'progress-bar bg-warning';
+                } else {
+                    progressElement.className = 'progress-bar bg-danger';
+                }
+            }
+        }
+        
+        function updateServiceStatusTable(services) {
+            const tableBody = document.getElementById('service-status-table');
+            const tableBodyFull = document.getElementById('service-status-table-full');
+            
+            if (tableBody && services) {
+                tableBody.innerHTML = '';
+                
+                services.forEach(service => {
+                    const row = document.createElement('tr');
+                    
+                    const statusClass = service.status === 'up' ? 'status-up' : 'status-down';
+                    const formattedTime = formatTime(service.response_time);
+                    const lastChecked = formatDateTime(service.last_checked);
+                    
+                    row.innerHTML = `
+                        <td>${service.service_name}</td>
+                        <td><span class="status-indicator ${statusClass}"></span>${service.status}</td>
+                        <td>${formattedTime}</td>
+                        <td>${lastChecked}</td>
+                    `;
+                    
+                    tableBody.appendChild(row);
+                });
+            }
+            
+            if (tableBodyFull && services) {
+                tableBodyFull.innerHTML = '';
+                
+                services.forEach(service => {
+                    const row = document.createElement('tr');
+                    
+                    const statusClass = service.status === 'up' ? 'status-up' : 'status-down';
+                    const formattedTime = formatTime(service.response_time);
+                    const lastChecked = formatDateTime(service.last_checked);
+                    
+                    row.innerHTML = `
+                        <td>${service.service_name}</td>
+                        <td><span class="status-indicator ${statusClass}"></span>${service.status}</td>
+                        <td>${formattedTime}</td>
+                        <td>${lastChecked}</td>
+                        <td>${service.endpoint}</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary" onclick="checkService('${service.service_name}', '${service.endpoint}')">
+                                <i class="bi bi-arrow-repeat"></i>
+                            </button>
+                        </td>
+                    `;
+                    
+                    tableBodyFull.appendChild(row);
+                });
+                
+                // Update response time chart
+                updateResponseTimeChart(services);
+            }
+        }
+        
+        function updateActiveAlerts(alerts) {
+            const container = document.getElementById('active-alerts-container');
+            const containerFull = document.getElementById('active-alerts-container-full');
+            const noAlertsMessage = document.getElementById('no-alerts-message');
+            
+            if (container && alerts) {
+                container.innerHTML = '';
+                
+                if (alerts.length === 0) {
+                    if (noAlertsMessage) {
+                        noAlertsMessage.style.display = 'block';
+                    }
+                } else {
+                    if (noAlertsMessage) {
+                        noAlertsMessage.style.display = 'none';
+                    }
+                    
+                    // Show only the first 3 alerts in the dashboard
+                    const displayAlerts = alerts.slice(0, 3);
+                    
+                    displayAlerts.forEach(alert => {
+                        const alertElement = createAlertElement(alert);
+                        container.appendChild(alertElement);
+                    });
+                    
+                    if (alerts.length > 3) {
+                        const moreAlertsElement = document.createElement('div');
+                        moreAlertsElement.className = 'text-center mt-2';
+                        moreAlertsElement.innerHTML = `
+                            <a href="#alerts" data-bs-toggle="tab" class="btn btn-sm btn-outline-secondary">
+                                View ${alerts.length - 3} more alerts
+                            </a>
+                        `;
+                        container.appendChild(moreAlertsElement);
+                    }
+                }
+            }
+            
+            if (containerFull && alerts) {
+                containerFull.innerHTML = '';
+                
+                if (alerts.length === 0) {
+                    const noAlertsElement = document.createElement('div');
+                    noAlertsElement.className = 'text-center text-muted py-3';
+                    noAlertsElement.innerHTML = `
+                        <i class="bi bi-check-circle" style="font-size: 2rem;"></i>
+                        <p class="mt-2">No active alerts</p>
+                    `;
+                    containerFull.appendChild(noAlertsElement);
+                } else {
+                    alerts.forEach(alert => {
+                        const alertElement = createAlertElement(alert, true);
+                        containerFull.appendChild(alertElement);
+                    });
+                }
+            }
+        }
+        
+        function createAlertElement(alert, showResolveButton = false) {
+            const alertElement = document.createElement('div');
+            alertElement.className = 'alert-card card mb-3';
+            
+            let alertClass = 'alert-warning';
+            if (alert.metric === 'cpu_usage' || alert.metric === 'memory_usage') {
+                alertClass = alert.current_value > 90 ? 'alert-critical' : 'alert-warning';
+            } else if (alert.metric === 'disk_usage') {
+                alertClass = alert.current_value > 95 ? 'alert-critical' : 'alert-warning';
+            }
+            
+            alertElement.classList.add(alertClass);
+            
+            const timestamp = formatDateTime(alert.timestamp);
+            const metricName = formatMetricName(alert.metric);
+            
+            let alertContent = `
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0">${metricName} Alert</h5>
+                        <span class="badge bg-warning">${timestamp}</span>
+                    </div>
+                    <p class="card-text mt-2">
+                        ${metricName} is at <strong>${alert.current_value.toFixed(1)}%</strong>, 
+                        which is ${alert.condition.replace('_', ' ')} the threshold of <strong>${alert.threshold}%</strong>
+                    </p>
+            `;
+            
+            if (showResolveButton) {
+                alertContent += `
+                    <button class="btn btn-sm btn-outline-success" onclick="resolveAlert('${alert.id}')">
+                        <i class="bi bi-check-circle"></i> Mark as Resolved
+                    </button>
+                `;
+            }
+            
+            alertContent += `</div>`;
+            alertElement.innerHTML = alertContent;
+            
+            return alertElement;
+        }
+        
+        function updateAlertHistoryTable(alerts) {
+            const tableBody = document.getElementById('alert-history-table');
+            
+            if (tableBody && alerts) {
+                tableBody.innerHTML = '';
+                
+                alerts.forEach(alert => {
+                    const row = document.createElement('tr');
+                    
+                    const timestamp = formatDateTime(alert.timestamp);
+                    const resolvedTimestamp = alert.resolved_timestamp ? formatDateTime(alert.resolved_timestamp) : '-';
+                    const metricName = formatMetricName(alert.metric);
+                    const statusBadge = alert.resolved ? 
+                        '<span class="badge bg-success">Resolved</span>' : 
+                        '<span class="badge bg-warning">Active</span>';
+                    
+                    row.innerHTML = `
+                        <td>${timestamp}</td>
+                        <td>${metricName}</td>
+                        <td>${alert.threshold}%</td>
+                        <td>${alert.current_value.toFixed(1)}%</td>
+                        <td>${statusBadge}</td>
+                        <td>${resolvedTimestamp}</td>
+                    `;
+                    
+                    tableBody.appendChild(row);
+                });
+            }
+        }
+        
+        function initializeCharts() {
+            // Main metrics chart
+            const metricsCtx = document.getElementById('metrics-chart').getContext('2d');
+            metricsChart = new Chart(metricsCtx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: 'CPU Usage',
+                            data: [],
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            borderWidth: 2,
+                            tension: 0.2
+                        },
+                        {
+                            label: 'Memory Usage',
+                            data: [],
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderWidth: 2,
+                            tension: 0.2
+                        },
+                        {
+                            label: 'Disk Usage',
+                            data: [],
+                            borderColor: 'rgba(255, 206, 86, 1)',
+                            backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                            borderWidth: 2,
+                            tension: 0.2
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Usage (%)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Time'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Individual metric charts
+            const cpuCtx = document.getElementById('cpu-chart').getContext('2d');
+            cpuChart = new Chart(cpuCtx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'CPU Usage',
+                        data: [],
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'CPU Usage (%)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            const memoryCtx = document.getElementById('memory-chart').getContext('2d');
+            memoryChart = new Chart(memoryCtx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Memory Usage',
+                        data: [],
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Memory Usage (%)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            const diskCtx = document.getElementById('disk-chart').getContext('2d');
+            diskChart = new Chart(diskCtx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Disk Usage',
+                        data: [],
+                        borderColor: 'rgba(255, 206, 86, 1)',
+                        backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Disk Usage (%)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            const networkCtx = document.getElementById('network-chart').getContext('2d');
+            networkChart = new Chart(networkCtx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: 'Sent',
+                            data: [],
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderWidth: 2,
+                            tension: 0.2
+                        },
+                        {
+                            label: 'Received',
+                            data: [],
+                            borderColor: 'rgba(153, 102, 255, 1)',
+                            backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                            borderWidth: 2,
+                            tension: 0.2
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Network Traffic (KB/s)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            const responseTimeCtx = document.getElementById('response-time-chart').getContext('2d');
+            responseTimeChart = new Chart(responseTimeCtx, {
+                type: 'bar',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Response Time (ms)',
+                        data: [],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(255, 206, 86, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Response Time (ms)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function updateMetricsCharts(metrics) {
+            if (!metrics || metrics.length === 0) return;
+            
+            // Sort metrics by timestamp
+            metrics.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+            
+            // Extract data for charts
+            const labels = metrics.map(m => formatTime(new Date(m.timestamp).toLocaleTimeString()));
+            const cpuData = metrics.map(m => m.cpu_usage);
+            const memoryData = metrics.map(m => m.memory_usage);
+            const diskData = metrics.map(m => m.disk_usage);
+            
+            // Calculate network rates
+            const networkSentData = [];
+            const networkReceivedData = [];
+            
+            for (let i = 1; i < metrics.length; i++) {
+                const timeDiff = (new Date(metrics[i].timestamp) - new Date(metrics[i-1].timestamp)) / 1000;
+                if (timeDiff > 0) {
+                    const sentRate = (metrics[i].network_sent - metrics[i-1].network_sent) / timeDiff / 1024; // KB/s
+                    const receivedRate = (metrics[i].network_received - metrics[i-1].network_received) / timeDiff / 1024; // KB/s
+                    
+                    networkSentData.push(sentRate);
+                    networkReceivedData.push(receivedRate);
+                } else {
+                    networkSentData.push(0);
+                    networkReceivedData.push(0);
+                }
+            }
+            
+            // Add a placeholder for the first point
+            networkSentData.unshift(0);
+            networkReceivedData.unshift(0);
+            
+            // Update main metrics chart
+            metricsChart.data.labels = labels;
+            metricsChart.data.datasets[0].data = cpuData;
+            metricsChart.data.datasets[1].data = memoryData;
+            metricsChart.data.datasets[2].data = diskData;
+            metricsChart.update();
+            
+            // Update individual charts
+            cpuChart.data.labels = labels;
+            cpuChart.data.datasets[0].data = cpuData;
+            cpuChart.update();
+            
+            memoryChart.data.labels = labels;
+            memoryChart.data.datasets[0].data = memoryData;
+            memoryChart.update();
+            
+            diskChart.data.labels = labels;
+            diskChart.data.datasets[0].data = diskData;
+            diskChart.update();
+            
+            networkChart.data.labels = labels;
+            networkChart.data.datasets[0].data = networkSentData;
+            networkChart.data.datasets[1].data = networkReceivedData;
+            networkChart.update();
+        }
+        
+        function updateResponseTimeChart(services) {
+            if (!services || services.length === 0) return;
+            
+            const labels = services.map(s => s.service_name);
+            const responseTimeData = services.map(s => s.response_time * 1000); // Convert to milliseconds
+            const backgroundColors = services.map(s => s.status === 'up' ? 'rgba(40, 167, 69, 0.7)' : 'rgba(220, 53, 69, 0.7)');
+            const borderColors = services.map(s => s.status === 'up' ? 'rgba(40, 167, 69, 1)' : 'rgba(220, 53, 69, 1)');
+            
+            responseTimeChart.data.labels = labels;
+            responseTimeChart.data.datasets[0].data = responseTimeData;
+            responseTimeChart.data.datasets[0].backgroundColor = backgroundColors;
+            responseTimeChart.data.datasets[0].borderColor = borderColors;
+            responseTimeChart.update();
+        }
+        
+        function updateTimeRange(range) {
+            currentTimeRange = range;
+            
+            // Update active button
+            const buttons = document.querySelectorAll('.btn-group .btn');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+                if (button.textContent === range) {
+                    button.classList.add('active');
+                }
+            });
+            
+            refreshMetricsHistory();
+        }
+        
+        function updateAlertHistory(range) {
+            // Calculate time range
+            const endTime = new Date().toISOString();
+            let startTime;
+            
+            switch (range) {
+                case '24h':
+                    startTime = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+                    break;
+                case '7d':
+                    startTime = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+                    break;
+                case '30d':
+                    startTime = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
+                    break;
+                default:
+                    startTime = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+            }
+            
+            // Update active button
+            const buttons = document.querySelectorAll('#alerts .btn-group .btn');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+                if (button.textContent === range) {
+                    button.classList.add('active');
+                }
+            });
+            
+            fetch(`${API_BASE_URL}/alerts/history?start_time=${startTime}&end_time=${endTime}`)
+                .then(response => response.json())
+                .then(data => {
+                    updateAlertHistoryTable(data.alerts);
+                })
+                .catch(error => {
+                    console.error('Error fetching alert history:', error);
+                });
+        }
+        
+        function checkService(serviceName, endpoint) {
+            // This is a placeholder - in a real implementation, you would call the API to check the service
+            alert(`Checking service: ${serviceName} at ${endpoint}`);
+        }
+        
+        function resolveAlert(alertId) {
+            fetch(`${API_BASE_URL}/alerts/${alertId}/resolve`, {
+                method: 'POST'
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        refreshAlerts();
+                        refreshAlertHistory();
+                    } else {
+                        alert('Failed to resolve alert: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error resolving alert:', error);
+                    alert('Error resolving alert: ' + error.message);
+                });
+        }
+        
+        function loadConfig() {
+            fetch(`${API_BASE_URL}/config`)
+                .then(response => response.json())
+                .then(config => {
+                    document.getElementById('system-check-interval').value = config.system_check_interval;
+                    document.getElementById('service-check-interval').value = config.service_check_interval;
+                    document.getElementById('retention-days').value = config.retention_days;
+                    
+                    // Update alert configurations
+                    const alertsConfigContainer = document.getElementById('alerts-config');
+                    alertsConfigContainer.innerHTML = '';
+                    
+                    config.alerts.forEach((alert, index) => {
+                        const alertElement = createAlertConfigElement(alert, index);
+                        alertsConfigContainer.appendChild(alertElement);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading configuration:', error);
+                    alert('Error loading configuration: ' + error.message);
+                });
+        }
+        
+        function saveConfig() {
+            const systemCheckInterval = parseInt(document.getElementById('system-check-interval').value);
+            const serviceCheckInterval = parseInt(document.getElementById('service-check-interval').value);
+            const retentionDays = parseInt(document.getElementById('retention-days').value);
+            
+            // Validate inputs
+            if (systemCheckInterval < 10 || systemCheckInterval > 3600) {
+                alert('System check interval must be between 10 and 3600 seconds');
+                return;
+            }
+            
+            if (serviceCheckInterval < 30 || serviceCheckInterval > 3600) {
+                alert('Service check interval must be between 30 and 3600 seconds');
+                return;
+            }
+            
+            if (retentionDays < 1 || retentionDays > 365) {
+                alert('Data retention must be between 1 and 365 days');
+                return;
+            }
+            
+            // Collect alert configurations
+            const alertConfigs = [];
+            const alertElements = document.querySelectorAll('.alert-config');
+            
+            alertElements.forEach(element => {
+                const metric = element.querySelector('.alert-metric').value;
+                const threshold = parseFloat(element.querySelector('.alert-threshold').value);
+                const condition = element.querySelector('.alert-condition').value;
+                const enabled = element.querySelector('.alert-enabled').checked;
+                const notifyEmail = element.querySelector('.alert-email').value;
+                const notifySlack = element.querySelector('.alert-slack').value;
+                
+                alertConfigs.push({
+                    metric,
+                    threshold,
+                    condition,
+                    enabled,
+                    notify_email: notifyEmail || null,
+                    notify_slack: notifySlack || null
+                });
+            });
+            
+            // Create config object
+            const config = {
+                system_check_interval: systemCheckInterval,
+                service_check_interval: serviceCheckInterval,
+                retention_days: retentionDays,
+                alerts: alertConfigs
+            };
+            
+            // Save configuration
+            fetch(`${API_BASE_URL}/config`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(config)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert('Configuration saved successfully');
+                    } else {
+                        alert('Failed to save configuration: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error saving configuration:', error);
+                    alert('Error saving configuration: ' + error.message);
+                });
+        }
+        
+        function addAlertConfig() {
+            const alertsConfigContainer = document.getElementById('alerts-config');
+            
+            const defaultAlert = {
+                metric: 'cpu_usage',
+                threshold: 90,
+                condition: 'greater_than',
+                enabled: true,
+                notify_email: null,
+                notify_slack: null
+            };
+            
+            const alertElement = createAlertConfigElement(defaultAlert, alertsConfigContainer.children.length);
+            alertsConfigContainer.appendChild(alertElement);
+        }
+        
+        function createAlertConfigElement(alert, index) {
+            const alertElement = document.createElement('div');
+            alertElement.className = 'alert-config card mb-3';
+            alertElement.innerHTML = `
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="mb-0">Alert #${index + 1}</h6>
+                        <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeAlertConfig(this)">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label class="form-label">Metric</label>
+                                <select class="form-select alert-metric">
+                                    <option value="cpu_usage" ${alert.metric === 'cpu_usage' ? 'selected' : ''}>CPU Usage</option>
+                                    <option value="memory_usage" ${alert.metric === 'memory_usage' ? 'selected' : ''}>Memory Usage</option>
+                                    <option value="disk_usage" ${alert.metric === 'disk_usage' ? 'selected' : ''}>Disk Usage</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label class="form-label">Condition</label>
+                                <select class="form-select alert-condition">
+                                    <option value="greater_than" ${alert.condition === 'greater_than' ? 'selected' : ''}>Greater Than</option>
+                                    <option value="less_than" ${alert.condition === 'less_than' ? 'selected' : ''}>Less Than</option>
+                                    <option value="equal_to" ${alert.condition === 'equal_to' ? 'selected' : ''}>Equal To</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label class="form-label">Threshold (%)</label>
+                                <input type="number" class="form-control alert-threshold" min="0" max="100" value="${alert.threshold}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input alert-enabled" type="checkbox" ${alert.enabled ? 'checked' : ''}>
+                                    <label class="form-check-label">Enabled</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label class="form-label">Notify Email</label>
+                                <input type="email" class="form-control alert-email" value="${alert.notify_email || ''}">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label class="form-label">Notify Slack Webhook</label>
+                                <input type="text" class="form-control alert-slack" value="${alert.notify_slack || ''}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            return alertElement;
+        }
+        
+        function removeAlertConfig(button) {
+            const alertElement = button.closest('.alert-config');
+            alertElement.remove();
+        }
+        
+        function exportMetrics() {
+            const startDate = document.getElementById('export-start-date').value;
+            const endDate = document.getElementById('export-end-date').value;
+            const format = document.getElementById('export-format').value;
+            
+            if (!startDate || !endDate) {
+                alert('Please select start and end dates');
+                return;
+            }
+            
+            const startTime = new Date(startDate).toISOString();
+            const endTime = new Date(endDate).toISOString();
+            
+            // In a real implementation, this would call an API endpoint to export metrics
+            // For this demo, we'll just show an alert
+            alert(`Exporting metrics from ${startTime} to ${endTime} in ${format.toUpperCase()} format`);
+        }
+        
+        // Utility functions
+        function formatBytes(bytes, decimals = 2) {
+            if (bytes === 0) return '0 B';
+            
+            const k = 1024;
+            const dm = decimals < 0 ? 0 : decimals;
+            const sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+            
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+        }
+        
+        function formatTime(time) {
+            if (typeof time === 'number') {
+                if (time < 0) return 'N/A';
+                return time < 1 ? `${(time * 1000).toFixed(0)} ms` : `${time.toFixed(2)} s`;
+            }
+            return time;
+        }
+        
+        function formatDateTime(dateTimeStr) {
+            const date = new Date(dateTimeStr);
+            return date.toLocaleString();
+        }
+        
+        function formatMetricName(metric) {
+            switch (metric) {
+                case 'cpu_usage':
+                    return 'CPU Usage';
+                case 'memory_usage':
+                    return 'Memory Usage';
+                case 'disk_usage':
+                    return 'Disk Usage';
+                default:
+                    return metric.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
+            }
+        }
+    </script>
+</body>
+</html>

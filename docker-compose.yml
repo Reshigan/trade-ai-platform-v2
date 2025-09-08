@@ -9,14 +9,20 @@ services:
     ports:
       - "27017:27017"
     environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: password123
-      MONGO_INITDB_DATABASE: trade-ai
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME:-admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:-password123}
+      MONGO_INITDB_DATABASE: ${MONGO_DATABASE:-trade-ai}
     volumes:
       - mongodb_data:/data/db
       - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
     networks:
       - trade-ai-network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo mongodb://${MONGO_USERNAME:-admin}:${MONGO_PASSWORD:-password123}@localhost:27017/admin --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
 
   # Redis
   redis:
@@ -25,11 +31,16 @@ services:
     restart: unless-stopped
     ports:
       - "6379:6379"
-    command: redis-server --appendonly yes
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-redis_password}
     volumes:
       - redis_data:/data
     networks:
       - trade-ai-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   # Backend API
   backend:
@@ -41,19 +52,35 @@ services:
     ports:
       - "5000:5000"
     environment:
-      NODE_ENV: production
-      MONGODB_URI: mongodb://admin:password123@mongodb:27017/tradeai?authSource=admin
-      REDIS_URL: redis://redis:6379
+      NODE_ENV: ${NODE_ENV:-production}
+      PORT: 5000
+      MONGODB_URI: mongodb://${MONGO_USERNAME:-admin}:${MONGO_PASSWORD:-password123}@mongodb:27017/${MONGO_DATABASE:-trade-ai}?authSource=admin
+      REDIS_URL: redis://:${REDIS_PASSWORD:-redis_password}@redis:6379
       JWT_SECRET: ${JWT_SECRET:-your_extremely_secure_and_long_jwt_secret_key_here}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-1h}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-your_jwt_refresh_secret_key}
+      JWT_REFRESH_EXPIRES_IN: ${JWT_REFRESH_EXPIRES_IN:-7d}
+      CORS_ORIGIN: ${CORS_ORIGIN:-*}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+      SECURITY_LOG_DIR: /app/logs/security
+      SECURITY_LOG_LEVEL: ${SECURITY_LOG_LEVEL:-info}
       AI_MODEL_API_KEY: ${AI_MODEL_API_KEY:-your_openai_api_key_here}
     depends_on:
-      - mongodb
-      - redis
+      mongodb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     volumes:
       - ./backend/uploads:/app/uploads
       - ./backend/logs:/app/logs
     networks:
       - trade-ai-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:5000/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
 
   # Frontend
   frontend:
@@ -62,17 +89,95 @@ services:
       dockerfile: Dockerfile
       args:
         CACHEBUST: ${CACHEBUST:-1}
+        REACT_APP_API_URL: ${REACT_APP_API_URL:-http://localhost:5000/api}
+        REACT_APP_SOCKET_URL: ${REACT_APP_SOCKET_URL:-http://localhost:5000}
+        REACT_APP_AI_API_URL: ${REACT_APP_AI_API_URL:-http://localhost:8000}
+        REACT_APP_MONITORING_URL: ${REACT_APP_MONITORING_URL:-http://localhost:8080}
     container_name: trade-ai-frontend
     restart: unless-stopped
     ports:
       - "3000:80"
     environment:
-      REACT_APP_API_URL: http://localhost:5000/api
-      REACT_APP_SOCKET_URL: http://localhost:5000
+      REACT_APP_API_URL: ${REACT_APP_API_URL:-http://localhost:5000/api}
+      REACT_APP_SOCKET_URL: ${REACT_APP_SOCKET_URL:-http://localhost:5000}
+      REACT_APP_AI_API_URL: ${REACT_APP_AI_API_URL:-http://localhost:8000}
+      REACT_APP_MONITORING_URL: ${REACT_APP_MONITORING_URL:-http://localhost:8080}
     depends_on:
       - backend
     networks:
       - trade-ai-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:80/health.json"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # AI Services
+  ai-services:
+    build:
+      context: ./ai-services
+      dockerfile: Dockerfile
+    container_name: trade-ai-ai-services
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - HOST=0.0.0.0
+      - MODEL_DIR=/app/models
+      - DATA_DIR=/app/data
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - MONGODB_URI=mongodb://${MONGO_USERNAME:-admin}:${MONGO_PASSWORD:-password123}@mongodb:27017/${MONGO_DATABASE:-trade-ai}?authSource=admin
+    volumes:
+      - ./ai-services:/app
+      - ai_services_models:/app/models
+      - ai_services_data:/app/data
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - trade-ai-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
+  # Monitoring Service
+  monitoring:
+    build:
+      context: ./monitoring
+      dockerfile: Dockerfile
+    container_name: trade-ai-monitoring
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - HOST=0.0.0.0
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - RETENTION_DAYS=${RETENTION_DAYS:-30}
+      - SYSTEM_CHECK_INTERVAL=${SYSTEM_CHECK_INTERVAL:-60}
+      - SERVICE_CHECK_INTERVAL=${SERVICE_CHECK_INTERVAL:-300}
+      - BACKEND_URL=http://backend:5000
+      - FRONTEND_URL=http://frontend:80
+      - AI_SERVICES_URL=http://ai-services:8000
+    volumes:
+      - ./monitoring:/app
+      - monitoring_data:/app/data
+    depends_on:
+      - backend
+      - frontend
+      - ai-services
+    networks:
+      - trade-ai-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
 
   # Nginx (Optional - for production)
   nginx:
@@ -88,12 +193,17 @@ services:
     depends_on:
       - frontend
       - backend
+      - ai-services
+      - monitoring
     networks:
       - trade-ai-network
 
 volumes:
   mongodb_data:
   redis_data:
+  ai_services_models:
+  ai_services_data:
+  monitoring_data:
 
 networks:
   trade-ai-network:
