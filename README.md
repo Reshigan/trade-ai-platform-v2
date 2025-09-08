@@ -1,7 +1,7 @@
 # Trade AI Final - Production-Ready FMCG Trade Spend Management System
 
 <div align="center">
-  <img src="assets/logo.svg" alt="Trade AI Logo" width="200"/>
+  <img src="frontend/public/images/logo.svg" alt="Trade AI Logo" width="200"/>
   
   **Enterprise-grade FMCG Trade Spend Management with AI-Powered Analytics**
   
@@ -64,8 +64,10 @@ trade-ai/
 │   └── requirements.txt
 ├── docs/                   # Documentation
 │   └── DEPLOYMENT.md       # Comprehensive deployment guide
-└── assets/                 # Shared assets
-    └── logo.svg            # Modern logo
+└── frontend/               # Frontend application
+    └── public/images/      # Public assets
+        ├── logo.svg        # Modern logo
+        └── favicon.svg     # Favicon
 ```
 
 ## 🛠️ Technology Stack
