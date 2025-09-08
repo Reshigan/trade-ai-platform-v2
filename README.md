@@ -11,7 +11,18 @@
   [![MongoDB](https://img.shields.io/badge/mongodb-%3E%3D5.0-green.svg)](https://www.mongodb.com)
   [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
   [![Test Coverage](https://img.shields.io/badge/coverage-92%25-brightgreen.svg)]()
+  [![Version](https://img.shields.io/badge/version-v1.1.5-blue.svg)]()
 </div>
+
+## 🎨 Modern Interface
+
+Trade AI features a modern, animated logo with a sleek design that represents the intersection of AI technology and trading analytics. The logo includes:
+
+- Animated trading chart line showing market movements
+- AI brain icon representing intelligent decision-making
+- Gradient color scheme with glowing effects
+- Responsive design that works across all devices
+- Animated pulse effect to indicate real-time processing
 
 ## 🚀 Overview
 
