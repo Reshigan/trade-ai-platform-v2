@@ -92,7 +92,7 @@ services:
         REACT_APP_API_URL: ${REACT_APP_API_URL:-http://localhost:5001/api}
         REACT_APP_SOCKET_URL: ${REACT_APP_SOCKET_URL:-http://localhost:5001}
         REACT_APP_AI_API_URL: ${REACT_APP_AI_API_URL:-http://localhost:8000}
-        REACT_APP_MONITORING_URL: ${REACT_APP_MONITORING_URL:-http://localhost:8080}
+        REACT_APP_MONITORING_URL: ${REACT_APP_MONITORING_URL:-http://localhost:8081}
     container_name: trade-ai-frontend
     restart: unless-stopped
     ports:
@@ -101,7 +101,7 @@ services:
       REACT_APP_API_URL: ${REACT_APP_API_URL:-http://localhost:5001/api}
       REACT_APP_SOCKET_URL: ${REACT_APP_SOCKET_URL:-http://localhost:5001}
       REACT_APP_AI_API_URL: ${REACT_APP_AI_API_URL:-http://localhost:8000}
-      REACT_APP_MONITORING_URL: ${REACT_APP_MONITORING_URL:-http://localhost:8080}
+      REACT_APP_MONITORING_URL: ${REACT_APP_MONITORING_URL:-http://localhost:8081}
     depends_on:
       - backend
     networks:
@@ -152,7 +152,7 @@ services:
     container_name: trade-ai-monitoring
     restart: unless-stopped
     ports:
-      - "8080:8080"
+      - "8081:8080"
     environment:
       - PORT=8080
       - HOST=0.0.0.0

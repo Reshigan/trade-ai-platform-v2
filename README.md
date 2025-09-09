@@ -197,7 +197,7 @@ The application will be available at:
 - Backend API: http://localhost:5001
 - API Docs: http://localhost:5001/api/docs
 - AI Services: http://localhost:8000
-- Monitoring Dashboard: http://localhost:8080
+- Monitoring Dashboard: http://localhost:8081
 
 ### 📱 Current Mode
 
