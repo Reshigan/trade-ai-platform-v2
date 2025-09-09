@@ -35,7 +35,9 @@ import {
   Notifications as NotificationsIcon,
   AccountCircle,
   Logout,
-  ChevronLeft
+  ChevronLeft,
+  Business as BusinessIcon,
+  Description as ReportIcon
 } from '@mui/icons-material';
 
 const drawerWidth = 240;
@@ -47,6 +49,8 @@ const menuItems = [
   { text: 'Promotions', icon: <PromotionIcon />, path: '/promotions' },
   { text: 'Customers', icon: <CustomerIcon />, path: '/customers' },
   { text: 'Products', icon: <ProductIcon />, path: '/products' },
+  { text: 'Companies', icon: <BusinessIcon />, path: '/companies' },
+  { text: 'Reports', icon: <ReportIcon />, path: '/reports' },
   { text: 'Analytics', icon: <AnalyticsIcon />, path: '/analytics' },
   { text: 'Settings', icon: <SettingsIcon />, path: '/settings' },
 ];
@@ -89,7 +93,7 @@ const Layout = ({ children, user, onLogout }) => {
     <div>
       <Toolbar sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <img src="/images/logo.svg" alt="Trade AI Logo" style={{ width: 40, marginRight: 8 }} />
+          <img src="/images/animated-logo.svg" alt="Trade AI Logo" style={{ width: 40, marginRight: 8 }} />
           <Typography variant="h6" noWrap component="div">
             Trade AI
           </Typography>
