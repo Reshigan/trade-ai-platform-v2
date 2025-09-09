@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a237e" />
+      <stop offset="100%" stop-color="#3949ab" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Main circle -->
+  <circle cx="100" cy="100" r="90" fill="url(#bgGradient)" />
+  
+  <!-- Neural network nodes -->
+  <circle cx="70" cy="60" r="8" fill="#64ffda" />
+  <circle cx="130" cy="60" r="8" fill="#64ffda" />
+  <circle cx="50" cy="100" r="8" fill="#64ffda" />
+  <circle cx="100" cy="100" r="12" fill="#ffffff" />
+  <circle cx="150" cy="100" r="8" fill="#64ffda" />
+  <circle cx="70" cy="140" r="8" fill="#64ffda" />
+  <circle cx="130" cy="140" r="8" fill="#64ffda" />
+  
+  <!-- Neural network connections -->
+  <line x1="70" y1="60" x2="50" y2="100" stroke="#ffffff" stroke-width="2" />
+  <line x1="70" y1="60" x2="100" y2="100" stroke="#ffffff" stroke-width="2" />
+  <line x1="70" y1="60" x2="150" y2="100" stroke="#ffffff" stroke-width="2" />
+  <line x1="130" y1="60" x2="50" y2="100" stroke="#ffffff" stroke-width="2" />
+  <line x1="130" y1="60" x2="100" y2="100" stroke="#ffffff" stroke-width="2" />
+  <line x1="130" y1="60" x2="150" y2="100" stroke="#ffffff" stroke-width="2" />
+  <line x1="50" y1="100" x2="70" y2="140" stroke="#ffffff" stroke-width="2" />
+  <line x1="50" y1="100" x2="130" y2="140" stroke="#ffffff" stroke-width="2" />
+  <line x1="100" y1="100" x2="70" y2="140" stroke="#ffffff" stroke-width="2" />
+  <line x1="100" y1="100" x2="130" y2="140" stroke="#ffffff" stroke-width="2" />
+  <line x1="150" y1="100" x2="70" y2="140" stroke="#ffffff" stroke-width="2" />
+  <line x1="150" y1="100" x2="130" y2="140" stroke="#ffffff" stroke-width="2" />
+  
+  <!-- Text -->
+  <text x="100" y="180" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white" text-anchor="middle">TRADE AI</text>
+</svg>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Container,
@@ -16,7 +16,9 @@ import {
   Avatar,
   Button,
   LinearProgress,
-  Chip
+  Chip,
+  Snackbar,
+  Alert
 } from '@mui/material';
 import {
   TrendingUp,
@@ -27,8 +29,11 @@ import {
   LocalOffer,
   Assessment,
   Warning,
-  CheckCircle
+  CheckCircle,
+  School as SchoolIcon
 } from '@mui/icons-material';
+import { AIAssistant } from './common';
+import { WalkthroughTour } from './training';
 
 // Mock data
 const budgetData = {
@@ -58,14 +63,84 @@ const kpis = [
 ];
 
 const Dashboard = ({ user }) => {
+  const [showWalkthrough, setShowWalkthrough] = useState(false);
+  const [showWalkthroughSnackbar, setShowWalkthroughSnackbar] = useState(false);
+  
+  // Check if this is the first login
+  useEffect(() => {
+    const walkthroughCompleted = localStorage.getItem('walkthroughCompleted');
+    const firstLogin = localStorage.getItem('firstLogin');
+    
+    if (!walkthroughCompleted && !firstLogin) {
+      // Set first login flag
+      localStorage.setItem('firstLogin', 'true');
+      // Show walkthrough snackbar
+      setShowWalkthroughSnackbar(true);
+    }
+  }, []);
+  
+  const handleStartWalkthrough = () => {
+    setShowWalkthrough(true);
+    setShowWalkthroughSnackbar(false);
+  };
+  
+  const handleCloseWalkthrough = () => {
+    setShowWalkthrough(false);
+  };
+  
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+      {/* AI Assistant */}
+      <AIAssistant context="dashboard" />
+      
+      {/* Walkthrough Tour */}
+      <WalkthroughTour 
+        open={showWalkthrough} 
+        onClose={handleCloseWalkthrough} 
+      />
+      
+      {/* Walkthrough Snackbar */}
+      <Snackbar
+        open={showWalkthroughSnackbar}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={10000}
+        onClose={() => setShowWalkthroughSnackbar(false)}
+      >
+        <Alert 
+          severity="info" 
+          icon={<SchoolIcon />}
+          action={
+            <Button 
+              color="inherit" 
+              size="small" 
+              onClick={handleStartWalkthrough}
+            >
+              Start Tour
+            </Button>
+          }
+          onClose={() => setShowWalkthroughSnackbar(false)}
+        >
+          Welcome to Trade AI Platform! Would you like to take a quick tour?
+        </Alert>
+      </Snackbar>
+      
       <Typography variant="h4" gutterBottom>
         Welcome back, {user?.name.split(' ')[0] || 'User'}
       </Typography>
       <Typography variant="subtitle1" color="text.secondary" gutterBottom>
         Here's what's happening with your trade spend activities today.
       </Typography>
+      
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+        <Button
+          startIcon={<SchoolIcon />}
+          onClick={handleStartWalkthrough}
+          variant="outlined"
+          size="small"
+        >
+          Platform Tour
+        </Button>
+      </Box>
       
       {/* KPI Cards */}
       <Grid container spacing={3} sx={{ mb: 4, mt: 1 }}>
