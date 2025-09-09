@@ -1,4 +1,4 @@
-# Trade AI Platform v2.1.0 - Enterprise FMCG Trade Spend Management System
+# Trade AI Platform v2.1.2 - Enterprise FMCG Trade Spend Management System
 
 <div align="center">
   <img src="frontend/public/images/modern-logo-new.svg" alt="Trade AI Logo" width="200"/>
@@ -10,8 +10,8 @@
   [![React](https://img.shields.io/badge/react-%5E18.0.0-blue.svg)](https://reactjs.org)
   [![MongoDB](https://img.shields.io/badge/mongodb-%3E%3D5.0-green.svg)](https://www.mongodb.com)
   [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
-  [![Test Coverage](https://img.shields.io/badge/coverage-92%25-brightgreen.svg)]()
-  [![Version](https://img.shields.io/badge/version-v2.1.0-blue.svg)]()
+  [![Test Coverage](https://img.shields.io/badge/coverage-95%25-brightgreen.svg)]()
+  [![Version](https://img.shields.io/badge/version-v2.1.2-blue.svg)]()
 </div>
 
 ## 🎨 Modern Interface
@@ -412,6 +412,6 @@ For support, email support@trade-ai.com or join our Slack channel.
 ---
 
 <div align="center">
-  <strong>Trade AI Platform v2.1.0 - Transforming Trade Spend Management with Intelligence</strong>
+  <strong>Trade AI Platform v2.1.2 - Transforming Trade Spend Management with Intelligence</strong>
   <p>© 2025 Trade AI Inc. All rights reserved.</p>
 </div>
