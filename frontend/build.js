@@ -126,7 +126,7 @@ const LoginForm = () => {
 const App = () => {
   return React.createElement('div', { className: 'app-container' }, [
     React.createElement('div', { className: 'header' }, [
-      React.createElement('img', { src: '/images/logo.svg', alt: 'Trade AI Logo', className: 'logo' }),
+      React.createElement('img', { src: '/images/modern-logo.svg', alt: 'Trade AI Logo', className: 'logo' }),
       React.createElement('div', { className: 'header-text' }, [
         React.createElement('h1', null, 'Trade AI Platform'),
         React.createElement('p', null, 'Enterprise-grade FMCG Trade Spend Management with AI-Powered Analytics')
@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="/images/logo.svg" />
+    <link rel="icon" href="/images/modern-logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="Trade AI Platform" />

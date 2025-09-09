@@ -93,7 +93,7 @@ const Layout = ({ children, user, onLogout }) => {
     <div>
       <Toolbar sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <img src="/images/animated-logo.svg" alt="Trade AI Logo" style={{ width: 40, marginRight: 8 }} />
+          <img src="/public/images/logo.svg" alt="Trade AI Logo" style={{ width: 40, marginRight: 8 }} />
           <Typography variant="h6" noWrap component="div">
             Trade AI
           </Typography>
@@ -134,7 +134,7 @@ const Layout = ({ children, user, onLogout }) => {
       <Divider />
       <Box sx={{ p: 2, mt: 'auto' }}>
         <Typography variant="body2" color="text.secondary">
-          Trade AI Platform v1.2.0
+          Trade AI Platform v2.0.0
         </Typography>
         <Typography variant="caption" color="text.secondary">
           © 2025 Trade AI Inc.
