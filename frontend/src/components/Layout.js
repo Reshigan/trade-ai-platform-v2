@@ -134,7 +134,7 @@ const Layout = ({ children, user, onLogout }) => {
       <Divider />
       <Box sx={{ p: 2, mt: 'auto' }}>
         <Typography variant="body2" color="text.secondary">
-          Trade AI Platform v2.1.0
+          Trade AI Platform v2.1.2
         </Typography>
         <Typography variant="caption" color="text.secondary">
           © 2025 Trade AI Inc.
