@@ -1,7 +1,7 @@
-# Trade AI Final - Production-Ready FMCG Trade Spend Management System
+# Trade AI Platform v2.1.0 - Enterprise FMCG Trade Spend Management System
 
 <div align="center">
-  <img src="frontend/public/images/logo.svg" alt="Trade AI Logo" width="200"/>
+  <img src="frontend/public/images/modern-logo-new.svg" alt="Trade AI Logo" width="200"/>
   
   **Enterprise-grade FMCG Trade Spend Management with AI-Powered Analytics**
   
@@ -11,7 +11,7 @@
   [![MongoDB](https://img.shields.io/badge/mongodb-%3E%3D5.0-green.svg)](https://www.mongodb.com)
   [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
   [![Test Coverage](https://img.shields.io/badge/coverage-92%25-brightgreen.svg)]()
-  [![Version](https://img.shields.io/badge/version-v1.1.5-blue.svg)]()
+  [![Version](https://img.shields.io/badge/version-v2.1.0-blue.svg)]()
 </div>
 
 ## 🎨 Modern Interface
@@ -19,10 +19,11 @@
 Trade AI features a modern, animated logo with a sleek design that represents the intersection of AI technology and trading analytics. The logo includes:
 
 - Animated trading chart line showing market movements
-- AI brain icon representing intelligent decision-making
-- Gradient color scheme with glowing effects
+- AI brain network visualization representing intelligent decision-making
+- Vibrant color scheme with blue gradient and accent colors
 - Responsive design that works across all devices
 - Animated pulse effect to indicate real-time processing
+- Star icon representing key performance indicators and achievements
 
 ## 🚀 Overview
 
@@ -41,6 +42,9 @@ Trade AI is a comprehensive trade spend management platform designed specificall
 - **🔍 Advanced AI Prediction Models**: Ensemble methods with feature importance analysis for accurate forecasting
 - **📊 Real-time Monitoring**: Comprehensive system monitoring with alerts and performance tracking
 - **🔒 Enhanced Security**: Robust security measures with audit logging and protection against common vulnerabilities
+- **💬 AI Assistant**: Contextual AI chatbot integrated into every feature for instant help and guidance
+- **🚶 Walkthrough Training**: Interactive guided tours for new users to learn the platform
+- **💱 Multi-Currency Support**: Configure different currencies per company with 10 major currencies supported
 
 ## 🏗️ Architecture
 
@@ -193,15 +197,29 @@ The system includes demo users for testing:
 | KAM | kam@tradeai.com | password123 |
 
 The application will be available at:
-- Frontend: http://localhost:3001
-- Backend API: http://localhost:5001
-- API Docs: http://localhost:5001/api/docs
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:5000
+- API Docs: http://localhost:5000/api/docs
 - AI Services: http://localhost:8000
-- Monitoring Dashboard: http://localhost:8081
+- Monitoring Dashboard: http://localhost:8080
 
 ### 📱 Current Mode
 
 The system is running in **Mock Mode** for easy development and testing without requiring MongoDB or Redis setup. All data is simulated and perfect for demos.
+
+### 💱 Currency Support
+
+The platform supports multiple currencies per company, including:
+- USD (US Dollar)
+- EUR (Euro)
+- GBP (British Pound)
+- JPY (Japanese Yen)
+- CAD (Canadian Dollar)
+- AUD (Australian Dollar)
+- CHF (Swiss Franc)
+- CNY (Chinese Yuan)
+- INR (Indian Rupee)
+- BRL (Brazilian Real)
 
 ## 🔧 Configuration
 
@@ -394,5 +412,6 @@ For support, email support@trade-ai.com or join our Slack channel.
 ---
 
 <div align="center">
-  <strong>Trade AI - Transforming Trade Spend Management with Intelligence</strong>
+  <strong>Trade AI Platform v2.1.0 - Transforming Trade Spend Management with Intelligence</strong>
+  <p>© 2025 Trade AI Inc. All rights reserved.</p>
 </div>

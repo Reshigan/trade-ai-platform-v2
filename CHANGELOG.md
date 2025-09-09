@@ -1,5 +1,47 @@
 # Changelog
 
+## [2.1.0] - 2025-09-05
+
+### 🚀 Major Update
+
+This release introduces several major enhancements to the Trade AI Platform, including a modernized logo, AI assistant integration, walkthrough training, and multi-currency support.
+
+### ✨ New Features
+- **AI Assistant**: Contextual AI chatbot integrated into every feature for instant help
+- **Walkthrough Training**: Interactive guided tours for new users to learn the platform
+- **Multi-Currency Support**: Configure different currencies per company with 10 major currencies
+- **Modern Logo**: Redesigned logo with brain network visualization and animated elements
+- **Simplified Login**: Improved login experience with cleaner interface
+
+### 🛠️ Technical Improvements
+- Improved Docker build reliability
+- Added MongoDB initialization and health checks
+- Fixed port conflicts in Docker setup
+- Enhanced frontend with Material UI components
+- Updated platform version to v2.1.0
+
+### 🐛 Bug Fixes
+- Resolved blank frontend issue
+- Fixed Docker build issues
+- Added proper health checks for all services
+- Resolved port conflicts between services
+- Fixed currency selection in company settings
+
+## [2.0.0] - 2025-08-15
+
+### 🎉 Major Release
+
+Complete rewrite of the Trade AI Platform with modern architecture, improved UI, and enhanced AI capabilities.
+
+### ✨ Features
+- Complete React frontend with Material UI
+- MongoDB database integration
+- AI prediction models for sales forecasting
+- Real-time monitoring system
+- Enhanced security features
+- Comprehensive API documentation
+- Docker containerization for all services
+
 ## [1.0.0-final] - 2025-01-05
 
 ### 🎉 Initial Production Release

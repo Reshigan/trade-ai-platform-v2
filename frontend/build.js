@@ -54,8 +54,53 @@ const LoginForm = () => {
     setTimeout(() => {
       // Demo credentials
       if ((email === 'admin@tradeai.com' || email === 'manager@tradeai.com' || email === 'kam@tradeai.com') && password === 'password123') {
-        alert('Login successful! Redirecting to dashboard...');
-        // In a real app, we would redirect to the dashboard
+        // Create success message element
+        const successDiv = document.createElement('div');
+        successDiv.style.display = 'flex';
+        successDiv.style.flexDirection = 'column';
+        successDiv.style.justifyContent = 'center';
+        successDiv.style.alignItems = 'center';
+        successDiv.style.height = '100vh';
+        successDiv.style.backgroundColor = '#f5f5f5';
+        
+        const contentDiv = document.createElement('div');
+        contentDiv.style.width = '400px';
+        contentDiv.style.padding = '40px';
+        contentDiv.style.backgroundColor = 'white';
+        contentDiv.style.borderRadius = '8px';
+        contentDiv.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+        contentDiv.style.textAlign = 'center';
+        
+        const logo = document.createElement('img');
+        logo.src = '/images/animated-logo-new.svg';
+        logo.alt = 'Trade AI Logo';
+        logo.style.width = '100px';
+        logo.style.marginBottom = '16px';
+        
+        const heading = document.createElement('h1');
+        heading.textContent = 'Login Successful';
+        heading.style.fontSize = '24px';
+        heading.style.margin = '0 0 16px 0';
+        
+        const welcomeText = document.createElement('p');
+        welcomeText.textContent = 'Welcome to the Trade AI Platform!';
+        welcomeText.style.color = '#666';
+        welcomeText.style.marginBottom = '24px';
+        
+        const infoText = document.createElement('p');
+        infoText.textContent = 'This is a simplified implementation. The full React application would load here.';
+        infoText.style.color = '#666';
+        
+        contentDiv.appendChild(logo);
+        contentDiv.appendChild(heading);
+        contentDiv.appendChild(welcomeText);
+        contentDiv.appendChild(infoText);
+        successDiv.appendChild(contentDiv);
+        
+        // Clear the root and append the success message
+        const root = document.getElementById('root');
+        root.innerHTML = '';
+        root.appendChild(successDiv);
       } else {
         setError('Invalid credentials. Try admin@tradeai.com / password123');
       }
@@ -126,7 +171,7 @@ const LoginForm = () => {
 const App = () => {
   return React.createElement('div', { className: 'app-container' }, [
     React.createElement('div', { className: 'header' }, [
-      React.createElement('img', { src: '/images/modern-logo.svg', alt: 'Trade AI Logo', className: 'logo' }),
+      React.createElement('img', { src: '/images/modern-logo-new.svg', alt: 'Trade AI Logo', className: 'logo' }),
       React.createElement('div', { className: 'header-text' }, [
         React.createElement('h1', null, 'Trade AI Platform'),
         React.createElement('p', null, 'Enterprise-grade FMCG Trade Spend Management with AI-Powered Analytics')
@@ -172,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="/images/modern-logo.svg" />
+    <link rel="icon" href="/images/favicon-new.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="Trade AI Platform" />
