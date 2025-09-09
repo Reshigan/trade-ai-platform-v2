@@ -103,6 +103,15 @@ if (db.users.countDocuments() === 0) {
       contact_phone: '+1-555-456-7890',
       created_at: new Date(),
       updated_at: new Date()
+    },
+    {
+      name: 'Test Company',
+      type: 'Test',
+      contact_name: 'Test User',
+      contact_email: 'test@example.com',
+      contact_phone: '+1-555-TEST-123',
+      created_at: new Date(),
+      updated_at: new Date()
     }
   ]).insertedIds;
 
@@ -168,6 +177,16 @@ if (db.users.countDocuments() === 0) {
       status: 'approved',
       created_at: new Date(),
       updated_at: new Date()
+    },
+    {
+      year: 2025,
+      customer_id: customerIds[3],
+      total_amount: 250000,
+      allocated_amount: 100000,
+      remaining_amount: 150000,
+      status: 'approved',
+      created_at: new Date(),
+      updated_at: new Date()
     }
   ]).insertedIds;
 
@@ -197,6 +216,15 @@ if (db.users.countDocuments() === 0) {
       type: 'display',
       description: 'End Cap Display',
       status: 'pending',
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      budget_id: budgetIds[3],
+      amount: 30000,
+      type: 'promotion',
+      description: 'Test Promotion',
+      status: 'approved',
       created_at: new Date(),
       updated_at: new Date()
     }
@@ -240,6 +268,19 @@ if (db.users.countDocuments() === 0) {
       discount_value: 20,
       budget: 100000,
       status: 'planned',
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      name: 'Test Promotion',
+      customer_id: customerIds[3],
+      product_ids: [productIds[0], productIds[1], productIds[2]],
+      start_date: new Date('2025-09-01'),
+      end_date: new Date('2025-09-30'),
+      discount_type: 'percentage',
+      discount_value: 10,
+      budget: 30000,
+      status: 'active',
       created_at: new Date(),
       updated_at: new Date()
     }
