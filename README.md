@@ -193,9 +193,9 @@ The system includes demo users for testing:
 | KAM | kam@tradeai.com | password123 |
 
 The application will be available at:
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:5000
-- API Docs: http://localhost:5000/api/docs
+- Frontend: http://localhost:3001
+- Backend API: http://localhost:5001
+- API Docs: http://localhost:5001/api/docs
 - AI Services: http://localhost:8000
 - Monitoring Dashboard: http://localhost:8080
 
