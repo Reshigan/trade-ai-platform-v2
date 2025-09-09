@@ -10,7 +10,7 @@ import {
   MenuItem,
   CircularProgress
 } from '@mui/material';
-import { activityGridService } from '../../services/api';
+import activityGridService from '../../services/api/activityGridService';
 import { useSnackbar } from 'notistack';
 import { format, parseISO } from 'date-fns';
 import { enZA } from 'date-fns/locale';

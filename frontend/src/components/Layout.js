@@ -42,6 +42,7 @@ import {
 } from '@mui/icons-material';
 
 import { AIAssistant, Walkthrough } from './common';
+import logo from '../assets/new_logo.svg';
 
 const drawerWidth = 240;
 
@@ -121,7 +122,7 @@ const Layout = ({ children, user, onLogout }) => {
     <div>
       <Toolbar sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <img src="/images/modern-logo-bold-new.svg" alt="Trade AI Logo" style={{ width: 40, marginRight: 8 }} />
+          <img src={logo} alt="Trade AI Logo" style={{ width: 40, marginRight: 8 }} />
           <Typography variant="h6" noWrap component="div">
             Trade AI
           </Typography>
