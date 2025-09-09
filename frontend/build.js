@@ -43,6 +43,7 @@ const LoginForm = () => {
   const [password, setPassword] = React.useState('');
   const [error, setError] = React.useState('');
   const [loading, setLoading] = React.useState(false);
+  const [showPassword, setShowPassword] = React.useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -62,31 +63,46 @@ const LoginForm = () => {
     }, 1000);
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return React.createElement('div', { className: 'login-container' }, [
     React.createElement('h2', null, 'Login to Trade AI Platform'),
     error && React.createElement('div', { className: 'error-message' }, error),
     React.createElement('form', { onSubmit: handleSubmit }, [
       React.createElement('div', { className: 'form-group' }, [
         React.createElement('label', { htmlFor: 'email' }, 'Email'),
-        React.createElement('input', { 
-          type: 'email', 
-          id: 'email', 
-          value: email, 
-          onChange: (e) => setEmail(e.target.value),
-          required: true,
-          placeholder: 'Enter your email'
-        })
+        React.createElement('div', { className: 'input-with-icon' }, [
+          React.createElement('span', { className: 'input-icon' }, '✉️'),
+          React.createElement('input', { 
+            type: 'email', 
+            id: 'email', 
+            value: email, 
+            onChange: (e) => setEmail(e.target.value),
+            required: true,
+            placeholder: 'Enter your email'
+          })
+        ])
       ]),
       React.createElement('div', { className: 'form-group' }, [
         React.createElement('label', { htmlFor: 'password' }, 'Password'),
-        React.createElement('input', { 
-          type: 'password', 
-          id: 'password', 
-          value: password, 
-          onChange: (e) => setPassword(e.target.value),
-          required: true,
-          placeholder: 'Enter your password'
-        })
+        React.createElement('div', { className: 'input-with-icon' }, [
+          React.createElement('span', { className: 'input-icon' }, '🔒'),
+          React.createElement('input', { 
+            type: showPassword ? 'text' : 'password', 
+            id: 'password', 
+            value: password, 
+            onChange: (e) => setPassword(e.target.value),
+            required: true,
+            placeholder: 'Enter your password'
+          }),
+          React.createElement('button', {
+            type: 'button',
+            className: 'toggle-password',
+            onClick: togglePasswordVisibility
+          }, showPassword ? '👁️' : '👁️‍🗨️')
+        ])
       ]),
       React.createElement('div', { className: 'form-group' }, [
         React.createElement('button', { 
@@ -233,12 +249,37 @@ document.addEventListener('DOMContentLoaded', () => {
         margin-bottom: 0.5rem;
         font-weight: 500;
       }
+      .input-with-icon {
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+      .input-icon {
+        position: absolute;
+        left: 10px;
+        font-size: 1rem;
+      }
+      .toggle-password {
+        position: absolute;
+        right: 10px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+      }
       .form-group input {
         width: 100%;
         padding: 0.75rem;
+        padding-left: 2.5rem;
         border: 1px solid #d1d5db;
         border-radius: 4px;
         font-size: 1rem;
+        transition: border-color 0.2s, box-shadow 0.2s;
+      }
+      .form-group input:focus {
+        outline: none;
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
       }
       .login-button {
         width: 100%;
@@ -250,14 +291,54 @@ document.addEventListener('DOMContentLoaded', () => {
         font-size: 1rem;
         font-weight: 500;
         cursor: pointer;
-        transition: background-color 0.2s;
+        transition: all 0.2s;
+        position: relative;
+        overflow: hidden;
       }
       .login-button:hover {
         background-color: #1d4ed8;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .login-button:active {
+        transform: translateY(0);
+        box-shadow: none;
       }
       .login-button:disabled {
         background-color: #93c5fd;
         cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
+      .login-button::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 5px;
+        height: 5px;
+        background: rgba(255, 255, 255, 0.5);
+        opacity: 0;
+        border-radius: 100%;
+        transform: scale(1, 1) translate(-50%);
+        transform-origin: 50% 50%;
+      }
+      .login-button:focus:not(:active)::after {
+        animation: ripple 1s ease-out;
+      }
+      @keyframes ripple {
+        0% {
+          transform: scale(0, 0);
+          opacity: 0.5;
+        }
+        20% {
+          transform: scale(25, 25);
+          opacity: 0.3;
+        }
+        100% {
+          opacity: 0;
+          transform: scale(40, 40);
+        }
       }
       .error-message {
         background-color: #fee2e2;
