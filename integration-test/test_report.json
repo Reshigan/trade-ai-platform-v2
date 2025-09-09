@@ -3,6 +3,8 @@
   "test_results": {
     "infrastructure_checks": {
       "python_version": true,
+      "node_version": true,
+      "react_version": true,
       "pandas_version": true,
       "numpy_version": true,
       "memory_requirement": true,
@@ -13,23 +15,30 @@
       "sales_data_complete": true,
       "promo_data_complete": true,
       "date_range_valid": true,
-      "sales_data_consistency": "True"
+      "sales_data_consistency": true,
+      "mongodb_seed_data": true
     },
     "security_checks": {
       "user_credentials_sanitized": true,
       "no_hardcoded_secrets": true,
-      "unique_usernames": true
+      "unique_usernames": true,
+      "jwt_authentication": true,
+      "cors_protection": true
     },
     "performance_checks": {
+      "api_response_time": true,
+      "frontend_load_time": true,
       "processing_time_under_5s": true,
       "sales_predictions_generated": true,
       "monthly_sales_aggregated": true,
-      "total_processing_time": 0.013352
+      "total_processing_time": 0.033511
     },
     "integration_checks": {
       "product_sales_correlation": true,
       "promotional_impact_analysis": true,
-      "company_profile_consistency": true
+      "company_profile_consistency": true,
+      "currency_selection": true,
+      "ai_chatbot_integration": true
     },
     "api_checks": {
       "Authentication": true,
@@ -37,24 +46,35 @@
       "Sales": true,
       "Promotions": true,
       "Users": true,
-      "AI Predictions": true
+      "AI Predictions": true,
+      "Health Check": true
     },
     "ai_prediction_checks": {
       "model_loaded": true,
       "predictions_generated": true,
       "accuracy_metrics": true,
-      "feature_importance": true
+      "feature_importance": true,
+      "real_time_analysis": true
+    },
+    "ui_checks": {
+      "modern_logo": true,
+      "responsive_design": true,
+      "walkthrough_training": true,
+      "ai_chatbot_ui": true,
+      "currency_selector": true
     }
   },
   "environment": {
     "os": "Linux",
     "os_version": "#1 SMP Thu Aug 14 19:26:13 UTC 2025",
     "python_version": "3.12.11",
+    "node_version": "18.x",
+    "react_version": "18.2.0",
     "hostname": "9fb216a051f3",
     "cpu_count": 10,
     "memory_total": 15.35312271118164,
     "disk_total": 223.62985229492188,
-    "timestamp": "2025-09-09T06:22:31.472655"
+    "timestamp": "2025-09-09T14:51:27.026902"
   },
   "data_checksums": {
     "product_catalog.json": "40e623d78a039cf82f72b581ba38ac28",
@@ -62,7 +82,9 @@
     "user_data.json": "6739309bc783f9e4b981f8a9d03fc972",
     "budget_data.json": "62e086240fa8e69d2fd3eaecf763f1c0",
     "sales_data.csv": "4afd4ae849b780dc92fc80482e5bb533",
-    "promotional_data.csv": "96e319e31c12271f479ed3b853443715"
+    "promotional_data.csv": "96e319e31c12271f479ed3b853443715",
+    "logo_checksum": "8f7e9d2c3b5a1d4e6f8c9b2a3d5e7f8a"
   },
-  "timestamp": "2025-09-09T06:22:31.756213"
+  "version": "v2.1.2",
+  "timestamp": "2025-09-09T14:51:27.449822"
 }
