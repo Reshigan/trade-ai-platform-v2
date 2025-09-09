@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, useTheme } from '@mui/material';
+import { Box, useTheme, Divider } from '@mui/material';
 import { 
   AreaChart, 
   Area, 

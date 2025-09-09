@@ -28,6 +28,7 @@ import {
   Email as EmailIcon,
   Phone as PhoneIcon,
   LocationOn as LocationIcon,
+  Add as AddIcon,
   Business as BusinessIcon,
   Notes as NotesIcon,
   AttachMoney as MoneyIcon

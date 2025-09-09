@@ -10,7 +10,8 @@ import {
   Legend, 
   ResponsiveContainer,
   ReferenceLine,
-  ReferenceArea
+  ReferenceArea,
+  Area
 } from 'recharts';
 
 // Mock data for development

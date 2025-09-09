@@ -301,7 +301,7 @@ const PromotionDetail = () => {
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                    <Description sx={{ mr: 1, color: 'text.secondary' }} />
+                    <DescriptionIcon sx={{ mr: 1, color: 'text.secondary' }} />
                     <Typography variant="body2" color="text.secondary">
                       Name
                     </Typography>
