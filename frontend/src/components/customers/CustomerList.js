@@ -25,112 +25,154 @@ import { PageHeader, DataTable, StatusChip } from '../common';
 import { customerService } from '../../services/api';
 import CustomerForm from './CustomerForm';
 
-// Mock data for development
+// Mock data for development - South African retail channels
 const mockCustomers = [
   {
     id: '1',
-    name: 'Walmart',
-    code: 'WMT',
+    name: 'Shoprite Holdings',
+    code: 'SHP',
     type: 'retailer',
     status: 'active',
     contact: {
-      name: 'John Smith',
-      email: 'john.smith@walmart.com',
-      phone: '555-123-4567'
+      name: 'Pieter Engelbrecht',
+      email: 'p.engelbrecht@shoprite.co.za',
+      phone: '+27-21-980-4000'
     },
     address: {
-      street: '702 SW 8th St',
-      city: 'Bentonville',
-      state: 'AR',
-      zip: '72716',
-      country: 'USA'
+      street: 'Cnr William Dabs and Old Paarl Roads',
+      city: 'Cape Town',
+      state: 'Western Cape',
+      zip: '7560',
+      country: 'South Africa'
     },
     created_at: new Date('2024-01-15'),
     updated_at: new Date('2025-03-10')
   },
   {
     id: '2',
-    name: 'Target',
-    code: 'TGT',
+    name: 'Pick n Pay',
+    code: 'PNP',
     type: 'retailer',
     status: 'active',
     contact: {
-      name: 'Jane Doe',
-      email: 'jane.doe@target.com',
-      phone: '555-987-6543'
+      name: 'Richard Brasher',
+      email: 'r.brasher@pnp.co.za',
+      phone: '+27-21-658-1000'
     },
     address: {
-      street: '1000 Nicollet Mall',
-      city: 'Minneapolis',
-      state: 'MN',
-      zip: '55403',
-      country: 'USA'
+      street: '101 Rosmead Avenue',
+      city: 'Cape Town',
+      state: 'Western Cape',
+      zip: '7708',
+      country: 'South Africa'
     },
     created_at: new Date('2024-02-20'),
     updated_at: new Date('2025-04-15')
   },
   {
     id: '3',
-    name: 'Costco',
-    code: 'COST',
+    name: 'SPAR Group',
+    code: 'SPAR',
     type: 'wholesaler',
     status: 'active',
     contact: {
-      name: 'Robert Johnson',
-      email: 'robert.johnson@costco.com',
-      phone: '555-456-7890'
+      name: 'Brett Botten',
+      email: 'b.botten@spar.co.za',
+      phone: '+27-31-719-3000'
     },
     address: {
-      street: '999 Lake Dr',
-      city: 'Issaquah',
-      state: 'WA',
-      zip: '98027',
-      country: 'USA'
+      street: '22 Chancery Lane',
+      city: 'Durban',
+      state: 'KwaZulu-Natal',
+      zip: '4001',
+      country: 'South Africa'
     },
     created_at: new Date('2024-03-05'),
     updated_at: new Date('2025-05-20')
   },
   {
     id: '4',
-    name: 'Test Company',
-    code: 'TEST',
-    type: 'distributor',
+    name: 'Woolworths Holdings',
+    code: 'WHL',
+    type: 'retailer',
     status: 'active',
     contact: {
-      name: 'Test User',
-      email: 'test.user@testcompany.com',
-      phone: '555-111-2222'
+      name: 'Roy Bagattini',
+      email: 'r.bagattini@woolworths.co.za',
+      phone: '+27-21-407-9111'
     },
     address: {
-      street: '123 Test St',
-      city: 'Testville',
-      state: 'TS',
-      zip: '12345',
-      country: 'USA'
+      street: '93 Longmarket Street',
+      city: 'Cape Town',
+      state: 'Western Cape',
+      zip: '8001',
+      country: 'South Africa'
     },
-    created_at: new Date('2025-08-01'),
+    created_at: new Date('2025-01-15'),
     updated_at: new Date('2025-08-01')
   },
   {
     id: '5',
-    name: 'Kroger',
-    code: 'KR',
+    name: 'Massmart (Game, Makro)',
+    code: 'MSM',
     type: 'retailer',
-    status: 'inactive',
+    status: 'active',
     contact: {
-      name: 'Michael Brown',
-      email: 'michael.brown@kroger.com',
-      phone: '555-222-3333'
+      name: 'Mitchell Slape',
+      email: 'm.slape@massmart.co.za',
+      phone: '+27-11-517-0000'
     },
     address: {
-      street: '1014 Vine St',
-      city: 'Cincinnati',
-      state: 'OH',
-      zip: '45202',
-      country: 'USA'
+      street: '16 Peltier Drive',
+      city: 'Johannesburg',
+      state: 'Gauteng',
+      zip: '2191',
+      country: 'South Africa'
     },
     created_at: new Date('2024-04-10'),
-    updated_at: new Date('2025-01-05')
+    updated_at: new Date('2025-06-05')
+  },
+  {
+    id: '6',
+    name: 'Boxer Superstores',
+    code: 'BOX',
+    type: 'retailer',
+    status: 'active',
+    contact: {
+      name: 'Marek Masojada',
+      email: 'm.masojada@boxer.co.za',
+      phone: '+27-31-275-9600'
+    },
+    address: {
+      street: '21 The Boulevard',
+      city: 'Durban',
+      state: 'KwaZulu-Natal',
+      zip: '4051',
+      country: 'South Africa'
+    },
+    created_at: new Date('2024-05-12'),
+    updated_at: new Date('2025-07-18')
+  },
+  {
+    id: '7',
+    name: 'Diplomat South Africa',
+    code: 'DSA',
+    type: 'distributor',
+    status: 'active',
+    contact: {
+      name: 'Sarah Nkosi',
+      email: 's.nkosi@diplomat.co.za',
+      phone: '+27-11-234-5678'
+    },
+    address: {
+      street: '45 Commerce Crescent',
+      city: 'Johannesburg',
+      state: 'Gauteng',
+      zip: '2157',
+      country: 'South Africa'
+    },
+    created_at: new Date('2024-01-01'),
+    updated_at: new Date('2025-08-15')
   }
 ];
 

@@ -57,7 +57,7 @@ const Login = ({ onLogin }) => {
       <Grid container spacing={2} sx={{ height: '80vh' }}>
         <Grid item xs={12} md={6} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 4 }}>
-            <img src="/images/animated-logo-new.svg" alt="Trade AI Logo" style={{ width: 120, marginBottom: 16 }} />
+            <img src="/images/modern-logo-bold-new.svg" alt="Trade AI Logo" style={{ width: 120, marginBottom: 16 }} />
             <Typography variant="h4" component="h1" gutterBottom>
               Trade AI Platform
             </Typography>

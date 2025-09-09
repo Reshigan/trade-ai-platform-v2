@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="100" cy="100" r="95" fill="#1A237E" />
+  <circle cx="100" cy="100" r="85" fill="#283593" />
+  
+  <!-- Inner Gradient -->
+  <circle cx="100" cy="100" r="75" fill="url(#paint0_radial)" />
+  
+  <!-- Trade AI Text -->
+  <path d="M45 70 H95 M70 70 V120" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M105 70 H145 M105 95 H135 M105 120 H145" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+  
+  <!-- AI Symbol -->
+  <path d="M60 140 L70 130 L80 140" stroke="#4CAF50" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M90 140 L100 130 L110 140" stroke="#FFC107" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M120 140 L130 130 L140 140" stroke="#F44336" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+  
+  <!-- Data Points -->
+  <circle cx="50" cy="100" r="4" fill="#4CAF50" />
+  <circle cx="60" cy="90" r="4" fill="#FFC107" />
+  <circle cx="70" cy="110" r="4" fill="#F44336" />
+  <circle cx="130" cy="80" r="4" fill="#4CAF50" />
+  <circle cx="140" cy="100" r="4" fill="#FFC107" />
+  <circle cx="150" cy="90" r="4" fill="#F44336" />
+  
+  <!-- Connecting Lines -->
+  <path d="M50 100 L60 90 L70 110" stroke="#FFFFFF" stroke-width="2" stroke-opacity="0.6" />
+  <path d="M130 80 L140 100 L150 90" stroke="#FFFFFF" stroke-width="2" stroke-opacity="0.6" />
+  
+  <!-- Gradient Definitions -->
+  <defs>
+    <radialGradient id="paint0_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(100 100) rotate(90) scale(75)">
+      <stop offset="0" stop-color="#3949AB" />
+      <stop offset="1" stop-color="#1A237E" />
+    </radialGradient>
+  </defs>
+</svg>

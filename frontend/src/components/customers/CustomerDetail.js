@@ -39,44 +39,44 @@ import { PageHeader, StatusChip, ConfirmDialog } from '../common';
 import { customerService, budgetService, promotionService, tradeSpendService } from '../../services/api';
 import CustomerForm from './CustomerForm';
 
-// Mock data for development
+// Mock data for development - South African customer
 const mockCustomer = {
-  id: '1',
-  name: 'Walmart',
-  code: 'WMT',
-  type: 'retailer',
+  id: '7',
+  name: 'Diplomat South Africa',
+  code: 'DSA',
+  type: 'distributor',
   status: 'active',
   contact: {
-    name: 'John Smith',
-    email: 'john.smith@walmart.com',
-    phone: '555-123-4567'
+    name: 'Sarah Nkosi',
+    email: 's.nkosi@diplomat.co.za',
+    phone: '+27-11-234-5678'
   },
   address: {
-    street: '702 SW 8th St',
-    city: 'Bentonville',
-    state: 'AR',
-    zip: '72716',
-    country: 'USA'
+    street: '45 Commerce Crescent',
+    city: 'Johannesburg',
+    state: 'Gauteng',
+    zip: '2157',
+    country: 'South Africa'
   },
-  notes: 'Major retail partner with nationwide distribution. Quarterly business reviews required.',
-  created_at: new Date('2024-01-15'),
-  updated_at: new Date('2025-03-10')
+  notes: 'Diplomat South Africa is a key distributor for our products across the South African market. They have strong relationships with major retailers and excellent logistics capabilities.',
+  created_at: new Date('2024-01-01'),
+  updated_at: new Date('2025-08-15')
 };
 
 const mockBudgets = [
   {
     id: '1',
     year: 2025,
-    total_amount: 1000000,
-    allocated_amount: 750000,
-    remaining_amount: 250000,
+    total_amount: 15000000,
+    allocated_amount: 11250000,
+    remaining_amount: 3750000,
     status: 'approved'
   },
   {
     id: '2',
     year: 2024,
-    total_amount: 800000,
-    allocated_amount: 800000,
+    total_amount: 12000000,
+    allocated_amount: 12000000,
     remaining_amount: 0,
     status: 'completed'
   }
@@ -85,35 +85,65 @@ const mockBudgets = [
 const mockPromotions = [
   {
     id: '1',
-    name: 'Summer Sale',
-    budget: 50000,
+    name: 'Winter Promotion',
+    budget: 750000,
     status: 'active',
     start_date: new Date('2025-06-01'),
-    end_date: new Date('2025-06-30')
+    end_date: new Date('2025-07-31')
   },
   {
     id: '2',
-    name: 'Spring Clearance',
-    budget: 40000,
+    name: 'Heritage Day Special',
+    budget: 600000,
+    status: 'planned',
+    start_date: new Date('2025-09-01'),
+    end_date: new Date('2025-09-30')
+  },
+  {
+    id: '3',
+    name: 'Summer Launch',
+    budget: 900000,
+    status: 'planned',
+    start_date: new Date('2025-11-01'),
+    end_date: new Date('2025-12-31')
+  },
+  {
+    id: '4',
+    name: 'Easter Campaign',
+    budget: 500000,
     status: 'completed',
-    start_date: new Date('2025-03-01'),
-    end_date: new Date('2025-03-31')
+    start_date: new Date('2025-03-15'),
+    end_date: new Date('2025-04-15')
   }
 ];
 
 const mockTradeSpends = [
   {
     id: '1',
-    description: 'End Cap Display',
+    description: 'Shoprite End Cap Display',
     type: 'display',
-    amount: 15000,
+    amount: 225000,
     status: 'approved'
   },
   {
     id: '2',
-    description: 'Featured Product Listing',
+    description: 'Pick n Pay Featured Product Listing',
     type: 'listing',
-    amount: 20000,
+    amount: 300000,
+    status: 'approved'
+  },
+  {
+    id: '3',
+    description: 'Woolworths Premium Placement',
+    type: 'placement',
+    amount: 450000,
+    status: 'pending'
+  },
+  {
+    id: '4',
+    description: 'SPAR Group Promotional Bundle',
+    type: 'bundle',
+    amount: 375000,
     status: 'approved'
   }
 ];
@@ -252,9 +282,14 @@ const CustomerDetail = () => {
     }
   };
 
-  // Format currency
+  // Format currency - South African Rand
   const formatCurrency = (amount) => {
-    return `$${amount.toLocaleString()}`;
+    return new Intl.NumberFormat('en-ZA', {
+      style: 'currency',
+      currency: 'ZAR',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    }).format(amount);
   };
 
   // Format date

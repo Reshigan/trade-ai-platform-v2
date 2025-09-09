@@ -6,6 +6,7 @@ import promotionService from './promotionService';
 import customerService from './customerService';
 import productService from './productService';
 import analyticsService from './analyticsService';
+import activityGridService from './activityGridService';
 
 export {
   apiClient,
@@ -15,5 +16,6 @@ export {
   promotionService,
   customerService,
   productService,
-  analyticsService
+  analyticsService,
+  activityGridService
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import {
   AppBar,
@@ -37,8 +37,11 @@ import {
   Logout,
   ChevronLeft,
   Business as BusinessIcon,
-  Description as ReportIcon
+  Description as ReportIcon,
+  CalendarMonth as ActivityGridIcon
 } from '@mui/icons-material';
+
+import { AIAssistant, Walkthrough } from './common';
 
 const drawerWidth = 240;
 
@@ -47,6 +50,7 @@ const menuItems = [
   { text: 'Budgets', icon: <BudgetIcon />, path: '/budgets' },
   { text: 'Trade Spends', icon: <TradeSpendIcon />, path: '/trade-spends' },
   { text: 'Promotions', icon: <PromotionIcon />, path: '/promotions' },
+  { text: 'Activity Grid', icon: <ActivityGridIcon />, path: '/activity-grid' },
   { text: 'Customers', icon: <CustomerIcon />, path: '/customers' },
   { text: 'Products', icon: <ProductIcon />, path: '/products' },
   { text: 'Companies', icon: <BusinessIcon />, path: '/companies' },
@@ -59,10 +63,34 @@ const Layout = ({ children, user, onLogout }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [anchorElNotifications, setAnchorElNotifications] = useState(null);
+  const [walkthroughOpen, setWalkthroughOpen] = useState(false);
+  const [walkthroughFeature, setWalkthroughFeature] = useState('');
   
   const location = useLocation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  
+  // Check if walkthrough should be shown based on current path
+  useEffect(() => {
+    const path = location.pathname;
+    let feature = '';
+    
+    if (path === '/dashboard') feature = 'dashboard';
+    else if (path.includes('/budgets')) feature = 'budgets';
+    else if (path.includes('/trade-spends')) feature = 'trade-spends';
+    else if (path.includes('/promotions')) feature = 'promotions';
+    else if (path.includes('/activity-grid')) feature = 'activity-grid';
+    else if (path.includes('/customers')) feature = 'customers';
+    else if (path.includes('/products')) feature = 'products';
+    else if (path.includes('/analytics')) feature = 'analytics';
+    else if (path.includes('/settings')) feature = 'settings';
+    
+    // Check if user has seen this walkthrough before
+    if (feature && !localStorage.getItem(`walkthrough_${feature}`)) {
+      setWalkthroughFeature(feature);
+      setWalkthroughOpen(true);
+    }
+  }, [location.pathname]);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -93,7 +121,7 @@ const Layout = ({ children, user, onLogout }) => {
     <div>
       <Toolbar sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <img src="/images/modern-logo-new.svg" alt="Trade AI Logo" style={{ width: 40, marginRight: 8 }} />
+          <img src="/images/modern-logo-bold-new.svg" alt="Trade AI Logo" style={{ width: 40, marginRight: 8 }} />
           <Typography variant="h6" noWrap component="div">
             Trade AI
           </Typography>
@@ -134,7 +162,7 @@ const Layout = ({ children, user, onLogout }) => {
       <Divider />
       <Box sx={{ p: 2, mt: 'auto' }}>
         <Typography variant="body2" color="text.secondary">
-          Trade AI Platform v2.1.2
+          Trade AI Platform v2.1.3
         </Typography>
         <Typography variant="caption" color="text.secondary">
           © 2025 Trade AI Inc.
@@ -302,6 +330,17 @@ const Layout = ({ children, user, onLogout }) => {
         <Toolbar />
         {children}
       </Box>
+      
+      {/* AI Assistant */}
+      <AIAssistant context={walkthroughFeature || location.pathname.split('/')[1] || 'dashboard'} />
+      
+      {/* Walkthrough */}
+      <Walkthrough 
+        open={walkthroughOpen} 
+        onClose={() => setWalkthroughOpen(false)} 
+        feature={walkthroughFeature}
+        showTips={true}
+      />
     </Box>
   );
 };

@@ -16,6 +16,7 @@ import { SettingsPage } from './components/settings';
 import { UserList, UserDetail, UserForm } from './components/users';
 import { ReportList, ReportBuilder } from './components/reports';
 import { CompanyList, CompanyDetail, CompanyForm } from './components/companies';
+import ActivityGrid from './components/activityGrid';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -327,6 +328,18 @@ function App() {
               <Navigate to="/" replace />
             )
           } 
+        />
+        <Route
+          path="/activity-grid"
+          element={
+            isAuthenticated ? (
+              <Layout user={user} onLogout={handleLogout}>
+                <ActivityGrid />
+              </Layout>
+            ) : (
+              <Navigate to="/" replace />
+            )
+          }
         />
         <Route path="*" element={<NotFound />} />
       </Routes>

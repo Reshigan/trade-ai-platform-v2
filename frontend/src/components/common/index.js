@@ -4,3 +4,4 @@ export { default as StatusChip } from './StatusChip';
 export { default as ConfirmDialog } from './ConfirmDialog';
 export { default as FormDialog } from './FormDialog';
 export { default as AIAssistant } from './AIAssistant';
+export { default as Walkthrough } from './Walkthrough';

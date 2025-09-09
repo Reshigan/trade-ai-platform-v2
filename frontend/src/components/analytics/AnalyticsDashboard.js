@@ -40,29 +40,37 @@ import ProductPerformanceChart from './charts/ProductPerformanceChart';
 import TradeSpendTrendsChart from './charts/TradeSpendTrendsChart';
 import AIPredictionsChart from './charts/AIPredictionsChart';
 
-// Mock data for development
+// Mock data for development - South African retail channels
 const mockCustomers = [
-  { id: '1', name: 'Walmart' },
-  { id: '2', name: 'Target' },
-  { id: '3', name: 'Kroger' },
-  { id: '4', name: 'Costco' },
-  { id: '5', name: 'Safeway' }
+  { id: '1', name: 'Shoprite Holdings' },
+  { id: '2', name: 'Pick n Pay' },
+  { id: '3', name: 'SPAR Group' },
+  { id: '4', name: 'Woolworths Holdings' },
+  { id: '5', name: 'Massmart (Game, Makro)' },
+  { id: '6', name: 'Boxer Superstores' },
+  { id: '7', name: 'Diplomat South Africa' }
 ];
 
 const mockProducts = [
-  { id: '1', name: 'Premium Cereal' },
-  { id: '2', name: 'Organic Granola' },
-  { id: '3', name: 'Chocolate Cookies' },
-  { id: '4', name: 'Fruit Juice' },
-  { id: '5', name: 'Potato Chips' }
+  { id: '1', name: 'Rooibos Tea' },
+  { id: '2', name: 'Biltong' },
+  { id: '3', name: 'Amarula Cream Liqueur' },
+  { id: '4', name: 'Mrs. Ball\'s Chutney' },
+  { id: '5', name: 'Ouma Rusks' },
+  { id: '6', name: 'Boerewors' },
+  { id: '7', name: 'Cape Malay Curry Powder' },
+  { id: '8', name: 'Malva Pudding Mix' }
 ];
 
 const mockCategories = [
-  'Breakfast',
-  'Snacks',
   'Beverages',
-  'Dairy',
-  'Frozen'
+  'Snacks',
+  'Alcoholic Beverages',
+  'Condiments',
+  'Breakfast',
+  'Meat',
+  'Spices',
+  'Desserts'
 ];
 
 const AnalyticsDashboard = () => {

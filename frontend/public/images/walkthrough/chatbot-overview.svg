@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="800" height="500" viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="500" rx="8" fill="#F5F7FA" />
+  
+  <!-- Chat Window -->
+  <rect x="450" y="50" width="300" height="400" rx="12" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="2" />
+  
+  <!-- Chat Header -->
+  <rect x="450" y="50" width="300" height="60" rx="12 12 0 0" fill="#1A237E" />
+  <circle cx="480" cy="80" r="15" fill="#FFFFFF" opacity="0.9" />
+  <text x="510" y="85" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#FFFFFF">Trade AI Assistant</text>
+  
+  <!-- Chat Messages -->
+  <rect x="470" y="130" width="200" height="60" rx="8" fill="#E8EAF6" />
+  <text x="485" y="155" font-family="Inter, sans-serif" font-size="12" fill="#1A237E">Hello! I'm your Trade AI Assistant for the South African market. How can I help you today?</text>
+  <text x="485" y="175" font-family="Inter, sans-serif" font-size="10" fill="#9E9E9E">10:30 AM</text>
+  
+  <rect x="530" y="210" width="200" height="40" rx="8" fill="#1A237E" />
+  <text x="545" y="235" font-family="Inter, sans-serif" font-size="12" fill="#FFFFFF">How is Biltong performing in Shoprite stores?</text>
+  <text x="710" y="255" font-family="Inter, sans-serif" font-size="10" fill="#9E9E9E">10:31 AM</text>
+  
+  <rect x="470" y="270" width="240" height="80" rx="8" fill="#E8EAF6" />
+  <text x="485" y="295" font-family="Inter, sans-serif" font-size="12" fill="#1A237E">Biltong is performing exceptionally well in Shoprite stores with a 22% sales increase year-over-year. The Western Cape region shows the strongest growth at 28%.</text>
+  <text x="485" y="335" font-family="Inter, sans-serif" font-size="10" fill="#9E9E9E">10:31 AM</text>
+  
+  <!-- Chat Input -->
+  <rect x="470" y="380" width="260" height="50" rx="25" fill="#F5F7FA" stroke="#E0E0E0" stroke-width="1" />
+  <text x="490" y="410" font-family="Inter, sans-serif" font-size="12" fill="#9E9E9E">Type your message...</text>
+  <circle cx="700" cy="405" r="15" fill="#1A237E" />
+  <path d="M695 405 L705 405 M700 400 L700 410" stroke="#FFFFFF" stroke-width="2" />
+  
+  <!-- Dashboard in Background -->
+  <rect x="50" y="50" width="350" height="400" rx="8" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1" />
+  
+  <!-- Dashboard Header -->
+  <rect x="50" y="50" width="350" height="60" rx="8 8 0 0" fill="#F5F7FA" />
+  <text x="70" y="85" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#1A237E">Product Performance</text>
+  
+  <!-- Chart -->
+  <rect x="70" y="130" width="310" height="200" rx="4" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1" />
+  
+  <!-- Chart Title -->
+  <text x="90" y="155" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#1A237E">Biltong Sales by Retailer</text>
+  
+  <!-- Chart Bars -->
+  <rect x="90" y="180" width="40" height="120" rx="4" fill="#1A237E" opacity="0.8" />
+  <rect x="140" y="200" width="40" height="100" rx="4" fill="#1A237E" opacity="0.6" />
+  <rect x="190" y="220" width="40" height="80" rx="4" fill="#1A237E" opacity="0.4" />
+  <rect x="240" y="240" width="40" height="60" rx="4" fill="#1A237E" opacity="0.3" />
+  <rect x="290" y="260" width="40" height="40" rx="4" fill="#1A237E" opacity="0.2" />
+  
+  <!-- Chart Labels -->
+  <text x="95" y="315" font-family="Inter, sans-serif" font-size="10" fill="#1A237E">Shoprite</text>
+  <text x="145" y="315" font-family="Inter, sans-serif" font-size="10" fill="#1A237E">Pick n Pay</text>
+  <text x="195" y="315" font-family="Inter, sans-serif" font-size="10" fill="#1A237E">SPAR</text>
+  <text x="240" y="315" font-family="Inter, sans-serif" font-size="10" fill="#1A237E">Woolworths</text>
+  <text x="295" y="315" font-family="Inter, sans-serif" font-size="10" fill="#1A237E">Other</text>
+  
+  <!-- Data Table -->
+  <rect x="70" y="350" width="310" height="80" rx="4" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1" />
+  <line x1="70" y1="380" x2="380" y2="380" stroke="#E0E0E0" stroke-width="1" />
+  
+  <!-- Table Headers -->
+  <text x="90" y="370" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#1A237E">Retailer</text>
+  <text x="200" y="370" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#1A237E">Sales (ZAR)</text>
+  <text x="300" y="370" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#1A237E">Growth</text>
+  
+  <!-- Table Data -->
+  <text x="90" y="400" font-family="Inter, sans-serif" font-size="12" fill="#1A237E">Shoprite</text>
+  <text x="200" y="400" font-family="Inter, sans-serif" font-size="12" fill="#1A237E">R1,245,680</text>
+  <text x="300" y="400" font-family="Inter, sans-serif" font-size="12" fill="#4CAF50">+22%</text>
+  
+  <!-- Highlight Overlay -->
+  <rect width="800" height="500" rx="8" fill="#1A237E" opacity="0.05" />
+  
+  <!-- Callout -->
+  <circle cx="600" cy="200" r="80" stroke="#1A237E" stroke-width="3" stroke-dasharray="8 4" fill="none" />
+  <path d="M540 150 L480 100" stroke="#1A237E" stroke-width="2" />
+  <rect x="280" y="50" width="220" height="80" rx="8" fill="#FFFFFF" stroke="#1A237E" stroke-width="2" />
+  <text x="290" y="75" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#1A237E">AI Assistant</text>
+  <text x="290" y="95" font-family="Inter, sans-serif" font-size="12" fill="#1A237E">Get insights and answers about</text>
+  <text x="290" y="115" font-family="Inter, sans-serif" font-size="12" fill="#1A237E">your South African trade data</text>
+</svg>

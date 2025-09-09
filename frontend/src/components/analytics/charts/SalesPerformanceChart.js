@@ -13,30 +13,30 @@ import {
   ComposedChart
 } from 'recharts';
 
-// Mock data for development
+// Mock data for development - South African sales data (in ZAR)
 const mockData = [
-  { month: 'Jan', sales: 1250000, target: 1200000, lastYear: 1100000 },
-  { month: 'Feb', sales: 1420000, target: 1300000, lastYear: 1150000 },
-  { month: 'Mar', sales: 1380000, target: 1400000, lastYear: 1250000 },
-  { month: 'Apr', sales: 1510000, target: 1450000, lastYear: 1300000 },
-  { month: 'May', sales: 1650000, target: 1500000, lastYear: 1400000 },
-  { month: 'Jun', sales: 1720000, target: 1550000, lastYear: 1450000 },
-  { month: 'Jul', sales: 1680000, target: 1600000, lastYear: 1500000 },
-  { month: 'Aug', sales: 1750000, target: 1650000, lastYear: 1550000 },
-  { month: 'Sep', sales: 1820000, target: 1700000, lastYear: 1600000 },
-  { month: 'Oct', sales: 1900000, target: 1750000, lastYear: 1650000 },
-  { month: 'Nov', sales: 1950000, target: 1800000, lastYear: 1700000 },
-  { month: 'Dec', sales: 2100000, target: 1900000, lastYear: 1800000 }
+  { month: 'Jan', sales: 18500000, target: 18000000, lastYear: 16500000 },
+  { month: 'Feb', sales: 19200000, target: 19000000, lastYear: 17200000 },
+  { month: 'Mar', sales: 20100000, target: 19500000, lastYear: 18100000 },
+  { month: 'Apr', sales: 21500000, target: 20000000, lastYear: 19300000 },
+  { month: 'May', sales: 22800000, target: 21000000, lastYear: 20400000 },
+  { month: 'Jun', sales: 23500000, target: 22000000, lastYear: 21200000 },
+  { month: 'Jul', sales: 24100000, target: 23000000, lastYear: 22000000 },
+  { month: 'Aug', sales: 25300000, target: 24000000, lastYear: 22800000 },
+  { month: 'Sep', sales: 26500000, target: 25000000, lastYear: 23500000 },
+  { month: 'Oct', sales: 27800000, target: 26000000, lastYear: 24200000 },
+  { month: 'Nov', sales: 28900000, target: 27000000, lastYear: 25100000 },
+  { month: 'Dec', sales: 30500000, target: 28000000, lastYear: 26500000 }
 ];
 
 const SalesPerformanceChart = ({ height = 400 }) => {
   const theme = useTheme();
 
-  // Format currency for tooltip
+  // Format currency for tooltip - South African Rand
   const formatCurrency = (value) => {
-    return new Intl.NumberFormat('en-US', {
+    return new Intl.NumberFormat('en-ZA', {
       style: 'currency',
-      currency: 'USD',
+      currency: 'ZAR',
       minimumFractionDigits: 0,
       maximumFractionDigits: 0
     }).format(value);

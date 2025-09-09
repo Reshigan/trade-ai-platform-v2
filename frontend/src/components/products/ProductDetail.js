@@ -42,38 +42,46 @@ import { PageHeader, StatusChip, ConfirmDialog } from '../common';
 import { productService, promotionService, tradeSpendService } from '../../services/api';
 import ProductForm from './ProductForm';
 
-// Mock data for development
+// Mock data for development - South African product
 const mockProduct = {
-  id: '1',
-  name: 'Premium Cereal',
-  sku: 'PC-001',
-  category: 'Breakfast',
+  id: '2',
+  name: 'Biltong',
+  sku: 'BLT-002',
+  category: 'Snacks',
   status: 'active',
-  price: 4.99,
-  cost: 2.25,
-  inventory: 1250,
-  description: 'Premium breakfast cereal with whole grains and natural sweeteners.',
-  specifications: 'Ingredients: Whole grain wheat, rice, corn, sugar, salt, malt flavoring. Contains wheat ingredients.',
+  price: 89.99,
+  cost: 45.50,
+  inventory: 850,
+  description: 'Traditional South African dried, cured meat with signature spices.',
+  specifications: 'Ingredients: Beef, vinegar, salt, coriander, black pepper, brown sugar, paprika. Packaged in 250g resealable bags.',
   is_taxable: true,
-  created_at: new Date('2024-01-15'),
-  updated_at: new Date('2025-03-10')
+  created_at: new Date('2024-02-20'),
+  updated_at: new Date('2025-04-15')
 };
 
 const mockPromotions = [
   {
     id: '1',
-    name: 'Summer Sale',
-    customer: { id: '1', name: 'Walmart' },
+    name: 'Winter Promotion',
+    customer: { id: '1', name: 'Shoprite Holdings' },
     start_date: new Date('2025-06-01'),
-    end_date: new Date('2025-06-30'),
+    end_date: new Date('2025-07-31'),
     status: 'active'
   },
   {
     id: '2',
-    name: 'Back to School',
-    customer: { id: '2', name: 'Target' },
-    start_date: new Date('2025-08-01'),
-    end_date: new Date('2025-08-31'),
+    name: 'Heritage Day Special',
+    customer: { id: '3', name: 'SPAR Group' },
+    start_date: new Date('2025-09-01'),
+    end_date: new Date('2025-09-30'),
+    status: 'planned'
+  },
+  {
+    id: '3',
+    name: 'Summer Launch',
+    customer: { id: '4', name: 'Woolworths Holdings' },
+    start_date: new Date('2025-11-01'),
+    end_date: new Date('2025-12-31'),
     status: 'planned'
   }
 ];
@@ -81,27 +89,36 @@ const mockPromotions = [
 const mockTradeSpends = [
   {
     id: '1',
-    description: 'End Cap Display',
+    description: 'Shoprite End Cap Display',
     type: 'display',
-    amount: 15000,
+    amount: 225000,
     status: 'approved'
   },
   {
     id: '2',
-    description: 'Featured Product Listing',
+    description: 'Pick n Pay Featured Product Listing',
     type: 'listing',
-    amount: 20000,
+    amount: 300000,
     status: 'approved'
+  },
+  {
+    id: '3',
+    description: 'Woolworths Premium Placement',
+    type: 'placement',
+    amount: 450000,
+    status: 'pending'
   }
 ];
 
 const mockSalesData = [
-  { month: 'Jan', sales: 1250, revenue: 6237.50 },
-  { month: 'Feb', sales: 1420, revenue: 7085.80 },
-  { month: 'Mar', sales: 1380, revenue: 6886.20 },
-  { month: 'Apr', sales: 1510, revenue: 7534.90 },
-  { month: 'May', sales: 1650, revenue: 8233.50 },
-  { month: 'Jun', sales: 1720, revenue: 8582.80 }
+  { month: 'Jan', sales: 5250, revenue: 472447.50 },
+  { month: 'Feb', sales: 5620, revenue: 505738.80 },
+  { month: 'Mar', sales: 5980, revenue: 538142.20 },
+  { month: 'Apr', sales: 6210, revenue: 558839.90 },
+  { month: 'May', sales: 6650, revenue: 598433.50 },
+  { month: 'Jun', sales: 7120, revenue: 640728.80 },
+  { month: 'Jul', sales: 7580, revenue: 682042.20 },
+  { month: 'Aug', sales: 8930, revenue: 803607.70 }
 ];
 
 const ProductDetail = () => {
@@ -238,9 +255,14 @@ const ProductDetail = () => {
     }
   };
 
-  // Format currency
+  // Format currency - South African Rand
   const formatCurrency = (amount) => {
-    return `$${amount.toFixed(2)}`;
+    return new Intl.NumberFormat('en-ZA', {
+      style: 'currency',
+      currency: 'ZAR',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }).format(amount);
   };
 
   // Format date
