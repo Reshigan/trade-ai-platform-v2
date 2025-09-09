@@ -18,7 +18,7 @@ services:
     networks:
       - trade-ai-network
     healthcheck:
-      test: echo 'db.runCommand("ping").ok' | mongo mongodb://${MONGO_USERNAME:-admin}:${MONGO_PASSWORD:-password123}@localhost:27017/admin --quiet
+      test: echo 'db.runCommand("ping").ok' | mongosh mongodb://${MONGO_USERNAME:-admin}:${MONGO_PASSWORD:-password123}@localhost:27017/admin --quiet
       interval: 10s
       timeout: 5s
       retries: 5
