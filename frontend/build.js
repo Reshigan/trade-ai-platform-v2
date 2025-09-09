@@ -38,22 +38,100 @@ try {
       // Write a simple bundle.js that includes the App component
       const bundleJs = `
 // Simple bundle for Trade AI Platform
+const LoginForm = () => {
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [error, setError] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    
+    // Simulate login
+    setTimeout(() => {
+      // Demo credentials
+      if ((email === 'admin@tradeai.com' || email === 'manager@tradeai.com' || email === 'kam@tradeai.com') && password === 'password123') {
+        alert('Login successful! Redirecting to dashboard...');
+        // In a real app, we would redirect to the dashboard
+      } else {
+        setError('Invalid credentials. Try admin@tradeai.com / password123');
+      }
+      setLoading(false);
+    }, 1000);
+  };
+
+  return React.createElement('div', { className: 'login-container' }, [
+    React.createElement('h2', null, 'Login to Trade AI Platform'),
+    error && React.createElement('div', { className: 'error-message' }, error),
+    React.createElement('form', { onSubmit: handleSubmit }, [
+      React.createElement('div', { className: 'form-group' }, [
+        React.createElement('label', { htmlFor: 'email' }, 'Email'),
+        React.createElement('input', { 
+          type: 'email', 
+          id: 'email', 
+          value: email, 
+          onChange: (e) => setEmail(e.target.value),
+          required: true,
+          placeholder: 'Enter your email'
+        })
+      ]),
+      React.createElement('div', { className: 'form-group' }, [
+        React.createElement('label', { htmlFor: 'password' }, 'Password'),
+        React.createElement('input', { 
+          type: 'password', 
+          id: 'password', 
+          value: password, 
+          onChange: (e) => setPassword(e.target.value),
+          required: true,
+          placeholder: 'Enter your password'
+        })
+      ]),
+      React.createElement('div', { className: 'form-group' }, [
+        React.createElement('button', { 
+          type: 'submit',
+          disabled: loading,
+          className: 'login-button'
+        }, loading ? 'Logging in...' : 'Login')
+      ]),
+      React.createElement('div', { className: 'demo-credentials' }, [
+        React.createElement('p', null, 'Demo Credentials:'),
+        React.createElement('ul', null, [
+          React.createElement('li', null, 'Admin: admin@tradeai.com / password123'),
+          React.createElement('li', null, 'Manager: manager@tradeai.com / password123'),
+          React.createElement('li', null, 'KAM: kam@tradeai.com / password123')
+        ])
+      ])
+    ])
+  ]);
+};
+
 const App = () => {
-  return React.createElement('div', null, [
-    React.createElement('h1', null, 'Trade AI Platform'),
-    React.createElement('p', null, 'Enterprise-grade FMCG Trade Spend Management with AI-Powered Analytics'),
-    React.createElement('img', { src: '/images/logo.svg', alt: 'Trade AI Logo', style: { width: '200px' } }),
-    React.createElement('div', { className: 'features' }, [
-      React.createElement('h2', null, 'Key Features'),
-      React.createElement('ul', null, [
-        React.createElement('li', null, 'AI-Powered Analytics'),
-        React.createElement('li', null, 'Budget Management'),
-        React.createElement('li', null, 'Trade Spend Tracking'),
-        React.createElement('li', null, 'Promotion Management'),
-        React.createElement('li', null, 'Real-time Dashboards'),
-        React.createElement('li', null, 'SAP Integration'),
-        React.createElement('li', null, 'Approval Workflows'),
-        React.createElement('li', null, 'Activity Calendar')
+  return React.createElement('div', { className: 'app-container' }, [
+    React.createElement('div', { className: 'header' }, [
+      React.createElement('img', { src: '/images/logo.svg', alt: 'Trade AI Logo', className: 'logo' }),
+      React.createElement('div', { className: 'header-text' }, [
+        React.createElement('h1', null, 'Trade AI Platform'),
+        React.createElement('p', null, 'Enterprise-grade FMCG Trade Spend Management with AI-Powered Analytics')
+      ])
+    ]),
+    React.createElement('div', { className: 'main-content' }, [
+      React.createElement('div', { className: 'login-section' }, [
+        React.createElement(LoginForm)
+      ]),
+      React.createElement('div', { className: 'features-section' }, [
+        React.createElement('h2', null, 'Key Features'),
+        React.createElement('ul', { className: 'features-list' }, [
+          React.createElement('li', null, 'AI-Powered Analytics: Machine learning models for sales forecasting, anomaly detection, and promotion optimization'),
+          React.createElement('li', null, 'Budget Management: Multi-year budget planning with ML-powered forecasting'),
+          React.createElement('li', null, 'Trade Spend Tracking: Complete lifecycle management for all trade spend types'),
+          React.createElement('li', null, 'Promotion Management: End-to-end promotion planning with ROI analysis'),
+          React.createElement('li', null, 'Real-time Dashboards: Executive, KAM, and Analytics dashboards with live updates'),
+          React.createElement('li', null, 'SAP Integration: Seamless bi-directional sync with SAP systems'),
+          React.createElement('li', null, 'Approval Workflows: Dynamic, role-based approval chains with SLA tracking'),
+          React.createElement('li', null, 'Activity Calendar: Unified view of all trade activities with conflict detection')
+        ])
       ])
     ])
   ]);
@@ -78,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="/images/favicon.svg" />
+    <link rel="icon" href="/images/logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="Trade AI Platform" />
@@ -95,35 +173,144 @@ document.addEventListener('DOMContentLoaded', () => {
         max-width: 1200px;
         margin: 0 auto;
         padding: 2rem;
-        text-align: center;
+      }
+      .app-container {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+      .header {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        margin-bottom: 1rem;
+      }
+      .logo {
+        width: 120px;
+        height: auto;
+      }
+      .header-text {
+        flex: 1;
       }
       h1 {
         color: #2563eb;
         font-size: 2.5rem;
-        margin-bottom: 1rem;
+        margin: 0 0 0.5rem 0;
       }
-      p {
+      .header-text p {
         color: #666;
         font-size: 1.2rem;
-        margin-bottom: 2rem;
+        margin: 0;
       }
-      .features {
+      .main-content {
+        display: flex;
+        gap: 2rem;
+      }
+      .login-section {
+        flex: 1;
+        max-width: 400px;
+      }
+      .features-section {
+        flex: 2;
+      }
+      .login-container {
         background-color: white;
         border-radius: 8px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         padding: 2rem;
-        margin-top: 2rem;
-        text-align: left;
       }
-      h2 {
+      .login-container h2 {
+        margin-top: 0;
         color: #2563eb;
-        margin-bottom: 1rem;
+        margin-bottom: 1.5rem;
+        text-align: center;
       }
-      ul {
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+      }
+      .form-group input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #d1d5db;
+        border-radius: 4px;
+        font-size: 1rem;
+      }
+      .login-button {
+        width: 100%;
+        padding: 0.75rem;
+        background-color: #2563eb;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+      .login-button:hover {
+        background-color: #1d4ed8;
+      }
+      .login-button:disabled {
+        background-color: #93c5fd;
+        cursor: not-allowed;
+      }
+      .error-message {
+        background-color: #fee2e2;
+        color: #b91c1c;
+        padding: 0.75rem;
+        border-radius: 4px;
+        margin-bottom: 1.5rem;
+      }
+      .demo-credentials {
+        margin-top: 2rem;
+        font-size: 0.9rem;
+        color: #6b7280;
+      }
+      .demo-credentials p {
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+      }
+      .demo-credentials ul {
+        margin-top: 0.5rem;
         padding-left: 1.5rem;
       }
-      li {
-        margin-bottom: 0.5rem;
+      .features-section {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+      }
+      .features-section h2 {
+        color: #2563eb;
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+      }
+      .features-list {
+        padding-left: 1.5rem;
+        margin: 0;
+      }
+      .features-list li {
+        margin-bottom: 1rem;
+      }
+      
+      /* Responsive design */
+      @media (max-width: 768px) {
+        .main-content {
+          flex-direction: column;
+        }
+        .login-section {
+          max-width: 100%;
+        }
+        .header {
+          flex-direction: column;
+          text-align: center;
+          gap: 1rem;
+        }
       }
     </style>
     <!-- React and ReactDOM from CDN -->
