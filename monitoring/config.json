@@ -1,0 +1,31 @@
+{
+  "system_check_interval": 60,
+  "service_check_interval": 300,
+  "retention_days": 30,
+  "alerts": [
+    {
+      "metric": "cpu_usage",
+      "threshold": 90.0,
+      "condition": "greater_than",
+      "enabled": true,
+      "notify_email": null,
+      "notify_slack": null
+    },
+    {
+      "metric": "memory_usage",
+      "threshold": 90.0,
+      "condition": "greater_than",
+      "enabled": true,
+      "notify_email": null,
+      "notify_slack": null
+    },
+    {
+      "metric": "disk_usage",
+      "threshold": 90.0,
+      "condition": "greater_than",
+      "enabled": true,
+      "notify_email": null,
+      "notify_slack": null
+    }
+  ]
+}

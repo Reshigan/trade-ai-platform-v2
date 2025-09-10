@@ -53,7 +53,7 @@ class SystemIntegrationTest:
         
         # Calculate checksums for JSON files
         for filename in ['product_catalog.json', 'company_profile.json', 'user_data.json', 'budget_data.json']:
-            file_path = f"/workspace/trade-ai-github/test_data/{filename}"
+            file_path = f"/workspace/project/trade-ai-platform-v2/test_data/{filename}"
             if os.path.exists(file_path):
                 with open(file_path, 'rb') as f:
                     file_hash = hashlib.md5(f.read()).hexdigest()
@@ -61,7 +61,7 @@ class SystemIntegrationTest:
         
         # Calculate checksums for CSV files
         for filename in ['sales_data.csv', 'promotional_data.csv']:
-            file_path = f"/workspace/trade-ai-github/test_data/{filename}"
+            file_path = f"/workspace/project/trade-ai-platform-v2/test_data/{filename}"
             if os.path.exists(file_path):
                 with open(file_path, 'rb') as f:
                     file_hash = hashlib.md5(f.read()).hexdigest()
@@ -72,17 +72,17 @@ class SystemIntegrationTest:
     def load_test_data(self):
         """Load all test datasets"""
         try:
-            with open('/workspace/trade-ai-github/test_data/product_catalog.json', 'r') as f:
+            with open('/workspace/project/trade-ai-platform-v2/test_data/product_catalog.json', 'r') as f:
                 self.product_catalog = json.load(f)
             
-            with open('/workspace/trade-ai-github/test_data/company_profile.json', 'r') as f:
+            with open('/workspace/project/trade-ai-platform-v2/test_data/company_profile.json', 'r') as f:
                 self.company_profile = json.load(f)
             
-            with open('/workspace/trade-ai-github/test_data/user_data.json', 'r') as f:
+            with open('/workspace/project/trade-ai-platform-v2/test_data/user_data.json', 'r') as f:
                 self.user_data = json.load(f)
             
-            self.sales_df = pd.read_csv('/workspace/trade-ai-github/test_data/sales_data.csv')
-            self.promo_df = pd.read_csv('/workspace/trade-ai-github/test_data/promotional_data.csv')
+            self.sales_df = pd.read_csv('/workspace/project/trade-ai-platform-v2/test_data/sales_data.csv')
+            self.promo_df = pd.read_csv('/workspace/project/trade-ai-platform-v2/test_data/promotional_data.csv')
         except Exception as e:
             print(f"Error loading test data: {e}")
             raise
@@ -242,7 +242,7 @@ class SystemIntegrationTest:
         # Load or simulate AI prediction model
         try:
             # Check if AI simulation file exists
-            ai_simulation_file = "/workspace/trade-ai-github/test_data/simple_ai_simulation.json"
+            ai_simulation_file = "/workspace/project/trade-ai-platform-v2/test_data/simple_ai_simulation.json"
             if os.path.exists(ai_simulation_file):
                 with open(ai_simulation_file, 'r') as f:
                     ai_simulation = json.load(f)
@@ -354,7 +354,7 @@ class SystemIntegrationTest:
             else:
                 return str(obj)
         
-        with open('/workspace/trade-ai-github/integration-test/test_report.json', 'w') as f:
+        with open('/workspace/project/trade-ai-platform-v2/integration-test/test_report.json', 'w') as f:
             json.dump({
                 "overall_result": json_serializer(overall_result),
                 "test_results": json_serializer(self.test_results),
@@ -371,7 +371,7 @@ class SystemIntegrationTest:
         
     def generate_deployment_readiness_report(self, overall_result):
         """Generate a comprehensive deployment readiness report"""
-        report_path = '/workspace/trade-ai-github/DEPLOYMENT_READINESS_REPORT.md'
+        report_path = '/workspace/project/trade-ai-platform-v2/DEPLOYMENT_READINESS_REPORT.md'
         
         with open(report_path, 'w') as f:
             f.write(f"# Trade AI Platform - Deployment Readiness Report\n\n")
