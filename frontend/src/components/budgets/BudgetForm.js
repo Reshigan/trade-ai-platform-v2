@@ -54,71 +54,8 @@ const BudgetForm = ({ open, onClose, onSubmit, budget = null }) => {
   // Fetch customers from API
   const fetchCustomers = async () => {
     try {
-      // In a real app, we would call the API
-      // const response = await customerService.getAll();
-      // setCustomers(response.data);
-      
-      // Using mock data for development
-      setCustomers(mockCustomers);
-    } catch (err) {
-      console.error('Error fetching customers:', err);
-    }
-  };
-
-  // Handle form field changes
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value
-    }));
-    
-    // Clear error for the field
-    if (errors[name]) {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        [name]: null
-      }));
-    }
-  };
-
-  // Validate form data
-  const validateForm = () => {
-    const newErrors = {};
-    
-    if (!formData.year) {
-      newErrors.year = 'Year is required';
-    }
-    
-    if (!formData.customer_id) {
-      newErrors.customer_id = 'Customer is required';
-    }
-    
-    if (!formData.total_amount) {
-      newErrors.total_amount = 'Total amount is required';
-    } else if (isNaN(formData.total_amount) || parseFloat(formData.total_amount) <= 0) {
-      newErrors.total_amount = 'Total amount must be a positive number';
-    }
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  // Handle form submission
-  const handleSubmit = () => {
-    if (validateForm()) {
-      setLoading(true);
-      
-      // Format data for API
-      const budgetData = {
-        ...formData,
-        total_amount: parseFloat(formData.total_amount),
-        allocated_amount: 0,
-        remaining_amount: parseFloat(formData.total_amount)
-      };
-      
-      // Submit form
-      onSubmit(budgetData);
+      const response = await service.getAll();
+      setData(response.data || response);
       setLoading(false);
     }
   };

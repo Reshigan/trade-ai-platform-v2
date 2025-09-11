@@ -13,21 +13,7 @@ import {
   ComposedChart
 } from 'recharts';
 
-// Mock data for development - South African sales data (in ZAR)
-const mockData = [
-  { month: 'Jan', sales: 18500000, target: 18000000, lastYear: 16500000 },
-  { month: 'Feb', sales: 19200000, target: 19000000, lastYear: 17200000 },
-  { month: 'Mar', sales: 20100000, target: 19500000, lastYear: 18100000 },
-  { month: 'Apr', sales: 21500000, target: 20000000, lastYear: 19300000 },
-  { month: 'May', sales: 22800000, target: 21000000, lastYear: 20400000 },
-  { month: 'Jun', sales: 23500000, target: 22000000, lastYear: 21200000 },
-  { month: 'Jul', sales: 24100000, target: 23000000, lastYear: 22000000 },
-  { month: 'Aug', sales: 25300000, target: 24000000, lastYear: 22800000 },
-  { month: 'Sep', sales: 26500000, target: 25000000, lastYear: 23500000 },
-  { month: 'Oct', sales: 27800000, target: 26000000, lastYear: 24200000 },
-  { month: 'Nov', sales: 28900000, target: 27000000, lastYear: 25100000 },
-  { month: 'Dec', sales: 30500000, target: 28000000, lastYear: 26500000 }
-];
+// No more mock data - using real API calls
 
 const SalesPerformanceChart = ({ height = 400 }) => {
   const theme = useTheme();

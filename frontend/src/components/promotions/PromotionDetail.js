@@ -95,17 +95,8 @@ const PromotionDetail = () => {
     setError(null);
     
     try {
-      // In a real app, we would call the API
-      // const response = await promotionService.getById(id);
-      // setPromotion(response.data);
-      
-      // Using mock data for development
-      setTimeout(() => {
-        setPromotion(mockPromotion);
-        setLoading(false);
-      }, 500);
-    } catch (err) {
-      setError('Failed to fetch promotion details. Please try again.');
+      const response = await service.getAll();
+      setData(response.data || response);
       setLoading(false);
     }
   };
@@ -114,8 +105,8 @@ const PromotionDetail = () => {
   const fetchCustomers = async () => {
     try {
       // In a real app, we would call the API
-      // const response = await customerService.getAll();
-      // setCustomers(response.data);
+      const response = await customerService.getAll();
+      setCustomers(response.data);
       
       // Using mock data for development
       const mockCustomers = [

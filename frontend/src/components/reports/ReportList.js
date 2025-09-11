@@ -46,69 +46,7 @@ import {
 
 import { PageHeader } from '../common';
 
-// Mock data for development
-const mockReports = [
-  {
-    id: '1',
-    name: 'Monthly Budget Performance',
-    description: 'Overview of budget utilization and performance for the current month',
-    type: 'budget',
-    format: 'dashboard',
-    lastRun: '2025-09-01T10:30:00Z',
-    scheduled: true,
-    frequency: 'monthly'
-  },
-  {
-    id: '2',
-    name: 'Trade Spend ROI Analysis',
-    description: 'Analysis of return on investment for all trade spend activities',
-    type: 'trade_spend',
-    format: 'chart',
-    lastRun: '2025-09-02T14:15:00Z',
-    scheduled: false,
-    frequency: null
-  },
-  {
-    id: '3',
-    name: 'Customer Performance Report',
-    description: 'Detailed performance metrics for all customers',
-    type: 'customer',
-    format: 'table',
-    lastRun: '2025-09-03T09:45:00Z',
-    scheduled: true,
-    frequency: 'weekly'
-  },
-  {
-    id: '4',
-    name: 'Product Sales Analysis',
-    description: 'Sales performance analysis for all products',
-    type: 'product',
-    format: 'chart',
-    lastRun: '2025-08-28T11:20:00Z',
-    scheduled: true,
-    frequency: 'weekly'
-  },
-  {
-    id: '5',
-    name: 'Promotion Effectiveness',
-    description: 'Analysis of promotion effectiveness and ROI',
-    type: 'promotion',
-    format: 'dashboard',
-    lastRun: '2025-09-01T16:10:00Z',
-    scheduled: false,
-    frequency: null
-  },
-  {
-    id: '6',
-    name: 'Executive Summary',
-    description: 'High-level summary of key performance indicators for executives',
-    type: 'summary',
-    format: 'dashboard',
-    lastRun: '2025-09-02T08:30:00Z',
-    scheduled: true,
-    frequency: 'monthly'
-  }
-];
+// No more mock data - using real API calls
 
 const ReportList = () => {
   const [reports, setReports] = useState([]);
@@ -136,10 +74,7 @@ const ReportList = () => {
     // In a real app, we would fetch data from the API
     // For now, we'll use mock data
     setLoading(true);
-    setTimeout(() => {
-      setReports(mockReports);
-      setLoading(false);
-    }, 1000);
+    
   }, []);
   
   // Handle search

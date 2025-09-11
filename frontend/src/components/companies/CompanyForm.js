@@ -118,21 +118,7 @@ const CompanyForm = () => {
       // In a real app, we would fetch data from the API
       // For now, we'll use mock data
       setLoading(true);
-      setTimeout(() => {
-        setFormData({
-          name: mockCompany.name,
-          industry: mockCompany.industry,
-          region: mockCompany.region,
-          address: mockCompany.address,
-          phone: mockCompany.phone,
-          website: mockCompany.website,
-          status: mockCompany.status,
-          currency: mockCompany.currency,
-          taxId: mockCompany.taxId,
-          notes: mockCompany.notes
-        });
-        setLoading(false);
-      }, 1000);
+      
     }
   }, [isEditMode]);
   

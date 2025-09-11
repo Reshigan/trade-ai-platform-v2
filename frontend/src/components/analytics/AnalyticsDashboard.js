@@ -40,16 +40,7 @@ import ProductPerformanceChart from './charts/ProductPerformanceChart';
 import TradeSpendTrendsChart from './charts/TradeSpendTrendsChart';
 import AIPredictionsChart from './charts/AIPredictionsChart';
 
-// Mock data for development - South African retail channels
-const mockCustomers = [
-  { id: '1', name: 'Shoprite Holdings' },
-  { id: '2', name: 'Pick n Pay' },
-  { id: '3', name: 'SPAR Group' },
-  { id: '4', name: 'Woolworths Holdings' },
-  { id: '5', name: 'Massmart (Game, Makro)' },
-  { id: '6', name: 'Boxer Superstores' },
-  { id: '7', name: 'Diplomat South Africa' }
-];
+// No more mock data - using real API calls
 
 const mockProducts = [
   { id: '1', name: 'Rooibos Tea' },
@@ -100,13 +91,8 @@ const AnalyticsDashboard = () => {
     setError(null);
     
     try {
-      // In a real app, we would call the API with filters
-      // Simulate API call
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
-    } catch (err) {
-      setError('Failed to fetch analytics data. Please try again.');
+      const response = await service.getAll();
+      setData(response.data || response);
       setLoading(false);
     }
   };

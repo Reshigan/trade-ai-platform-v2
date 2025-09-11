@@ -14,24 +14,7 @@ import {
   Area
 } from 'recharts';
 
-// Mock data for development
-const mockData = [
-  // Historical data
-  { month: 'Jan', actual: 1250000, predicted: null, lower: null, upper: null, isPrediction: false },
-  { month: 'Feb', actual: 1420000, predicted: null, lower: null, upper: null, isPrediction: false },
-  { month: 'Mar', actual: 1380000, predicted: null, lower: null, upper: null, isPrediction: false },
-  { month: 'Apr', actual: 1510000, predicted: null, lower: null, upper: null, isPrediction: false },
-  { month: 'May', actual: 1650000, predicted: null, lower: null, upper: null, isPrediction: false },
-  { month: 'Jun', actual: 1720000, predicted: null, lower: null, upper: null, isPrediction: false },
-  // Current month
-  { month: 'Jul', actual: 1680000, predicted: 1650000, lower: 1550000, upper: 1750000, isPrediction: false },
-  // Predictions
-  { month: 'Aug', actual: null, predicted: 1750000, lower: 1650000, upper: 1850000, isPrediction: true },
-  { month: 'Sep', actual: null, predicted: 1820000, lower: 1700000, upper: 1940000, isPrediction: true },
-  { month: 'Oct', actual: null, predicted: 1900000, lower: 1750000, upper: 2050000, isPrediction: true },
-  { month: 'Nov', actual: null, predicted: 1950000, lower: 1800000, upper: 2100000, isPrediction: true },
-  { month: 'Dec', actual: null, predicted: 2100000, lower: 1900000, upper: 2300000, isPrediction: true }
-];
+// No more mock data - using real API calls
 
 const AIPredictionsChart = ({ height = 400 }) => {
   const theme = useTheme();

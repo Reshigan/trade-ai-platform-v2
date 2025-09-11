@@ -83,17 +83,8 @@ const TradeSpendDetail = () => {
     setError(null);
     
     try {
-      // In a real app, we would call the API
-      // const response = await tradeSpendService.getById(id);
-      // setTradeSpend(response.data);
-      
-      // Using mock data for development
-      setTimeout(() => {
-        setTradeSpend(mockTradeSpend);
-        setLoading(false);
-      }, 500);
-    } catch (err) {
-      setError('Failed to fetch trade spend details. Please try again.');
+      const response = await service.getAll();
+      setData(response.data || response);
       setLoading(false);
     }
   };
@@ -102,8 +93,8 @@ const TradeSpendDetail = () => {
   const fetchBudgets = async () => {
     try {
       // In a real app, we would call the API
-      // const response = await budgetService.getAll();
-      // setBudgets(response.data);
+      const response = await budgetService.getAll();
+      setBudgets(response.data);
       
       // Using mock data for development
       const mockBudgets = [

@@ -12,15 +12,7 @@ import {
   ReferenceLine
 } from 'recharts';
 
-// Mock data for development
-const mockData = [
-  { name: 'Display', spend: 120000, revenue: 720000, roi: 6.0 },
-  { name: 'Listing', spend: 80000, revenue: 560000, roi: 7.0 },
-  { name: 'Promotion', spend: 150000, revenue: 900000, roi: 6.0 },
-  { name: 'Discount', spend: 200000, revenue: 1000000, roi: 5.0 },
-  { name: 'Sampling', spend: 50000, revenue: 300000, roi: 6.0 },
-  { name: 'Advertising', spend: 180000, revenue: 720000, roi: 4.0 }
-];
+// No more mock data - using real API calls
 
 const ROIAnalysisChart = ({ height = 400 }) => {
   const theme = useTheme();

@@ -176,17 +176,8 @@ const CustomerDetail = () => {
     setError(null);
     
     try {
-      // In a real app, we would call the API
-      // const response = await customerService.getById(id);
-      // setCustomer(response.data);
-      
-      // Using mock data for development
-      setTimeout(() => {
-        setCustomer(mockCustomer);
-        setLoading(false);
-      }, 500);
-    } catch (err) {
-      setError('Failed to fetch customer details. Please try again.');
+      const response = await service.getAll();
+      setData(response.data || response);
       setLoading(false);
     }
   };
@@ -195,8 +186,8 @@ const CustomerDetail = () => {
   const fetchBudgets = async () => {
     try {
       // In a real app, we would call the API
-      // const response = await budgetService.getAll({ customer_id: id });
-      // setBudgets(response.data);
+      const response = await budgetService.getAll({ customer_id: id });
+      setBudgets(response.data);
       
       // Using mock data for development
       setBudgets(mockBudgets);
@@ -209,8 +200,8 @@ const CustomerDetail = () => {
   const fetchPromotions = async () => {
     try {
       // In a real app, we would call the API
-      // const response = await promotionService.getAll({ customer_id: id });
-      // setPromotions(response.data);
+      const response = await promotionService.getAll({ customer_id: id });
+      setPromotions(response.data);
       
       // Using mock data for development
       setPromotions(mockPromotions);
@@ -223,8 +214,8 @@ const CustomerDetail = () => {
   const fetchTradeSpends = async () => {
     try {
       // In a real app, we would call the API
-      // const response = await tradeSpendService.getAll({ customer_id: id });
-      // setTradeSpends(response.data);
+      const response = await tradeSpendService.getAll({ customer_id: id });
+      setTradeSpends(response.data);
       
       // Using mock data for development
       setTradeSpends(mockTradeSpends);

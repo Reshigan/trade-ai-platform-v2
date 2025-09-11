@@ -25,113 +25,7 @@ import { PageHeader, DataTable, StatusChip } from '../common';
 import { productService } from '../../services/api';
 import ProductForm from './ProductForm';
 
-// Mock data for development - South African products
-const mockProducts = [
-  {
-    id: '1',
-    name: 'Rooibos Tea',
-    sku: 'RT-001',
-    category: 'Beverages',
-    status: 'active',
-    price: 45.99,
-    cost: 22.50,
-    inventory: 1250,
-    description: 'Premium South African Rooibos tea, naturally caffeine-free and rich in antioxidants.',
-    created_at: new Date('2024-01-15'),
-    updated_at: new Date('2025-03-10')
-  },
-  {
-    id: '2',
-    name: 'Biltong',
-    sku: 'BLT-002',
-    category: 'Snacks',
-    status: 'active',
-    price: 89.99,
-    cost: 45.50,
-    inventory: 850,
-    description: 'Traditional South African dried, cured meat with signature spices.',
-    created_at: new Date('2024-02-20'),
-    updated_at: new Date('2025-04-15')
-  },
-  {
-    id: '3',
-    name: 'Amarula Cream Liqueur',
-    sku: 'ACL-003',
-    category: 'Alcoholic Beverages',
-    status: 'active',
-    price: 199.99,
-    cost: 120.75,
-    inventory: 500,
-    description: 'Creamy liqueur made from the fruit of the African marula tree.',
-    created_at: new Date('2024-03-05'),
-    updated_at: new Date('2025-05-20')
-  },
-  {
-    id: '4',
-    name: 'Mrs. Ball\'s Chutney',
-    sku: 'MBC-004',
-    category: 'Condiments',
-    status: 'active',
-    price: 32.99,
-    cost: 18.25,
-    inventory: 1500,
-    description: 'Iconic South African fruit chutney, perfect for meats and sandwiches.',
-    created_at: new Date('2024-04-10'),
-    updated_at: new Date('2025-06-15')
-  },
-  {
-    id: '5',
-    name: 'Ouma Rusks',
-    sku: 'OR-005',
-    category: 'Breakfast',
-    status: 'active',
-    price: 39.99,
-    cost: 21.10,
-    inventory: 1200,
-    description: 'Traditional South African twice-baked bread, perfect for dipping in tea or coffee.',
-    created_at: new Date('2024-05-15'),
-    updated_at: new Date('2025-01-05')
-  },
-  {
-    id: '6',
-    name: 'Boerewors',
-    sku: 'BW-006',
-    category: 'Meat',
-    status: 'active',
-    price: 89.99,
-    cost: 45.50,
-    inventory: 300,
-    description: 'Traditional South African sausage made with beef and spices.',
-    created_at: new Date('2024-06-20'),
-    updated_at: new Date('2025-02-10')
-  },
-  {
-    id: '7',
-    name: 'Cape Malay Curry Powder',
-    sku: 'CMP-007',
-    category: 'Spices',
-    status: 'active',
-    price: 29.99,
-    cost: 14.50,
-    inventory: 750,
-    description: 'Authentic Cape Malay curry spice blend for traditional South African dishes.',
-    created_at: new Date('2024-07-25'),
-    updated_at: new Date('2025-03-15')
-  },
-  {
-    id: '8',
-    name: 'Malva Pudding Mix',
-    sku: 'MPM-008',
-    category: 'Desserts',
-    status: 'active',
-    price: 34.99,
-    cost: 17.25,
-    inventory: 600,
-    description: 'Traditional South African sweet pudding mix with apricot jam.',
-    created_at: new Date('2024-08-30'),
-    updated_at: new Date('2025-04-20')
-  }
-];
+// No more mock data - using real API calls
 
 const ProductList = () => {
   const navigate = useNavigate();
@@ -157,17 +51,8 @@ const ProductList = () => {
     setError(null);
     
     try {
-      // In a real app, we would call the API
-      // const response = await productService.getAll();
-      // setProducts(response.data);
-      
-      // Using mock data for development
-      setTimeout(() => {
-        setProducts(mockProducts);
-        setLoading(false);
-      }, 500);
-    } catch (err) {
-      setError('Failed to fetch products. Please try again.');
+      const response = await service.getAll();
+      setData(response.data || response);
       setLoading(false);
     }
   };

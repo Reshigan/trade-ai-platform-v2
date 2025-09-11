@@ -42,81 +42,7 @@ import {
 
 import { PageHeader } from '../common';
 
-// Mock data for development
-const mockUsers = [
-  {
-    id: '1',
-    name: 'Admin User',
-    email: 'admin@tradeai.com',
-    role: 'Administrator',
-    department: 'IT',
-    status: 'active',
-    lastLogin: '2025-09-01T10:30:00Z'
-  },
-  {
-    id: '2',
-    name: 'John Smith',
-    email: 'john.smith@tradeai.com',
-    role: 'Manager',
-    department: 'Sales',
-    status: 'active',
-    lastLogin: '2025-09-02T14:15:00Z'
-  },
-  {
-    id: '3',
-    name: 'Jane Doe',
-    email: 'jane.doe@tradeai.com',
-    role: 'Analyst',
-    department: 'Marketing',
-    status: 'active',
-    lastLogin: '2025-09-03T09:45:00Z'
-  },
-  {
-    id: '4',
-    name: 'Robert Johnson',
-    email: 'robert.johnson@tradeai.com',
-    role: 'Manager',
-    department: 'Finance',
-    status: 'inactive',
-    lastLogin: '2025-08-15T11:20:00Z'
-  },
-  {
-    id: '5',
-    name: 'Emily Wilson',
-    email: 'emily.wilson@tradeai.com',
-    role: 'Analyst',
-    department: 'Sales',
-    status: 'active',
-    lastLogin: '2025-09-01T16:10:00Z'
-  },
-  {
-    id: '6',
-    name: 'Michael Brown',
-    email: 'michael.brown@tradeai.com',
-    role: 'Viewer',
-    department: 'Operations',
-    status: 'active',
-    lastLogin: '2025-09-02T08:30:00Z'
-  },
-  {
-    id: '7',
-    name: 'Sarah Davis',
-    email: 'sarah.davis@tradeai.com',
-    role: 'Analyst',
-    department: 'Marketing',
-    status: 'active',
-    lastLogin: '2025-09-03T13:45:00Z'
-  },
-  {
-    id: '8',
-    name: 'David Miller',
-    email: 'david.miller@tradeai.com',
-    role: 'Manager',
-    department: 'Product',
-    status: 'inactive',
-    lastLogin: '2025-08-20T10:15:00Z'
-  }
-];
+// No more mock data - using real API calls
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -145,10 +71,7 @@ const UserList = () => {
     // In a real app, we would fetch data from the API
     // For now, we'll use mock data
     setLoading(true);
-    setTimeout(() => {
-      setUsers(mockUsers);
-      setLoading(false);
-    }, 1000);
+    
   }, []);
   
   // Handle page change

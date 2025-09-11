@@ -11,21 +11,7 @@ import {
   ResponsiveContainer
 } from 'recharts';
 
-// Mock data for development
-const mockData = [
-  { month: 'Jan', display: 25000, listing: 15000, promotion: 30000, discount: 40000, sampling: 10000, advertising: 30000 },
-  { month: 'Feb', display: 30000, listing: 20000, promotion: 35000, discount: 45000, sampling: 12000, advertising: 35000 },
-  { month: 'Mar', display: 28000, listing: 18000, promotion: 32000, discount: 42000, sampling: 11000, advertising: 32000 },
-  { month: 'Apr', display: 32000, listing: 22000, promotion: 38000, discount: 48000, sampling: 14000, advertising: 38000 },
-  { month: 'May', display: 35000, listing: 25000, promotion: 40000, discount: 50000, sampling: 15000, advertising: 40000 },
-  { month: 'Jun', display: 38000, listing: 28000, promotion: 45000, discount: 55000, sampling: 18000, advertising: 45000 },
-  { month: 'Jul', display: 36000, listing: 26000, promotion: 42000, discount: 52000, sampling: 16000, advertising: 42000 },
-  { month: 'Aug', display: 40000, listing: 30000, promotion: 48000, discount: 58000, sampling: 20000, advertising: 48000 },
-  { month: 'Sep', display: 42000, listing: 32000, promotion: 50000, discount: 60000, sampling: 22000, advertising: 50000 },
-  { month: 'Oct', display: 45000, listing: 35000, promotion: 55000, discount: 65000, sampling: 25000, advertising: 55000 },
-  { month: 'Nov', display: 48000, listing: 38000, promotion: 58000, discount: 68000, sampling: 28000, advertising: 58000 },
-  { month: 'Dec', display: 50000, listing: 40000, promotion: 60000, discount: 70000, sampling: 30000, advertising: 60000 }
-];
+// No more mock data - using real API calls
 
 const TradeSpendTrendsChart = ({ height = 400 }) => {
   const theme = useTheme();

@@ -24,89 +24,7 @@ import { PageHeader, DataTable, StatusChip } from '../common';
 import { tradeSpendService, budgetService } from '../../services/api';
 import TradeSpendForm from './TradeSpendForm';
 
-// Mock data for development
-const mockTradeSpends = [
-  {
-    id: '1',
-    budget: {
-      id: '1',
-      year: 2025,
-      customer: { id: '1', name: 'Walmart' }
-    },
-    amount: 50000,
-    type: 'promotion',
-    description: 'Summer Promotion',
-    status: 'approved',
-    start_date: new Date('2025-06-01'),
-    end_date: new Date('2025-06-30'),
-    created_at: new Date('2025-02-10'),
-    updated_at: new Date('2025-02-15')
-  },
-  {
-    id: '2',
-    budget: {
-      id: '1',
-      year: 2025,
-      customer: { id: '1', name: 'Walmart' }
-    },
-    amount: 75000,
-    type: 'listing',
-    description: 'New Product Listing',
-    status: 'approved',
-    start_date: new Date('2025-03-01'),
-    end_date: new Date('2025-12-31'),
-    created_at: new Date('2025-03-05'),
-    updated_at: new Date('2025-03-10')
-  },
-  {
-    id: '3',
-    budget: {
-      id: '1',
-      year: 2025,
-      customer: { id: '1', name: 'Walmart' }
-    },
-    amount: 25000,
-    type: 'display',
-    description: 'End Cap Display',
-    status: 'pending',
-    start_date: new Date('2025-05-01'),
-    end_date: new Date('2025-05-31'),
-    created_at: new Date('2025-04-20'),
-    updated_at: new Date('2025-04-20')
-  },
-  {
-    id: '4',
-    budget: {
-      id: '2',
-      year: 2025,
-      customer: { id: '2', name: 'Target' }
-    },
-    amount: 40000,
-    type: 'promotion',
-    description: 'Back to School',
-    status: 'approved',
-    start_date: new Date('2025-08-01'),
-    end_date: new Date('2025-08-31'),
-    created_at: new Date('2025-05-15'),
-    updated_at: new Date('2025-05-20')
-  },
-  {
-    id: '5',
-    budget: {
-      id: '4',
-      year: 2025,
-      customer: { id: '4', name: 'Test Company' }
-    },
-    amount: 30000,
-    type: 'promotion',
-    description: 'Test Promotion',
-    status: 'active',
-    start_date: new Date('2025-09-01'),
-    end_date: new Date('2025-09-30'),
-    created_at: new Date('2025-08-15'),
-    updated_at: new Date('2025-08-15')
-  }
-];
+// No more mock data - using real API calls
 
 const TradeSpendList = () => {
   const navigate = useNavigate();
@@ -140,17 +58,8 @@ const TradeSpendList = () => {
     setError(null);
     
     try {
-      // In a real app, we would call the API
-      // const response = await tradeSpendService.getAll();
-      // setTradeSpends(response.data);
-      
-      // Using mock data for development
-      setTimeout(() => {
-        setTradeSpends(mockTradeSpends);
-        setLoading(false);
-      }, 500);
-    } catch (err) {
-      setError('Failed to fetch trade spends. Please try again.');
+      const response = await service.getAll();
+      setData(response.data || response);
       setLoading(false);
     }
   };
@@ -159,8 +68,8 @@ const TradeSpendList = () => {
   const fetchBudgets = async () => {
     try {
       // In a real app, we would call the API
-      // const response = await budgetService.getAll();
-      // setBudgets(response.data);
+      const response = await budgetService.getAll();
+      setBudgets(response.data);
       
       // Using mock data for development
       const mockBudgets = [

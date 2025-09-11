@@ -74,19 +74,7 @@ const UserForm = () => {
       // In a real app, we would fetch data from the API
       // For now, we'll use mock data
       setLoading(true);
-      setTimeout(() => {
-        setFormData({
-          name: mockUser.name,
-          email: mockUser.email,
-          role: mockUser.role,
-          department: mockUser.department,
-          password: '',
-          confirmPassword: '',
-          status: mockUser.status,
-          sendWelcomeEmail: false
-        });
-        setLoading(false);
-      }, 1000);
+      
     }
   }, [isEditMode]);
   

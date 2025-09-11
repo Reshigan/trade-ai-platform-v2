@@ -30,22 +30,7 @@ const Login = ({ onLogin }) => {
     setError('');
 
     // Simulate API call
-    setTimeout(() => {
-      // Demo credentials
-      if ((email === 'admin@tradeai.com' || email === 'manager@tradeai.com' || email === 'kam@tradeai.com') && password === 'password123') {
-        const userData = {
-          email,
-          name: email === 'admin@tradeai.com' ? 'Admin User' : 
-                email === 'manager@tradeai.com' ? 'Manager User' : 'KAM User',
-          role: email === 'admin@tradeai.com' ? 'admin' : 
-                email === 'manager@tradeai.com' ? 'manager' : 'kam',
-        };
-        onLogin(userData);
-      } else {
-        setError('Invalid credentials. Try admin@tradeai.com / password123');
-      }
-      setLoading(false);
-    }, 1000);
+    
   };
 
   const handleClickShowPassword = () => {

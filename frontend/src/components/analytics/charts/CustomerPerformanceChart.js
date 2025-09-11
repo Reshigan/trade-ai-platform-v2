@@ -12,14 +12,7 @@ import {
   LabelList
 } from 'recharts';
 
-// Mock data for development
-const mockData = [
-  { name: 'Walmart', sales: 3250000, spend: 650000, roi: 5.0 },
-  { name: 'Target', sales: 2100000, spend: 420000, roi: 5.0 },
-  { name: 'Kroger', sales: 1850000, spend: 370000, roi: 5.0 },
-  { name: 'Costco', sales: 1650000, spend: 275000, roi: 6.0 },
-  { name: 'Safeway', sales: 950000, spend: 190000, roi: 5.0 }
-];
+// No more mock data - using real API calls
 
 const CustomerPerformanceChart = ({ height = 400 }) => {
   const theme = useTheme();

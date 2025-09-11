@@ -149,17 +149,8 @@ const ProductDetail = () => {
     setError(null);
     
     try {
-      // In a real app, we would call the API
-      // const response = await productService.getById(id);
-      // setProduct(response.data);
-      
-      // Using mock data for development
-      setTimeout(() => {
-        setProduct(mockProduct);
-        setLoading(false);
-      }, 500);
-    } catch (err) {
-      setError('Failed to fetch product details. Please try again.');
+      const response = await service.getAll();
+      setData(response.data || response);
       setLoading(false);
     }
   };
@@ -168,8 +159,8 @@ const ProductDetail = () => {
   const fetchPromotions = async () => {
     try {
       // In a real app, we would call the API
-      // const response = await promotionService.getAll({ product_id: id });
-      // setPromotions(response.data);
+      const response = await promotionService.getAll({ product_id: id });
+      setPromotions(response.data);
       
       // Using mock data for development
       setPromotions(mockPromotions);
@@ -182,8 +173,8 @@ const ProductDetail = () => {
   const fetchTradeSpends = async () => {
     try {
       // In a real app, we would call the API
-      // const response = await tradeSpendService.getAll({ product_id: id });
-      // setTradeSpends(response.data);
+      const response = await tradeSpendService.getAll({ product_id: id });
+      setTradeSpends(response.data);
       
       // Using mock data for development
       setTradeSpends(mockTradeSpends);
@@ -196,8 +187,8 @@ const ProductDetail = () => {
   const fetchSalesData = async () => {
     try {
       // In a real app, we would call the API
-      // const response = await productService.getSalesData(id);
-      // setSalesData(response.data);
+      const response = await productService.getSalesData(id);
+      setSalesData(response.data);
       
       // Using mock data for development
       setSalesData(mockSalesData);

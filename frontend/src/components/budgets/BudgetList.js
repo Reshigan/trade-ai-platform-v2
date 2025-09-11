@@ -24,64 +24,7 @@ import { PageHeader, DataTable, StatusChip } from '../common';
 import { budgetService } from '../../services/api';
 import BudgetForm from './BudgetForm';
 
-// Mock data for development
-const mockBudgets = [
-  {
-    id: '1',
-    year: 2025,
-    customer: { id: '1', name: 'Walmart' },
-    total_amount: 1000000,
-    allocated_amount: 750000,
-    remaining_amount: 250000,
-    status: 'approved',
-    created_at: new Date('2025-01-15'),
-    updated_at: new Date('2025-01-20')
-  },
-  {
-    id: '2',
-    year: 2025,
-    customer: { id: '2', name: 'Target' },
-    total_amount: 750000,
-    allocated_amount: 500000,
-    remaining_amount: 250000,
-    status: 'approved',
-    created_at: new Date('2025-01-15'),
-    updated_at: new Date('2025-01-20')
-  },
-  {
-    id: '3',
-    year: 2025,
-    customer: { id: '3', name: 'Costco' },
-    total_amount: 500000,
-    allocated_amount: 300000,
-    remaining_amount: 200000,
-    status: 'approved',
-    created_at: new Date('2025-01-15'),
-    updated_at: new Date('2025-01-20')
-  },
-  {
-    id: '4',
-    year: 2025,
-    customer: { id: '4', name: 'Test Company' },
-    total_amount: 250000,
-    allocated_amount: 100000,
-    remaining_amount: 150000,
-    status: 'approved',
-    created_at: new Date('2025-01-15'),
-    updated_at: new Date('2025-01-20')
-  },
-  {
-    id: '5',
-    year: 2026,
-    customer: { id: '1', name: 'Walmart' },
-    total_amount: 1200000,
-    allocated_amount: 0,
-    remaining_amount: 1200000,
-    status: 'draft',
-    created_at: new Date('2025-08-15'),
-    updated_at: new Date('2025-08-15')
-  }
-];
+// No more mock data - using real API calls
 
 const BudgetList = () => {
   const navigate = useNavigate();
@@ -107,17 +50,8 @@ const BudgetList = () => {
     setError(null);
     
     try {
-      // In a real app, we would call the API
-      // const response = await budgetService.getAll();
-      // setBudgets(response.data);
-      
-      // Using mock data for development
-      setTimeout(() => {
-        setBudgets(mockBudgets);
-        setLoading(false);
-      }, 500);
-    } catch (err) {
-      setError('Failed to fetch budgets. Please try again.');
+      const response = await service.getAll();
+      setData(response.data || response);
       setLoading(false);
     }
   };

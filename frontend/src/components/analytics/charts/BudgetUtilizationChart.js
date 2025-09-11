@@ -9,12 +9,7 @@ import {
   Legend
 } from 'recharts';
 
-// Mock data for development
-const mockData = [
-  { name: 'Used', value: 680000 },
-  { name: 'Committed', value: 150000 },
-  { name: 'Available', value: 370000 }
-];
+// No more mock data - using real API calls
 
 const BudgetUtilizationChart = ({ height = 400 }) => {
   const theme = useTheme();

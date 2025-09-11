@@ -10,6 +10,9 @@ const tradeSpendRoutes = require('./tradeSpend');
 const dashboardRoutes = require('./dashboard');
 const sapRoutes = require('./sap');
 const activityGridRoutes = require('./activityGrid');
+const aiChatbotRoutes = require('./aiChatbot');
+const customerRoutes = require('./customer');
+const productRoutes = require('./product');
 
 // Mount routes
 router.use('/auth', authRoutes);
@@ -21,6 +24,9 @@ router.use('/trade-spends', authenticateToken, tradeSpendRoutes);
 router.use('/dashboards', authenticateToken, dashboardRoutes);
 router.use('/sap', authenticateToken, sapRoutes);
 router.use('/activity-grid', authenticateToken, activityGridRoutes);
+router.use('/ai/chatbot', authenticateToken, aiChatbotRoutes);
+router.use('/customers', authenticateToken, customerRoutes);
+router.use('/products', authenticateToken, productRoutes);
 
 // Health check
 router.get('/health', (req, res) => {

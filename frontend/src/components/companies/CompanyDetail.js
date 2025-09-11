@@ -128,10 +128,7 @@ const CompanyDetail = () => {
     // In a real app, we would fetch data from the API
     // For now, we'll use mock data
     setLoading(true);
-    setTimeout(() => {
-      setCompany(mockCompany);
-      setLoading(false);
-    }, 1000);
+    
   }, [id]);
   
   // Handle tab change

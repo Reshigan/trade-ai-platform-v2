@@ -118,10 +118,7 @@ const UserDetail = () => {
     // In a real app, we would fetch data from the API
     // For now, we'll use mock data
     setLoading(true);
-    setTimeout(() => {
-      setUser(mockUser);
-      setLoading(false);
-    }, 1000);
+    
   }, [id]);
   
   // Handle tab change

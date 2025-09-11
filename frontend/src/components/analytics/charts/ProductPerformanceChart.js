@@ -13,19 +13,7 @@ import {
   Label
 } from 'recharts';
 
-// Mock data for development
-const mockData = [
-  { name: 'Premium Cereal', sales: 2100000, roi: 6.2, volume: 420000, category: 'Breakfast' },
-  { name: 'Organic Granola', sales: 1450000, roi: 5.8, volume: 290000, category: 'Breakfast' },
-  { name: 'Chocolate Cookies', sales: 1850000, roi: 7.4, volume: 370000, category: 'Snacks' },
-  { name: 'Fruit Juice', sales: 1650000, roi: 5.5, volume: 330000, category: 'Beverages' },
-  { name: 'Potato Chips', sales: 1950000, roi: 6.5, volume: 390000, category: 'Snacks' },
-  { name: 'Yogurt', sales: 1250000, roi: 4.2, volume: 250000, category: 'Dairy' },
-  { name: 'Ice Cream', sales: 1350000, roi: 5.4, volume: 270000, category: 'Frozen' },
-  { name: 'Canned Soup', sales: 950000, roi: 3.8, volume: 190000, category: 'Canned Goods' },
-  { name: 'Pasta', sales: 850000, roi: 4.3, volume: 170000, category: 'Dry Goods' },
-  { name: 'Coffee', sales: 1550000, roi: 6.2, volume: 310000, category: 'Beverages' }
-];
+// No more mock data - using real API calls
 
 // Group data by category
 const categories = [...new Set(mockData.map(item => item.category))];

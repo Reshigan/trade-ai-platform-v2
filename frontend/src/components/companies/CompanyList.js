@@ -41,81 +41,7 @@ import {
 
 import { PageHeader } from '../common';
 
-// Mock data for development
-const mockCompanies = [
-  {
-    id: '1',
-    name: 'Acme Corporation',
-    industry: 'Manufacturing',
-    region: 'North America',
-    status: 'active',
-    currency: 'USD',
-    createdAt: '2025-01-15T08:30:00Z'
-  },
-  {
-    id: '2',
-    name: 'Global Foods Ltd',
-    industry: 'Food & Beverage',
-    region: 'Europe',
-    status: 'active',
-    currency: 'EUR',
-    createdAt: '2025-02-20T10:15:00Z'
-  },
-  {
-    id: '3',
-    name: 'Tech Innovations Inc',
-    industry: 'Technology',
-    region: 'North America',
-    status: 'active',
-    currency: 'USD',
-    createdAt: '2025-03-10T14:45:00Z'
-  },
-  {
-    id: '4',
-    name: 'Pacific Traders',
-    industry: 'Retail',
-    region: 'Asia Pacific',
-    status: 'inactive',
-    currency: 'JPY',
-    createdAt: '2025-01-05T09:20:00Z'
-  },
-  {
-    id: '5',
-    name: 'European Markets',
-    industry: 'Retail',
-    region: 'Europe',
-    status: 'active',
-    currency: 'EUR',
-    createdAt: '2025-04-12T11:30:00Z'
-  },
-  {
-    id: '6',
-    name: 'Sunshine Beverages',
-    industry: 'Food & Beverage',
-    region: 'South America',
-    status: 'active',
-    currency: 'BRL',
-    createdAt: '2025-02-28T16:10:00Z'
-  },
-  {
-    id: '7',
-    name: 'Northern Manufacturing',
-    industry: 'Manufacturing',
-    region: 'Europe',
-    status: 'active',
-    currency: 'GBP',
-    createdAt: '2025-03-22T13:45:00Z'
-  },
-  {
-    id: '8',
-    name: 'Digital Solutions',
-    industry: 'Technology',
-    region: 'North America',
-    status: 'inactive',
-    currency: 'CAD',
-    createdAt: '2025-01-18T10:30:00Z'
-  }
-];
+// No more mock data - using real API calls
 
 // Currency display mapping
 const currencyDisplay = {
@@ -158,10 +84,7 @@ const CompanyList = () => {
     // In a real app, we would fetch data from the API
     // For now, we'll use mock data
     setLoading(true);
-    setTimeout(() => {
-      setCompanies(mockCompanies);
-      setLoading(false);
-    }, 1000);
+    
   }, []);
   
   // Handle page change
