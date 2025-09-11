@@ -78,7 +78,6 @@ services:
       LOG_LEVEL: ${LOG_LEVEL}
       SECURITY_LOG_DIR: /app/logs/security
       SECURITY_LOG_LEVEL: ${SECURITY_LOG_LEVEL}
-      AI_MODEL_API_KEY: ${AI_MODEL_API_KEY}
       RATE_LIMIT_WINDOW_MS: ${RATE_LIMIT_WINDOW_MS}
       RATE_LIMIT_MAX_REQUESTS: ${RATE_LIMIT_MAX_REQUESTS}
       SESSION_TIMEOUT: ${SESSION_TIMEOUT}
@@ -159,7 +158,9 @@ services:
       - DATA_DIR=/app/data
       - LOG_LEVEL=${LOG_LEVEL}
       - MONGODB_URI=mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongodb:27017/${MONGO_DATABASE}?authSource=admin
-      - AI_MODEL_API_KEY=${AI_MODEL_API_KEY}
+      - AI_MODEL_TYPE=${AI_MODEL_TYPE}
+      - AI_MODEL_PATH=${AI_MODEL_PATH}
+      - AI_USE_LOCAL_MODELS=${AI_USE_LOCAL_MODELS}
     volumes:
       - ./ai-services:/app
       - ai_services_models:/app/models

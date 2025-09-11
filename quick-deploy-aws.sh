@@ -36,15 +36,11 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-# Prompt for required information
-echo -e "${YELLOW}Please provide the following information:${NC}"
+# Note: AI services use local ML models, no external API keys required
+echo -e "${YELLOW}Configuration Information:${NC}"
+echo "✅ AI Services: Using local machine learning models (scikit-learn)"
+echo "✅ No external API keys required for AI functionality"
 echo ""
-
-read -p "OpenAI API Key: " OPENAI_API_KEY
-if [ -z "$OPENAI_API_KEY" ]; then
-    echo -e "${RED}OpenAI API Key is required${NC}"
-    exit 1
-fi
 
 read -p "Email for SSL certificates (default: admin@gonxt.tech): " SSL_EMAIL
 SSL_EMAIL=${SSL_EMAIL:-admin@gonxt.tech}
@@ -54,7 +50,7 @@ echo -e "${YELLOW}Configuration Summary:${NC}"
 echo "Domain: $DOMAIN"
 echo "Server IP: $SERVER_IP"
 echo "SSL Email: $SSL_EMAIL"
-echo "OpenAI API Key: [HIDDEN]"
+echo "AI Services: Local ML Models (No external APIs)"
 echo ""
 
 read -p "Continue with deployment? (y/N): " -n 1 -r
@@ -66,7 +62,6 @@ fi
 
 # Update environment file with provided values
 echo -e "${YELLOW}Updating environment configuration...${NC}"
-sed -i "s/AI_MODEL_API_KEY=your_openai_api_key_here/AI_MODEL_API_KEY=$OPENAI_API_KEY/" .env.production
 sed -i "s/SSL_EMAIL=admin@gonxt.tech/SSL_EMAIL=$SSL_EMAIL/" .env.production
 
 # Run main deployment script
