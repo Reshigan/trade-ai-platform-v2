@@ -185,13 +185,18 @@ fi
 source "$ENV_FILE"
 
 # Check required variables
-required_vars=("MONGO_USERNAME" "MONGO_PASSWORD" "REDIS_PASSWORD" "JWT_SECRET" "AI_MODEL_API_KEY")
+required_vars=("MONGO_USERNAME" "MONGO_PASSWORD" "REDIS_PASSWORD" "JWT_SECRET")
 for var in "${required_vars[@]}"; do
     if [ -z "${!var}" ]; then
         error "Required environment variable $var is not set in $ENV_FILE"
         exit 1
     fi
 done
+
+# Check AI configuration (optional since we use local models)
+if [ -z "${AI_MODEL_TYPE}" ]; then
+    warning "AI_MODEL_TYPE not set, defaulting to local_ml"
+fi
 
 info "Environment configuration validated"
 
