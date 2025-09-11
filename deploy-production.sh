@@ -8,7 +8,7 @@ set -e
 # Configuration
 DOMAIN="tradeai.gonxt.tech"
 SERVER_IP="13.247.139.75"
-PROJECT_DIR="/workspace/project/trade-ai-platform-v2"
+PROJECT_DIR="$(pwd)"
 ENV_FILE=".env.production"
 COMPOSE_FILE="docker-compose.production.yml"
 
