@@ -21,6 +21,7 @@ import uvicorn
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from src.prediction_model import TradeAIPredictionModel
 from utils.data_processor import TradeAIDataProcessor
+from config import get_model_config, validate_config
 
 # Define API models
 class ProductData(BaseModel):
