@@ -1,11 +1,17 @@
 const mongoose = require('mongoose');
 
 const promotionSchema = new mongoose.Schema({
+  // Company reference for multi-tenancy
+  company: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Company',
+    required: true
+  },
+  
   // Promotion Identification
   promotionId: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   },
   name: {
     type: String,

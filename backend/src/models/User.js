@@ -3,10 +3,18 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const userSchema = new mongoose.Schema({
+  // Company reference for multi-tenancy
+  company: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Company',
+    required: function() {
+      return this.role !== 'super_admin';
+    }
+  },
+  
   employeeId: {
     type: String,
     required: true,
-    unique: true,
     trim: true
   },
   email: {
@@ -33,12 +41,12 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['admin', 'board', 'director', 'manager', 'kam', 'sales_rep', 'sales_admin', 'analyst'],
+    enum: ['super_admin', 'admin', 'board', 'director', 'manager', 'kam', 'sales_rep', 'sales_admin', 'analyst'],
     required: true
   },
   department: {
     type: String,
-    enum: ['sales', 'marketing', 'finance', 'operations', 'admin'],
+    enum: ['sales', 'marketing', 'finance', 'operations', 'admin', 'system'],
     required: true
   },
   permissions: [{
@@ -110,7 +118,8 @@ const userSchema = new mongoose.Schema({
 
 // Indexes
 userSchema.index({ email: 1 });
-userSchema.index({ employeeId: 1 });
+userSchema.index({ company: 1, employeeId: 1 }, { unique: true }); // Unique employeeId per company
+userSchema.index({ company: 1 });
 userSchema.index({ role: 1 });
 userSchema.index({ department: 1 });
 userSchema.index({ isActive: 1 });

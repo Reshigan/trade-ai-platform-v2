@@ -6,14 +6,30 @@ const mongoose = require('mongoose');
 const config = require('./config');
 const logger = require('./utils/logger');
 
+// Import models to ensure they are registered
+require('./models/User');
+require('./models/Company');
+require('./models/Customer');
+require('./models/Product');
+require('./models/Vendor');
+require('./models/Budget');
+require('./models/Promotion');
+require('./models/Campaign');
+require('./models/TradeSpend');
+require('./models/ActivityGrid');
+require('./models/SalesHistory');
+require('./models/MasterData');
+
 // Import routes
 const authRoutes = require('./routes/auth');
+const companyRoutes = require('./routes/company');
 const userRoutes = require('./routes/user');
 const customerRoutes = require('./routes/customer');
 const productRoutes = require('./routes/product');
 const promotionRoutes = require('./routes/promotion');
 const budgetRoutes = require('./routes/budget');
 const dashboardRoutes = require('./routes/dashboard');
+const superAdminRoutes = require('./routes/superAdmin');
 
 const app = express();
 
@@ -47,14 +63,19 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
+// Import authentication middleware
+const { authenticateToken } = require('./middleware/auth');
+
 // API routes
 app.use('/api/auth', authRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/customers', customerRoutes);
-app.use('/api/products', productRoutes);
-app.use('/api/promotions', promotionRoutes);
-app.use('/api/budgets', budgetRoutes);
-app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/companies', authenticateToken, companyRoutes);
+app.use('/api/users', authenticateToken, userRoutes);
+app.use('/api/customers', authenticateToken, customerRoutes);
+app.use('/api/products', authenticateToken, productRoutes);
+app.use('/api/promotions', authenticateToken, promotionRoutes);
+app.use('/api/budgets', authenticateToken, budgetRoutes);
+app.use('/api/dashboard', authenticateToken, dashboardRoutes);
+app.use('/api/super-admin', superAdminRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

@@ -38,7 +38,8 @@ import {
   ChevronLeft,
   Business as BusinessIcon,
   Description as ReportIcon,
-  CalendarMonth as ActivityGridIcon
+  CalendarMonth as ActivityGridIcon,
+  SupervisorAccount as SuperAdminIcon
 } from '@mui/icons-material';
 
 import { AIAssistant, Walkthrough } from './common';
@@ -46,19 +47,31 @@ import logo from '../assets/new_logo.svg';
 
 const drawerWidth = 240;
 
-const menuItems = [
-  { text: 'Dashboard', icon: <DashboardIcon />, path: '/dashboard' },
-  { text: 'Budgets', icon: <BudgetIcon />, path: '/budgets' },
-  { text: 'Trade Spends', icon: <TradeSpendIcon />, path: '/trade-spends' },
-  { text: 'Promotions', icon: <PromotionIcon />, path: '/promotions' },
-  { text: 'Activity Grid', icon: <ActivityGridIcon />, path: '/activity-grid' },
-  { text: 'Customers', icon: <CustomerIcon />, path: '/customers' },
-  { text: 'Products', icon: <ProductIcon />, path: '/products' },
-  { text: 'Companies', icon: <BusinessIcon />, path: '/companies' },
-  { text: 'Reports', icon: <ReportIcon />, path: '/reports' },
-  { text: 'Analytics', icon: <AnalyticsIcon />, path: '/analytics' },
-  { text: 'Settings', icon: <SettingsIcon />, path: '/settings' },
-];
+const getMenuItems = (userRole) => {
+  const baseItems = [
+    { text: 'Dashboard', icon: <DashboardIcon />, path: '/dashboard' },
+    { text: 'Budgets', icon: <BudgetIcon />, path: '/budgets' },
+    { text: 'Trade Spends', icon: <TradeSpendIcon />, path: '/trade-spends' },
+    { text: 'Promotions', icon: <PromotionIcon />, path: '/promotions' },
+    { text: 'Activity Grid', icon: <ActivityGridIcon />, path: '/activity-grid' },
+    { text: 'Customers', icon: <CustomerIcon />, path: '/customers' },
+    { text: 'Products', icon: <ProductIcon />, path: '/products' },
+    { text: 'Companies', icon: <BusinessIcon />, path: '/companies' },
+    { text: 'Reports', icon: <ReportIcon />, path: '/reports' },
+    { text: 'Analytics', icon: <AnalyticsIcon />, path: '/analytics' },
+    { text: 'Settings', icon: <SettingsIcon />, path: '/settings' },
+  ];
+
+  // Add super admin menu item for super admins
+  if (userRole === 'super_admin') {
+    return [
+      { text: 'Super Admin', icon: <SuperAdminIcon />, path: '/super-admin' },
+      ...baseItems
+    ];
+  }
+
+  return baseItems;
+};
 
 const Layout = ({ children, user, onLogout }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -135,7 +148,7 @@ const Layout = ({ children, user, onLogout }) => {
       </Toolbar>
       <Divider />
       <List>
-        {menuItems.map((item) => (
+        {getMenuItems(user?.role).map((item) => (
           <ListItem key={item.text} disablePadding>
             <ListItemButton
               component={RouterLink}
@@ -195,7 +208,7 @@ const Layout = ({ children, user, onLogout }) => {
           </IconButton>
           
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-            {menuItems.find(item => item.path === location.pathname)?.text || 'Dashboard'}
+            {getMenuItems(user?.role).find(item => item.path === location.pathname)?.text || 'Dashboard'}
           </Typography>
           
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -263,7 +276,8 @@ const Layout = ({ children, user, onLogout }) => {
                   <Box sx={{ px: 1 }}>
                     <Typography variant="subtitle1">{user?.name || 'User'}</Typography>
                     <Typography variant="body2" color="text.secondary">
-                      {user?.role === 'admin' ? 'Administrator' : 
+                      {user?.role === 'super_admin' ? 'Super Administrator' :
+                       user?.role === 'admin' ? 'Administrator' : 
                        user?.role === 'manager' ? 'Manager' : 'Key Account Manager'}
                     </Typography>
                   </Box>

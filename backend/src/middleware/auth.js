@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const Company = require('../models/Company');
 const config = require('../config');
 const logger = require('../utils/logger');
 const crypto = require('crypto');
@@ -76,6 +77,7 @@ const authenticateToken = async (req, res, next) => {
       // For real database, use the full query
       user = await User.findById(decoded._id)
         .select('-password')
+        .populate('company', 'name domain currency timezone license.features')
         .populate('assignedCustomers', 'name code')
         .populate('assignedProducts', 'name sku')
         .populate('assignedVendors', 'name code');

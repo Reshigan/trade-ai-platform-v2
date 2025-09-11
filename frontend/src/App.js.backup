@@ -17,7 +17,6 @@ import { UserList, UserDetail, UserForm } from './components/users';
 import { ReportList, ReportBuilder } from './components/reports';
 import { CompanyList, CompanyDetail, CompanyForm } from './components/companies';
 import ActivityGrid from './components/activityGrid';
-import SuperAdminDashboard from './components/SuperAdmin/SuperAdminDashboard';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -339,18 +338,6 @@ function App() {
               </Layout>
             ) : (
               <Navigate to="/" replace />
-            )
-          }
-        />
-        <Route
-          path="/super-admin"
-          element={
-            isAuthenticated && user?.role === 'super_admin' ? (
-              <Layout user={user} onLogout={handleLogout}>
-                <SuperAdminDashboard />
-              </Layout>
-            ) : (
-              <Navigate to="/dashboard" replace />
             )
           }
         />

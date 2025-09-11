@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Test Page</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 2rem;
+        background-color: #f0f0f0;
+      }
+      .test-container {
+        background-color: white;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="test-container">
+      <h1>Test Page</h1>
+      <p>This is a simple test to verify HTML is working.</p>
+      <div id="react-test">React not loaded yet...</div>
+    </div>
+    
+    <!-- React and ReactDOM from CDN -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <script>
+      console.log('Script starting...');
+      console.log('React available:', typeof React !== 'undefined');
+      console.log('ReactDOM available:', typeof ReactDOM !== 'undefined');
+      
+      if (typeof React !== 'undefined' && typeof ReactDOM !== 'undefined') {
+        const { useState } = React;
+        
+        const TestComponent = () => {
+          const [count, setCount] = useState(0);
+          
+          return React.createElement('div', {}, [
+            React.createElement('h2', { key: 'title' }, 'React is working!'),
+            React.createElement('p', { key: 'count' }, `Count: ${count}`),
+            React.createElement('button', { 
+              key: 'button',
+              onClick: () => setCount(count + 1) 
+            }, 'Click me')
+          ]);
+        };
+        
+        const container = document.getElementById('react-test');
+        if (container) {
+          ReactDOM.render(React.createElement(TestComponent), container);
+        }
+      } else {
+        document.getElementById('react-test').innerHTML = 'React failed to load from CDN';
+      }
+    </script>
+  </body>
+</html>

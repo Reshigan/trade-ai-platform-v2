@@ -1,6 +1,13 @@
 const mongoose = require('mongoose');
 
 const budgetSchema = new mongoose.Schema({
+  // Company reference for multi-tenancy
+  company: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Company',
+    required: true
+  },
+  
   // Budget Identification
   name: {
     type: String,
@@ -8,8 +15,7 @@ const budgetSchema = new mongoose.Schema({
   },
   code: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   },
   year: {
     type: Number,
@@ -235,12 +241,13 @@ const budgetSchema = new mongoose.Schema({
 });
 
 // Indexes
-budgetSchema.index({ code: 1 });
-budgetSchema.index({ year: 1 });
-budgetSchema.index({ budgetType: 1 });
-budgetSchema.index({ status: 1 });
-budgetSchema.index({ 'scope.level': 1 });
-budgetSchema.index({ year: 1, budgetType: 1, status: 1 });
+budgetSchema.index({ company: 1, code: 1 }, { unique: true }); // Unique code per company
+budgetSchema.index({ company: 1 });
+budgetSchema.index({ company: 1, year: 1 });
+budgetSchema.index({ company: 1, budgetType: 1 });
+budgetSchema.index({ company: 1, status: 1 });
+budgetSchema.index({ company: 1, 'scope.level': 1 });
+budgetSchema.index({ company: 1, year: 1, budgetType: 1, status: 1 });
 
 // Pre-save middleware to calculate annual totals
 budgetSchema.pre('save', function(next) {

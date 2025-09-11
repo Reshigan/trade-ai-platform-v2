@@ -1,11 +1,17 @@
 const mongoose = require('mongoose');
 
 const tradeSpendSchema = new mongoose.Schema({
+  // Company reference for multi-tenancy
+  company: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Company',
+    required: true
+  },
+  
   // Spend Identification
   spendId: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   },
   
   // Spend Type

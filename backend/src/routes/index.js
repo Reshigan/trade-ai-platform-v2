@@ -4,6 +4,7 @@ const { authenticateToken } = require('../middleware/auth');
 
 // Import route modules
 const authRoutes = require('./auth');
+const companyRoutes = require('./company');
 const budgetRoutes = require('./budget');
 const promotionRoutes = require('./promotion');
 const tradeSpendRoutes = require('./tradeSpend');
@@ -18,6 +19,7 @@ const productRoutes = require('./product');
 router.use('/auth', authRoutes);
 
 // Protected routes
+router.use('/companies', authenticateToken, companyRoutes);
 router.use('/budgets', authenticateToken, budgetRoutes);
 router.use('/promotions', authenticateToken, promotionRoutes);
 router.use('/trade-spends', authenticateToken, tradeSpendRoutes);

@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trade AI Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            width: 100%;
+            max-width: 1200px;
+            min-height: 600px;
+            display: flex;
+        }
+        
+        .left-panel {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+            padding: 3rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .right-panel {
+            padding: 3rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+        
+        .features {
+            list-style: none;
+        }
+        
+        .features li {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+        
+        .login-form {
+            max-width: 400px;
+        }
+        
+        .form-title {
+            font-size: 2rem;
+            color: #1f2937;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #374151;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .login-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .error {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 0.75rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .success {
+            background: #d1fae5;
+            color: #059669;
+            padding: 0.75rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .demo-credentials {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: #f9fafb;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .demo-credentials h4 {
+            margin-bottom: 0.5rem;
+            color: #374151;
+        }
+        
+        .demo-credentials ul {
+            list-style: none;
+            margin: 0;
+        }
+        
+        .demo-credentials li {
+            margin-bottom: 0.25rem;
+            color: #6b7280;
+        }
+        
+        .dashboard {
+            display: none;
+            padding: 2rem;
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .logout-btn {
+            padding: 0.5rem 1rem;
+            background: #dc2626;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .stat-card h3 {
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #1f2937;
+        }
+        
+        .api-test {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .api-test h3 {
+            margin-bottom: 1rem;
+            color: #1f2937;
+        }
+        
+        .api-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        
+        .api-btn {
+            padding: 0.5rem 1rem;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .api-response {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 1rem;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 0.8rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                margin: 1rem;
+            }
+            
+            .left-panel, .right-panel {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Login Section -->
+        <div id="loginSection">
+            <div class="left-panel">
+                <div class="logo">🚀 Trade AI Platform</div>
+                <div class="tagline">Enterprise-grade FMCG Trade Spend Management with AI-Powered Analytics</div>
+                <ul class="features">
+                    <li>Multi-tenant Architecture with SSO</li>
+                    <li>AI-Powered Analytics & Forecasting</li>
+                    <li>Complete Trade Spend Management</li>
+                    <li>Promotion ROI Optimization</li>
+                    <li>Real-time Dashboards</li>
+                    <li>SAP Integration Ready</li>
+                    <li>Advanced Reporting & Exports</li>
+                    <li>Company-specific AI Chat</li>
+                </ul>
+            </div>
+            
+            <div class="right-panel">
+                <form class="login-form" id="loginForm">
+                    <h2 class="form-title">Welcome Back</h2>
+                    
+                    <div id="errorMessage" class="error" style="display: none;"></div>
+                    <div id="successMessage" class="success" style="display: none;"></div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="companyDomain">Company Domain (optional)</label>
+                        <input type="text" id="companyDomain" name="companyDomain" placeholder="e.g., gonxt (leave empty for super admin)">
+                    </div>
+                    
+                    <button type="submit" class="login-btn" id="loginBtn">Sign In</button>
+                    
+                    <div class="demo-credentials">
+                        <h4>Demo Credentials:</h4>
+                        <ul>
+                            <li><strong>Super Admin:</strong> superadmin@tradeai.com / SuperAdmin123!</li>
+                            <li><strong>GONXT Admin:</strong> admin@gonxt.co.za / GonxtAdmin123! (domain: gonxt)</li>
+                            <li><strong>GONXT Manager:</strong> manager@gonxt.co.za / GonxtManager123! (domain: gonxt)</li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Dashboard Section -->
+        <div id="dashboardSection" class="dashboard">
+            <div class="dashboard-header">
+                <div>
+                    <h1>Trade AI Dashboard</h1>
+                    <div class="user-info">
+                        <span id="userInfo"></span>
+                    </div>
+                </div>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Customers</h3>
+                    <div class="value" id="customerCount">-</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Active Products</h3>
+                    <div class="value" id="productCount">-</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Active Promotions</h3>
+                    <div class="value" id="promotionCount">-</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Budget Utilization</h3>
+                    <div class="value" id="budgetUtilization">-</div>
+                </div>
+            </div>
+            
+            <div class="api-test">
+                <h3>API Testing & Data Verification</h3>
+                <div class="api-buttons">
+                    <button class="api-btn" onclick="testAPI('/companies')">Companies</button>
+                    <button class="api-btn" onclick="testAPI('/customers')">Customers</button>
+                    <button class="api-btn" onclick="testAPI('/products')">Products</button>
+                    <button class="api-btn" onclick="testAPI('/promotions')">Promotions</button>
+                    <button class="api-btn" onclick="testAPI('/budgets')">Budgets</button>
+                    <button class="api-btn" onclick="testAPI('/trade-spends')">Trade Spends</button>
+                </div>
+                <pre id="apiResponse" class="api-response">Click any button above to test API endpoints and view real data from the database.</pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = '/api';
+        let currentUser = null;
+        let authToken = null;
+
+        // Login form handler
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const companyDomain = document.getElementById('companyDomain').value;
+            const loginBtn = document.getElementById('loginBtn');
+            
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'Signing in...';
+            
+            hideMessages();
+            
+            try {
+                const credentials = { email, password };
+                if (companyDomain) {
+                    credentials.companyDomain = companyDomain;
+                }
+                
+                const response = await fetch(`${API_BASE}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    mode: 'cors',
+                    credentials: 'omit',
+                    body: JSON.stringify(credentials)
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    currentUser = data.data.user;
+                    authToken = data.data.tokens ? data.data.tokens.accessToken : data.data.accessToken;
+                    
+                    showSuccess('Login successful! Loading dashboard...');
+                    
+                    setTimeout(() => {
+                        showDashboard();
+                        loadDashboardData();
+                    }, 1000);
+                } else {
+                    showError(data.message || 'Login failed');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showError('Network error. Please try again.');
+            } finally {
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'Sign In';
+            }
+        });
+
+        function showDashboard() {
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('dashboardSection').style.display = 'block';
+            
+            const userInfo = document.getElementById('userInfo');
+            const companyInfo = currentUser.company ? ` (${currentUser.company.name})` : ' (Super Admin)';
+            userInfo.textContent = `${currentUser.firstName} ${currentUser.lastName} - ${currentUser.role}${companyInfo}`;
+        }
+
+        async function loadDashboardData() {
+            try {
+                // Load basic stats
+                const [customers, products, promotions, budgets] = await Promise.all([
+                    apiCall('/customers'),
+                    apiCall('/products'),
+                    apiCall('/promotions'),
+                    apiCall('/budgets')
+                ]);
+
+                document.getElementById('customerCount').textContent = customers.data?.length || customers.customers?.length || 0;
+                document.getElementById('productCount').textContent = products.data?.length || products.products?.length || 0;
+                document.getElementById('promotionCount').textContent = promotions.data?.length || promotions.promotions?.length || 0;
+                
+                const budgetCount = budgets.data?.length || budgets.budgets?.length || 0;
+                document.getElementById('budgetUtilization').textContent = `${budgetCount} Budgets`;
+                
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+            }
+        }
+
+        async function testAPI(endpoint) {
+            const responseEl = document.getElementById('apiResponse');
+            responseEl.textContent = 'Loading...';
+            
+            try {
+                const data = await apiCall(endpoint);
+                responseEl.textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                responseEl.textContent = `Error: ${error.message}`;
+            }
+        }
+
+        async function apiCall(endpoint) {
+            const response = await fetch(`${API_BASE}${endpoint}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${authToken}`,
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                mode: 'cors',
+                credentials: 'omit'
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            
+            return await response.json();
+        }
+
+        function logout() {
+            currentUser = null;
+            authToken = null;
+            document.getElementById('loginSection').style.display = 'flex';
+            document.getElementById('dashboardSection').style.display = 'none';
+            document.getElementById('loginForm').reset();
+            hideMessages();
+        }
+
+        function showError(message) {
+            const errorEl = document.getElementById('errorMessage');
+            errorEl.textContent = message;
+            errorEl.style.display = 'block';
+            document.getElementById('successMessage').style.display = 'none';
+        }
+
+        function showSuccess(message) {
+            const successEl = document.getElementById('successMessage');
+            successEl.textContent = message;
+            successEl.style.display = 'block';
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+
+        function hideMessages() {
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+        }
+
+        // Auto-fill demo credentials
+        document.addEventListener('DOMContentLoaded', () => {
+            // You can uncomment one of these for quick testing:
+            // document.getElementById('email').value = 'superadmin@tradeai.com';
+            // document.getElementById('password').value = 'SuperAdmin123!';
+            
+            // document.getElementById('email').value = 'admin@gonxt.co.za';
+            // document.getElementById('password').value = 'GonxtAdmin123!';
+            // document.getElementById('companyDomain').value = 'gonxt';
+        });
+    </script>
+</body>
+</html>

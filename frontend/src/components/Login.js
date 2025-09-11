@@ -16,21 +16,36 @@ import {
   Link
 } from '@mui/material';
 import { Visibility, VisibilityOff, Email, Lock } from '@mui/icons-material';
+import authService from '../services/api/authService';
 
 const Login = ({ onLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [companyDomain, setCompanyDomain] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
 
-    // Simulate API call
-    
+    try {
+      const credentials = { 
+        email, 
+        password,
+        ...(companyDomain && { companyDomain })
+      };
+      
+      const userData = await authService.login(credentials);
+      onLogin(userData.user);
+    } catch (error) {
+      console.error('Login error:', error);
+      setError(error.response?.data?.message || error.message || 'Login failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleClickShowPassword = () => {
@@ -113,6 +128,17 @@ const Login = ({ onLogin }) => {
                     ),
                   }}
                 />
+                <TextField
+                  margin="normal"
+                  fullWidth
+                  id="companyDomain"
+                  label="Company Domain (optional - for company admins)"
+                  name="companyDomain"
+                  autoComplete="organization"
+                  value={companyDomain}
+                  onChange={(e) => setCompanyDomain(e.target.value)}
+                  helperText="Leave empty for super admin login"
+                />
                 <Button
                   type="submit"
                   fullWidth
@@ -132,13 +158,13 @@ const Login = ({ onLogin }) => {
               
               <Box sx={{ mt: 2 }}>
                 <Typography variant="body2" gutterBottom>
-                  <strong>Admin:</strong> admin@tradeai.com / password123
+                  <strong>Super Admin:</strong> superadmin@tradeai.com / SuperAdmin123!
                 </Typography>
                 <Typography variant="body2" gutterBottom>
-                  <strong>Manager:</strong> manager@tradeai.com / password123
+                  <strong>GONXT Admin:</strong> admin@gonxt.co.za / GonxtAdmin123! (domain: gonxt)
                 </Typography>
                 <Typography variant="body2">
-                  <strong>KAM:</strong> kam@tradeai.com / password123
+                  <strong>GONXT Manager:</strong> manager@gonxt.co.za / GonxtManager123! (domain: gonxt)
                 </Typography>
               </Box>
             </CardContent>
