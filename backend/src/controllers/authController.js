@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Company = require('../models/Company');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const config = require('../config');
@@ -124,10 +125,77 @@ exports.quickLogin = asyncHandler(async (req, res, next) => {
 
 // Login
 exports.login = asyncHandler(async (req, res, next) => {
-  const { email, password } = req.body;
+  const { email, password, companyDomain } = req.body;
   
-  // Find user and verify password
-  const user = await User.findByCredentials(email, password);
+  // For super admin, no company domain needed
+  if (email === 'superadmin@tradeai.com') {
+    const user = await User.findByCredentials(email, password);
+    
+    // Generate tokens
+    const { accessToken, refreshToken } = generateTokens(user);
+    
+    // Save refresh token
+    user.refreshToken = refreshToken;
+    await user.save();
+    
+    // Log the login
+    logger.info('Audit Log', {
+      action: 'user_login',
+      userId: user._id,
+      email: user.email,
+      ip: req.ip
+    });
+    
+    return res.status(200).json({
+      success: true,
+      message: 'Login successful',
+      data: {
+        user: {
+          id: user._id,
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          role: user.role,
+          isActive: user.isActive
+        },
+        accessToken,
+        refreshToken
+      }
+    });
+  }
+  
+  // For company users, require company domain
+  if (!companyDomain) {
+    throw new AppError('Company domain is required', 400);
+  }
+  
+  // Find company by domain
+  const company = await Company.findOne({ domain: companyDomain, isActive: true });
+  if (!company) {
+    throw new AppError('Invalid company domain', 400);
+  }
+  
+  // Check if company license is valid
+  if (!company.isLicenseValid()) {
+    throw new AppError('Company license has expired', 403);
+  }
+  
+  // Find user by email and company
+  const user = await User.findOne({ 
+    email, 
+    company: company._id, 
+    isActive: true 
+  });
+  
+  if (!user) {
+    throw new AppError('Invalid login credentials', 401);
+  }
+  
+  // Verify password
+  const isMatch = await user.comparePassword(password);
+  if (!isMatch) {
+    throw new AppError('Invalid login credentials', 401);
+  }
   
   // Check if 2FA is enabled
   if (user.twoFactorEnabled) {
@@ -151,16 +219,23 @@ exports.login = asyncHandler(async (req, res, next) => {
   // Generate tokens
   const { accessToken, refreshToken } = generateTokens(user);
   
-  // Update last login
+  // Save refresh token
+  user.refreshToken = refreshToken;
   user.lastLogin = new Date();
   await user.save();
   
-  // Cache user data
-  await cacheService.cacheUser(user._id.toString(), user);
+  // Update company last login if applicable
+  if (company) {
+    company.lastLoginAt = new Date();
+    await company.save();
+  }
   
   // Log login
-  logger.logAudit('user_login', user._id, {
+  logger.info('Audit Log', {
+    action: 'user_login',
+    userId: user._id,
     email: user.email,
+    company: company ? company.name : 'System',
     ip: req.ip
   });
   
@@ -174,7 +249,15 @@ exports.login = asyncHandler(async (req, res, next) => {
         firstName: user.firstName,
         lastName: user.lastName,
         role: user.role,
-        department: user.department
+        department: user.department,
+        company: company ? {
+          id: company._id,
+          name: company.name,
+          domain: company.domain,
+          currency: company.currency,
+          timezone: company.timezone,
+          features: company.license.features
+        } : null
       },
       tokens: {
         accessToken,

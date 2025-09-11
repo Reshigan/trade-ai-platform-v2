@@ -18,6 +18,7 @@ const { authenticateToken } = require('./middleware/auth');
 
 // Import routes
 const authRoutes = require('./routes/auth');
+const companyRoutes = require('./routes/company');
 const userRoutes = require('./routes/user');
 const customerRoutes = require('./routes/customer');
 const productRoutes = require('./routes/product');
@@ -120,6 +121,13 @@ app.get('/api/health', (req, res) => {
 
 // API Routes
 app.use('/api/auth', authRoutes);
+
+// Test route
+app.get('/api/companies/test', (req, res) => {
+  res.json({ success: true, message: 'Test route works' });
+});
+
+app.use('/api/companies', authenticateToken, companyRoutes);
 app.use('/api/users', authenticateToken, userRoutes);
 app.use('/api/customers', authenticateToken, customerRoutes);
 app.use('/api/products', authenticateToken, productRoutes);
