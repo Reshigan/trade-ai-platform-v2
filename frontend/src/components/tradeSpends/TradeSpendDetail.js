@@ -32,7 +32,7 @@ import {
 import { format } from 'date-fns';
 
 import { PageHeader, StatusChip, ConfirmDialog } from '../common';
-import { tradeSpendService } from '../../services/api';
+import { tradeSpendService, budgetService } from '../../services/api';
 import TradeSpendForm from './TradeSpendForm';
 
 // Mock data for development
@@ -83,10 +83,14 @@ const TradeSpendDetail = () => {
     setError(null);
     
     try {
-      const response = await service.getAll();
-      setData(response.data || response);
+      const response = await tradeSpendService.getById(id);
+      setTradeSpend(response.data || response);
       setLoading(false);
     } catch (error) {
+      console.error('Failed to fetch data:', error);
+      setError(error.message || "An error occurred");
+      setLoading(false);
+    }
   };
 
   // Fetch budgets from API
@@ -153,9 +157,10 @@ const TradeSpendDetail = () => {
       // Refresh trade spend
       fetchTradeSpend();
       setOpenEditForm(false);
-    } catch (err) {
-      console.error('Error updating trade spend:', err);
     } catch (error) {
+      console.error('Error updating trade spend:', error);
+      setError(error.message || "An error occurred");
+    }
   };
 
   // Format currency

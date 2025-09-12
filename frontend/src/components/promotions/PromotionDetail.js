@@ -36,7 +36,7 @@ import {
 import { format } from 'date-fns';
 
 import { PageHeader, StatusChip, ConfirmDialog } from '../common';
-import { promotionService } from '../../services/api';
+import { promotionService, customerService } from '../../services/api';
 import PromotionForm from './PromotionForm';
 
 // Mock data for development
@@ -95,10 +95,14 @@ const PromotionDetail = () => {
     setError(null);
     
     try {
-      const response = await service.getAll();
-      setData(response.data || response);
+      const response = await promotionService.getById(id);
+      setPromotion(response.data || response);
       setLoading(false);
     } catch (error) {
+      console.error('Failed to fetch data:', error);
+      setError(error.message || "An error occurred");
+      setLoading(false);
+    }
   };
 
   // Fetch customers from API
@@ -165,9 +169,10 @@ const PromotionDetail = () => {
       // Refresh promotion
       fetchPromotion();
       setOpenEditForm(false);
-    } catch (err) {
-      console.error('Error updating promotion:', err);
     } catch (error) {
+      console.error('Error updating promotion:', error);
+      setError(error.message || "An error occurred");
+    }
   };
 
   // Format currency

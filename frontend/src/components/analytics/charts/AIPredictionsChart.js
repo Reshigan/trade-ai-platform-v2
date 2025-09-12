@@ -16,7 +16,7 @@ import {
 
 // No more mock data - using real API calls
 
-const AIPredictionsChart = ({ height = 400 }) => {
+const AIPredictionsChart = ({ data = [], height = 400 }) => {
   const theme = useTheme();
 
   // Format currency for tooltip
@@ -32,7 +32,7 @@ const AIPredictionsChart = ({ height = 400 }) => {
   };
 
   // Find the index where predictions start
-  const predictionStartIndex = mockData.findIndex(item => item.isPrediction);
+  const predictionStartIndex = data.findIndex(item => item.isPrediction);
 
   // Custom tooltip
   const CustomTooltip = ({ active, payload, label }) => {
@@ -81,7 +81,7 @@ const AIPredictionsChart = ({ height = 400 }) => {
     <Box sx={{ width: '100%', height }}>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
-          data={mockData}
+          data={data}
           margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
         >
           <CartesianGrid strokeDasharray="3 3" stroke={theme.palette.divider} />
@@ -95,15 +95,15 @@ const AIPredictionsChart = ({ height = 400 }) => {
           
           {/* Prediction area */}
           <ReferenceArea 
-            x1={mockData[predictionStartIndex - 1].month} 
-            x2={mockData[mockData.length - 1].month} 
+            x1={data[predictionStartIndex - 1].month} 
+            x2={data[data.length - 1].month} 
             fill={theme.palette.grey[100]} 
             fillOpacity={0.5} 
           />
           
           {/* Reference line for current month */}
           <ReferenceLine 
-            x={mockData[predictionStartIndex - 1].month} 
+            x={data[predictionStartIndex - 1].month} 
             stroke={theme.palette.grey[500]} 
             strokeDasharray="3 3" 
             label={{ 

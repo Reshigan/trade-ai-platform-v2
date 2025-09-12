@@ -1,5 +1,5 @@
 # Build stage
-FROM node:16.14-alpine AS builder
+FROM node:18-alpine AS builder
 
 WORKDIR /app
 
@@ -10,7 +10,6 @@ COPY package*.json ./
 RUN npm config set fetch-retry-mintimeout 20000 && \
     npm config set fetch-retry-maxtimeout 120000 && \
     npm config set fetch-retries 5 && \
-    npm config set network-timeout 300000 && \
     npm config set registry https://registry.npmjs.org/
 
 # Install dependencies with multiple attempts using legacy-peer-deps and force

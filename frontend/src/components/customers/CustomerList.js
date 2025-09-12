@@ -51,8 +51,8 @@ const CustomerList = () => {
     setError(null);
     
     try {
-      const response = await service.getAll();
-      setData(response.data || response);
+      const response = await customerService.getAll();
+      setCustomers(response.data || response);
       setLoading(false);
     } catch (error) {
       console.error("Error:", error);

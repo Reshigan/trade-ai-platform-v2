@@ -103,8 +103,8 @@ const BudgetDetail = () => {
     setError(null);
     
     try {
-      const response = await service.getAll();
-      setData(response.data || response);
+      const response = await budgetService.getById(id);
+      setBudget(response.data || response);
       setLoading(false);
     } catch (error) {
       console.error('Error loading budget:', error);

@@ -11,7 +11,7 @@ import {
 
 // No more mock data - using real API calls
 
-const BudgetUtilizationChart = ({ height = 400 }) => {
+const BudgetUtilizationChart = ({ data = [], height = 400 }) => {
   const theme = useTheme();
 
   // Colors for the pie chart
@@ -32,10 +32,10 @@ const BudgetUtilizationChart = ({ height = 400 }) => {
   };
 
   // Calculate total budget
-  const totalBudget = mockData.reduce((sum, item) => sum + item.value, 0);
+  const totalBudget = data.reduce((sum, item) => sum + item.value, 0);
 
   // Calculate percentages
-  const dataWithPercentage = mockData.map(item => ({
+  const dataWithPercentage = data.map(item => ({
     ...item,
     percentage: ((item.value / totalBudget) * 100).toFixed(1)
   }));

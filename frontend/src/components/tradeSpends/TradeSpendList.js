@@ -58,10 +58,14 @@ const TradeSpendList = () => {
     setError(null);
     
     try {
-      const response = await service.getAll();
-      setData(response.data || response);
+      const response = await tradeSpendService.getAll();
+      setTradeSpends(response.data || response);
       setLoading(false);
     } catch (error) {
+      console.error('Failed to fetch data:', error);
+      setError(error.message || "An error occurred");
+      setLoading(false);
+    }
   };
 
   // Fetch budgets from API
@@ -135,18 +139,22 @@ const TradeSpendList = () => {
     // Apply customer filter
     if (filters.customer && tradeSpend.budget.customer.id !== filters.customer) {
       return false;
+    }
     
     // Apply type filter
     if (filters.type && tradeSpend.type !== filters.type) {
       return false;
+    }
     
     // Apply status filter
     if (filters.status && tradeSpend.status !== filters.status) {
       return false;
+    }
     
     // Apply budget filter
     if (selectedBudgetId && tradeSpend.budget.id !== selectedBudgetId) {
       return false;
+    }
     
     // Apply search filter
     if (filters.search) {
@@ -157,6 +165,7 @@ const TradeSpendList = () => {
         tradeSpend.type.toLowerCase().includes(searchTerm) ||
         tradeSpend.status.toLowerCase().includes(searchTerm)
       );
+    }
     
     return true;
   });
@@ -197,6 +206,7 @@ const TradeSpendList = () => {
       id: 'status', 
       label: 'Status',
       format: (value) => <StatusChip status={value} />
+    }
   ];
 
   return (

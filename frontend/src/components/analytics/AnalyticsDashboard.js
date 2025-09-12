@@ -32,6 +32,7 @@ import {
 } from '@mui/icons-material';
 
 import { PageHeader } from '../common';
+import { analyticsService } from '../../services/api';
 import SalesPerformanceChart from './charts/SalesPerformanceChart';
 import BudgetUtilizationChart from './charts/BudgetUtilizationChart';
 import ROIAnalysisChart from './charts/ROIAnalysisChart';
@@ -53,6 +54,17 @@ const mockProducts = [
   { id: '8', name: 'Malva Pudding Mix' }
 ];
 
+const mockCustomers = [
+  { id: '1', name: 'Pick n Pay' },
+  { id: '2', name: 'Shoprite' },
+  { id: '3', name: 'Woolworths' },
+  { id: '4', name: 'Spar' },
+  { id: '5', name: 'Checkers' },
+  { id: '6', name: 'Food Lover\'s Market' },
+  { id: '7', name: 'OK Foods' },
+  { id: '8', name: 'Makro' }
+];
+
 const mockCategories = [
   'Beverages',
   'Snacks',
@@ -68,6 +80,7 @@ const AnalyticsDashboard = () => {
   const [tabValue, setTabValue] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [analyticsData, setAnalyticsData] = useState({});
   const [filters, setFilters] = useState({
     dateRange: {
       startDate: new Date(new Date().getFullYear(), 0, 1), // Jan 1 of current year
@@ -91,8 +104,8 @@ const AnalyticsDashboard = () => {
     setError(null);
     
     try {
-      const response = await service.getAll();
-      setData(response.data || response);
+      const response = await analyticsService.getAll();
+      setAnalyticsData(response.data || response);
       setLoading(false);
     } catch (error) {
       console.error('Error loading data:', error);

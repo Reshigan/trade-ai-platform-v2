@@ -54,14 +54,35 @@ const BudgetForm = ({ open, onClose, onSubmit, budget = null }) => {
   // Fetch customers from API
   const fetchCustomers = async () => {
     try {
-      const response = await service.getAll();
-      setData(response.data || response);
+      const response = await customerService.getAll();
+      setCustomers(response.data || response);
       setLoading(false);
     } catch (error) {
       console.error('Error loading customers:', error);
-      setError(error.message || 'Failed to load customers');
+      setErrors({ general: error.message || 'Failed to load customers' });
       setLoading(false);
     }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      await onSubmit(formData);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setErrors({ general: error.message || 'Failed to submit form' });
+      setLoading(false);
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   return (

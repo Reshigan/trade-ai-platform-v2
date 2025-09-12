@@ -149,10 +149,14 @@ const ProductDetail = () => {
     setError(null);
     
     try {
-      const response = await service.getAll();
-      setData(response.data || response);
+      const response = await productService.getById(id);
+      setProduct(response.data || response);
       setLoading(false);
     } catch (error) {
+      console.error('Failed to fetch data:', error);
+      setError(error.message || "An error occurred");
+      setLoading(false);
+    }
   };
 
   // Fetch promotions from API
@@ -192,9 +196,9 @@ const ProductDetail = () => {
       
       // Using mock data for development
       setSalesData(mockSalesData);
-    } catch (err) {
-      console.error('Failed to fetch sales data:', err);
     } catch (error) {
+      console.error('Failed to fetch sales data:', error);
+    }
   };
 
   // Handle tab change
@@ -226,10 +230,10 @@ const ProductDetail = () => {
         setOpenDeleteDialog(false);
         navigate('/products');
       }, 1000);
-    } catch (err) {
-      console.error('Failed to delete product:', err);
-      setDeleteLoading(false);
     } catch (error) {
+      console.error('Failed to delete product:', error);
+      setDeleteLoading(false);
+    }
   };
 
   // Handle form submit
@@ -241,9 +245,9 @@ const ProductDetail = () => {
       // Refresh product
       fetchProduct();
       setOpenEditForm(false);
-    } catch (err) {
-      console.error('Error updating product:', err);
     } catch (error) {
+      console.error('Error updating product:', error);
+    }
   };
 
   // Format currency - South African Rand

@@ -14,7 +14,7 @@ import {
 
 // No more mock data - using real API calls
 
-const ROIAnalysisChart = ({ height = 400 }) => {
+const ROIAnalysisChart = ({ data = [], height = 400 }) => {
   const theme = useTheme();
 
   // Format currency for tooltip
@@ -61,7 +61,7 @@ const ROIAnalysisChart = ({ height = 400 }) => {
     <Box sx={{ width: '100%', height }}>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
-          data={mockData}
+          data={data}
           margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
         >
           <CartesianGrid strokeDasharray="3 3" stroke={theme.palette.divider} />

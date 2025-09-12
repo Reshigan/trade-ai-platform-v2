@@ -176,8 +176,8 @@ const CustomerDetail = () => {
     setError(null);
     
     try {
-      const response = await service.getAll();
-      setData(response.data || response);
+      const response = await customerService.getById(id);
+      setCustomer(response.data || response);
       setLoading(false);
     } catch (error) {
       console.error("Error:", error);
@@ -223,15 +223,8 @@ const CustomerDetail = () => {
       
       // Using mock data for development
       setTradeSpends(mockTradeSpends);
-    } catch (err) {
-      console.error('Failed to fetch trade spends:', err);
-    }
     } catch (error) {
-      console.error("Error:", error);
-      setError(error.message || "An error occurred");
-      setLoading(false);
-    }
-      console.error("Error:", error);
+      console.error('Failed to fetch trade spends:', error);
       setError(error.message || "An error occurred");
       setLoading(false);
     }
@@ -266,18 +259,10 @@ const CustomerDetail = () => {
         setOpenDeleteDialog(false);
         navigate('/customers');
       }, 1000);
-    } catch (err) {
-      console.error('Failed to delete customer:', err);
-      setDeleteLoading(false);
-    }
     } catch (error) {
-      console.error("Error:", error);
+      console.error('Failed to delete customer:', error);
+      setDeleteLoading(false);
       setError(error.message || "An error occurred");
-      setLoading(false);
-    }
-      console.error("Error:", error);
-      setError(error.message || "An error occurred");
-      setLoading(false);
     }
   };
 
@@ -290,17 +275,9 @@ const CustomerDetail = () => {
       // Refresh customer
       fetchCustomer();
       setOpenEditForm(false);
-    } catch (err) {
-      console.error('Error updating customer:', err);
-    }
     } catch (error) {
-      console.error("Error:", error);
+      console.error('Error updating customer:', error);
       setError(error.message || "An error occurred");
-      setLoading(false);
-    }
-      console.error("Error:", error);
-      setError(error.message || "An error occurred");
-      setLoading(false);
     }
   };
 

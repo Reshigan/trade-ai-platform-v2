@@ -15,14 +15,13 @@ import {
 
 // No more mock data - using real API calls
 
-// Group data by category
-const categories = [...new Set(mockData.map(item => item.category))];
-const dataByCategory = categories.map(category => ({
-  name: category,
-  data: mockData.filter(item => item.category === category)
-}));
-
-const ProductPerformanceChart = ({ height = 400 }) => {
+const ProductPerformanceChart = ({ data = [], height = 400 }) => {
+  // Group data by category
+  const categories = [...new Set(data.map(item => item.category))];
+  const dataByCategory = categories.map(category => ({
+    name: category,
+    data: data.filter(item => item.category === category)
+  }));
   const theme = useTheme();
 
   // Colors for different categories
