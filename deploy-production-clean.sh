@@ -14,7 +14,7 @@ echo "Environment: Production"
 echo
 
 # Configuration
-COMPOSE_FILE="docker-compose.aws-production.yml"
+COMPOSE_FILE="docker-compose.aws-production-simple.yml"
 PROJECT_NAME="trade-ai-platform"
 DOMAIN="tradeai.gonxt.tech"
 SERVER_IP="13.247.139.75"

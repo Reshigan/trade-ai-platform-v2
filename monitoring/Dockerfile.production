@@ -1,0 +1,37 @@
+FROM node:18-alpine
+
+# Set build arguments
+ARG BUILD_DATE
+ARG VERSION
+
+# Set labels
+LABEL maintainer="Trade AI Platform Team"
+LABEL build_date=$BUILD_DATE
+LABEL version=$VERSION
+
+# Set working directory
+WORKDIR /app
+
+# Install dependencies
+COPY package*.json ./
+RUN npm ci --only=production && npm cache clean --force
+
+# Copy application code
+COPY . .
+
+# Create non-root user
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S monitoring -u 1001 -G nodejs && \
+    chown -R monitoring:nodejs /app
+
+USER monitoring
+
+# Expose port
+EXPOSE 8080
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost:8080/health || exit 1
+
+# Start application
+CMD ["node", "server.js"]
