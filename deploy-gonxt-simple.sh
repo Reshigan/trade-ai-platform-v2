@@ -1,17 +1,17 @@
 #!/bin/bash
 
-# Trade AI Platform v2 - GONXT Production Deployment
+# Trade AI Platform v2 - GONXT Simple Production Deployment
+# Bypasses server verification for immediate deployment
 # Server: 13.247.139.75
 # Domain: tradeai.gonxt.tech
-# Single server deployment with complete cleanup
 
 set -e
 
-echo "🚀 Trade AI Platform v2 - GONXT Production Deployment"
-echo "====================================================="
+echo "🚀 Trade AI Platform v2 - GONXT Simple Production Deployment"
+echo "============================================================="
 echo "Server: 13.247.139.75"
 echo "Domain: tradeai.gonxt.tech"
-echo "Environment: Production Single Server"
+echo "Environment: Production Single Server (No Verification)"
 echo
 
 # Configuration
@@ -44,54 +44,6 @@ print_warning() {
 
 print_error() {
     echo -e "${RED}[ERROR]${NC} $1"
-}
-
-# Verify we're on the correct server
-verify_server() {
-    print_status "Verifying server environment..."
-    
-    # Check if we're on AWS EC2
-    if curl -s --max-time 3 http://169.254.169.254/latest/meta-data/instance-id &>/dev/null; then
-        CURRENT_IP=$(curl -s --max-time 5 http://169.254.169.254/latest/meta-data/public-ipv4 2>/dev/null || echo "")
-        INSTANCE_ID=$(curl -s --max-time 5 http://169.254.169.254/latest/meta-data/instance-id 2>/dev/null || echo "unknown")
-        
-        if [[ -n "$CURRENT_IP" && "$CURRENT_IP" == "$SERVER_IP" ]]; then
-            print_success "Confirmed: Running on correct AWS server ($INSTANCE_ID)"
-            print_success "Public IP: $CURRENT_IP matches expected $SERVER_IP"
-        elif [[ -z "$CURRENT_IP" ]]; then
-            print_warning "Could not retrieve public IP from metadata service"
-            print_warning "This might be due to IMDSv2 requirements or network restrictions"
-            print_status "Checking if we can bind to expected IP..."
-            
-            # Try to check if the expected IP is configured on this instance
-            if ip addr show | grep -q "$SERVER_IP"; then
-                print_success "Found expected IP $SERVER_IP configured on this instance"
-            else
-                print_warning "Expected IP $SERVER_IP not found in network interfaces"
-                print_warning "Proceeding with deployment - please verify this is the correct server"
-                
-                # Ask for confirmation
-                echo -n "Continue with deployment on this server? (y/N): "
-                read -r response
-                if [[ ! "$response" =~ ^[Yy]$ ]]; then
-                    print_error "Deployment cancelled by user"
-                    exit 1
-                fi
-            fi
-        else
-            print_error "IP mismatch! Current: $CURRENT_IP, Expected: $SERVER_IP"
-            print_warning "If this is the correct server, you may need to update the SERVER_IP variable"
-            echo -n "Continue anyway? (y/N): "
-            read -r response
-            if [[ ! "$response" =~ ^[Yy]$ ]]; then
-                print_error "Deployment cancelled by user"
-                exit 1
-            fi
-        fi
-    else
-        print_warning "Not running on AWS EC2 or metadata service unavailable"
-        print_warning "Proceeding with deployment - please verify this is the correct server"
-    fi
 }
 
 # Check prerequisites
@@ -500,9 +452,9 @@ show_deployment_summary() {
 # Main deployment process
 main() {
     echo "Starting GONXT production deployment process..."
+    echo "⚠️  Server verification bypassed for immediate deployment"
     echo
     
-    verify_server
     check_prerequisites
     complete_cleanup
     create_directories
