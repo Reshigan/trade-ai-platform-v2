@@ -94,11 +94,11 @@ if grep -q "CHANGE_THIS" "$PROD_DIR/.env.production"; then
         
         # Update .env.production file
         sed -i.bak \
-            -e "s/CHANGE_THIS_SECURE_PASSWORD_123!/$MONGO_PASS/g" \
-            -e "s/CHANGE_THIS_REDIS_PASSWORD_456!/$REDIS_PASS/g" \
-            -e "s/CHANGE_THIS_EXTREMELY_SECURE_JWT_SECRET_KEY_789_PRODUCTION/$JWT_SECRET/g" \
-            -e "s/CHANGE_THIS_EXTREMELY_SECURE_REFRESH_SECRET_KEY_ABC_PRODUCTION/$JWT_REFRESH_SECRET/g" \
-            -e "s/CHANGE_THIS_SESSION_SECRET_XYZ_PRODUCTION/$SESSION_SECRET/g" \
+            -e "s|CHANGE_THIS_SECURE_PASSWORD_123!|$MONGO_PASS|g" \
+            -e "s|CHANGE_THIS_REDIS_PASSWORD_456!|$REDIS_PASS|g" \
+            -e "s|CHANGE_THIS_EXTREMELY_SECURE_JWT_SECRET_KEY_789_PRODUCTION|$JWT_SECRET|g" \
+            -e "s|CHANGE_THIS_EXTREMELY_SECURE_REFRESH_SECRET_KEY_ABC_PRODUCTION|$JWT_REFRESH_SECRET|g" \
+            -e "s|CHANGE_THIS_SESSION_SECRET_XYZ_PRODUCTION|$SESSION_SECRET|g" \
             "$PROD_DIR/.env.production"
         
         echo -e "${GREEN}✅ Secure passwords generated and updated${NC}"
