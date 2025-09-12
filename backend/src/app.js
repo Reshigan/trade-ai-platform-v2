@@ -16,6 +16,9 @@ const logger = require('./utils/logger');
 const { errorHandler } = require('./middleware/errorHandler');
 const { authenticateToken } = require('./middleware/auth');
 
+// Load all models to ensure they are registered with Mongoose
+require('./models');
+
 // Import routes
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');

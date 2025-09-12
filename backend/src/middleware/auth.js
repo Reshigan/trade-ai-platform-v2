@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+// const User = require('../models/User');
+const TestUser = require('../models/TestUser');
 const config = require('../config');
 const logger = require('../utils/logger');
 const crypto = require('crypto');
@@ -67,18 +68,15 @@ const authenticateToken = async (req, res, next) => {
     // Check if we're in mock mode
     if (process.env.USE_MOCK_DB === 'true') {
       // For mock mode, just get the user without chaining
-      user = await User.findById(decoded._id);
+      user = await TestUser.findById(decoded._id);
       // Remove password manually
       if (user) {
         delete user.password;
       }
     } else {
       // For real database, use the full query
-      user = await User.findById(decoded._id)
-        .select('-password')
-        .populate('assignedCustomers', 'name code')
-        .populate('assignedProducts', 'name sku')
-        .populate('assignedVendors', 'name code');
+      user = await TestUser.findById(decoded._id)
+        .select('-password');
     }
     
     if (!user) {
@@ -618,7 +616,7 @@ const refreshToken = async (req, res, next) => {
     );
     
     // Get user
-    const user = await User.findById(decoded._id);
+    const user = await TestUser.findById(decoded._id);
     
     if (!user) {
       return res.status(401).json({

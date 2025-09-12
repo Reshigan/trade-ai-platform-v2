@@ -4,12 +4,13 @@ const jwt = require('jsonwebtoken');
 
 const userSchema = new mongoose.Schema({
   // Company Association - CRITICAL for multi-tenant isolation
-  company: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Company',
-    required: true,
-    index: true
-  },
+  // TEMPORARILY COMMENTED OUT FOR DEBUGGING
+  // company: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Company',
+  //   required: true,
+  //   index: true
+  // },
   employeeId: {
     type: String,
     required: true,
@@ -51,18 +52,19 @@ const userSchema = new mongoose.Schema({
     module: String,
     actions: [String]
   }],
-  assignedCustomers: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Customer'
-  }],
-  assignedProducts: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Product'
-  }],
-  assignedVendors: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Vendor'
-  }],
+  // TEMPORARILY COMMENTED OUT FOR DEBUGGING
+  // assignedCustomers: [{
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Customer'
+  // }],
+  // assignedProducts: [{
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Product'
+  // }],
+  // assignedVendors: [{
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Vendor'
+  // }],
   cashCoopWallet: {
     allocated: { type: Number, default: 0 },
     spent: { type: Number, default: 0 },
@@ -74,10 +76,11 @@ const userSchema = new mongoose.Schema({
     tradingTerms: { type: Number, default: 0 },
     promotions: { type: Number, default: 0 }
   },
-  manager: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
-  },
+  // TEMPORARILY COMMENTED OUT FOR DEBUGGING
+  // manager: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'User'
+  // },
   isActive: {
     type: Boolean,
     default: true
@@ -110,16 +113,17 @@ const userSchema = new mongoose.Schema({
   }]
 }, {
   timestamps: true,
-  toJSON: { virtuals: true },
-  toObject: { virtuals: true }
+  toJSON: { virtuals: false },
+  toObject: { virtuals: false }
 });
 
 // Indexes - Company-specific indexes for multi-tenant isolation
-userSchema.index({ company: 1, email: 1 }, { unique: true });
-userSchema.index({ company: 1, employeeId: 1 }, { unique: true });
-userSchema.index({ company: 1, role: 1 });
-userSchema.index({ company: 1, department: 1 });
-userSchema.index({ company: 1, isActive: 1 });
+// TEMPORARILY COMMENTED OUT FOR DEBUGGING
+// userSchema.index({ company: 1, email: 1 }, { unique: true });
+// userSchema.index({ company: 1, employeeId: 1 }, { unique: true });
+// userSchema.index({ company: 1, role: 1 });
+// userSchema.index({ company: 1, department: 1 });
+// userSchema.index({ company: 1, isActive: 1 });
 userSchema.index({ email: 1 });
 userSchema.index({ employeeId: 1 });
 userSchema.index({ role: 1 });
@@ -165,7 +169,7 @@ userSchema.methods.generateAuthToken = function() {
       email: this.email, 
       role: this.role,
       department: this.department,
-      company: this.company
+      // companyId: this.company  // TEMPORARILY COMMENTED OUT FOR DEBUGGING
     },
     process.env.JWT_SECRET,
     { expiresIn: process.env.JWT_EXPIRE || '7d' }
@@ -201,11 +205,12 @@ userSchema.methods.changedPasswordAfter = function(JWTTimestamp) {
 // Static methods
 userSchema.statics.findByCredentials = async function(email, password, companyId = null) {
   const query = { email, isActive: true };
-  if (companyId) {
-    query.company = companyId;
-  }
+  // TEMPORARILY COMMENTED OUT FOR DEBUGGING
+  // if (companyId) {
+  //   query.company = companyId;
+  // }
   
-  const user = await this.findOne(query).populate('company');
+  const user = await this.findOne(query);
   if (!user) {
     throw new Error('Invalid login credentials');
   }

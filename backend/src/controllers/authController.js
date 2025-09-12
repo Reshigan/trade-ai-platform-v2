@@ -1,4 +1,8 @@
-const User = require('../models/User');
+// TEMPORARILY COMMENTED OUT FOR DEBUGGING
+// const Company = require('../models/Company'); // Explicitly load Company model first
+// const User = require('../models/User');
+// const User = require('../models/UserMinimal'); // TEMPORARY MINIMAL USER MODEL FOR DEBUGGING
+const TestUser = require('../models/TestUser'); // COMPLETELY NEW TEST MODEL
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const config = require('../config');
@@ -11,15 +15,23 @@ const QRCode = require('qrcode');
 
 // Generate tokens
 const generateTokens = (user) => {
-  const accessToken = user.generateAuthToken();
-  
-  const refreshToken = jwt.sign(
-    { _id: user._id },
-    config.jwt.refreshSecret,
-    { expiresIn: config.jwt.refreshExpiresIn }
-  );
-  
-  return { accessToken, refreshToken };
+  try {
+    console.log('Generating access token for user:', user._id);
+    const accessToken = user.generateAuthToken();
+    console.log('Access token generated successfully');
+    
+    const refreshToken = jwt.sign(
+      { _id: user._id },
+      config.jwt.refreshSecret,
+      { expiresIn: config.jwt.refreshExpiresIn }
+    );
+    console.log('Refresh token generated successfully');
+    
+    return { accessToken, refreshToken };
+  } catch (error) {
+    console.error('Error in generateTokens:', error);
+    throw error;
+  }
 };
 
 // Register new user
@@ -126,62 +138,59 @@ exports.quickLogin = asyncHandler(async (req, res, next) => {
 exports.login = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
   
-  // Find user and verify password
-  const user = await User.findByCredentials(email, password);
-  
-  // Check if 2FA is enabled
-  if (user.twoFactorEnabled) {
-    // Generate temporary token for 2FA verification
-    const tempToken = jwt.sign(
-      { _id: user._id, temp: true },
+  try {
+    // Find user by email
+    const user = await TestUser.findOne({ email: email });
+    
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid credentials'
+      });
+    }
+    
+    // For now, simple password comparison (in production, use bcrypt)
+    if (user.password !== password) {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid credentials'
+      });
+    }
+    
+    // Generate JWT token
+    const token = jwt.sign(
+      { 
+        userId: user._id,
+        email: user.email,
+        role: user.role
+      },
       config.jwt.secret,
-      { expiresIn: '5m' }
+      { expiresIn: config.jwt.expiresIn }
     );
     
+    // Return success with token
     return res.json({
       success: true,
-      message: '2FA verification required',
+      message: 'Login successful',
       data: {
-        requiresTwoFactor: true,
-        tempToken
+        user: {
+          id: user._id,
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          role: user.role
+        },
+        token: token
       }
     });
+    
+  } catch (error) {
+    logger.error('Login error:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Internal server error'
+    });
   }
-  
-  // Generate tokens
-  const { accessToken, refreshToken } = generateTokens(user);
-  
-  // Update last login
-  user.lastLogin = new Date();
-  await user.save();
-  
-  // Cache user data
-  await cacheService.cacheUser(user._id.toString(), user);
-  
-  // Log login
-  logger.logAudit('user_login', user._id, {
-    email: user.email,
-    ip: req.ip
-  });
-  
-  res.json({
-    success: true,
-    message: 'Login successful',
-    data: {
-      user: {
-        id: user._id,
-        email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        role: user.role,
-        department: user.department
-      },
-      tokens: {
-        accessToken,
-        refreshToken
-      }
-    }
-  });
 });
 
 // Verify 2FA

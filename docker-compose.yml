@@ -89,19 +89,19 @@ services:
       dockerfile: Dockerfile
       args:
         CACHEBUST: ${CACHEBUST:-1}
-        REACT_APP_API_URL: ${REACT_APP_API_URL:-http://localhost:5001/api}
-        REACT_APP_SOCKET_URL: ${REACT_APP_SOCKET_URL:-http://localhost:5001}
-        REACT_APP_AI_API_URL: ${REACT_APP_AI_API_URL:-http://localhost:8000}
-        REACT_APP_MONITORING_URL: ${REACT_APP_MONITORING_URL:-http://localhost:8081}
+        REACT_APP_API_URL: ${REACT_APP_API_URL:-/api}
+        REACT_APP_SOCKET_URL: ${REACT_APP_SOCKET_URL:-}
+        REACT_APP_AI_API_URL: ${REACT_APP_AI_API_URL:-/ai}
+        REACT_APP_MONITORING_URL: ${REACT_APP_MONITORING_URL:-/monitoring}
     container_name: trade-ai-frontend
     restart: unless-stopped
     ports:
       - "3001:80"
     environment:
-      REACT_APP_API_URL: ${REACT_APP_API_URL:-http://localhost:5001/api}
-      REACT_APP_SOCKET_URL: ${REACT_APP_SOCKET_URL:-http://localhost:5001}
-      REACT_APP_AI_API_URL: ${REACT_APP_AI_API_URL:-http://localhost:8000}
-      REACT_APP_MONITORING_URL: ${REACT_APP_MONITORING_URL:-http://localhost:8081}
+      REACT_APP_API_URL: ${REACT_APP_API_URL:-/api}
+      REACT_APP_SOCKET_URL: ${REACT_APP_SOCKET_URL:-}
+      REACT_APP_AI_API_URL: ${REACT_APP_AI_API_URL:-/ai}
+      REACT_APP_MONITORING_URL: ${REACT_APP_MONITORING_URL:-/monitoring}
     depends_on:
       - backend
     networks:

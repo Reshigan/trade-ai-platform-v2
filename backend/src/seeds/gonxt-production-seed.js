@@ -295,11 +295,13 @@ const seedGONXTProductionData = async () => {
       { name: 'Organic Harvest', code: 'OHV', type: 'supplier', category: 'organic' }
     ];
 
-    for (const vendor of vendorData) {
+    for (let i = 0; i < vendorData.length; i++) {
+      const vendor = vendorData[i];
       const newVendor = new Vendor({
         company: gonxtCompany._id,
         name: vendor.name,
         code: vendor.code,
+        sapVendorId: `V${(100000 + i).toString()}`, // Generate SAP vendor ID
         vendorType: vendor.type,
         category: vendor.category,
         status: 'active',

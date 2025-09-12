@@ -16,6 +16,7 @@ import {
   Link
 } from '@mui/material';
 import { Visibility, VisibilityOff, Email, Lock } from '@mui/icons-material';
+import { authService } from '../services/api';
 
 const Login = ({ onLogin }) => {
   const [email, setEmail] = useState('');
@@ -24,13 +25,32 @@ const Login = ({ onLogin }) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
 
-    // Simulate API call
-    
+    try {
+      const response = await authService.login({ email, password });
+      
+      if (response.success) {
+        // Store user data
+        localStorage.setItem('isAuthenticated', 'true');
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+        
+        // Call onLogin callback
+        if (onLogin) {
+          onLogin(response.data.user);
+        }
+      } else {
+        setError(response.message || 'Login failed');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      setError(error.response?.data?.message || 'Invalid credentials. Try admin@tradeai.com / password123');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleClickShowPassword = () => {
