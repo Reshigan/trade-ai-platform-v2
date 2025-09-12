@@ -3,7 +3,7 @@ version: '3.8'
 services:
   # MongoDB with Production Configuration
   mongodb:
-    image: mongo:5-focal
+    image: mongo:7.0
     container_name: trade-ai-mongodb-aws-prod
     restart: always
     ports:
@@ -15,7 +15,7 @@ services:
     volumes:
       - mongodb_data:/data/db
       - mongodb_config:/data/configdb
-      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      - ./docker/mongo-init-production.js:/docker-entrypoint-initdb.d/mongo-init-production.js:ro
       - ./backups/mongodb:/backups
       - ./scripts/mongodb-backup.sh:/usr/local/bin/mongodb-backup.sh:ro
     networks:

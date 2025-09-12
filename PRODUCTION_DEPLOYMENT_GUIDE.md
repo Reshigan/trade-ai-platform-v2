@@ -1,14 +1,21 @@
-# Trade AI Platform - Production Deployment Guide
+# Trade AI Platform v2 - Production Deployment Guide
 
 ## Overview
 
-This guide provides complete instructions for deploying the Trade AI Platform to production on AWS with the following configuration:
+This guide provides comprehensive instructions for deploying the Trade AI Platform v2 in a production AWS environment with full multi-tenant support, advanced analytics features, and enterprise-grade security.
 
-- **Domain**: tradeai.gonxt.tech
-- **Server IP**: 13.247.139.75
-- **Environment**: AWS Production
-- **SSL**: Let's Encrypt with auto-renewal
-- **Architecture**: Docker Compose with Nginx reverse proxy
+## Architecture
+
+The production deployment includes:
+
+- **Frontend**: React application with production optimizations
+- **Backend**: Node.js API with multi-tenant architecture
+- **Database**: MongoDB 7.0 with production configuration
+- **Cache**: Redis for session management and caching
+- **AI Services**: Local ML models for analytics and predictions
+- **Monitoring**: Real-time system monitoring and alerting
+- **Nginx**: Reverse proxy with SSL termination and rate limiting
+- **Backup**: Automated backup system with AWS S3 integration
 
 ## Prerequisites
 

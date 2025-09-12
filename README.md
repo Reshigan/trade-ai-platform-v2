@@ -1,4 +1,4 @@
-# Trade AI Platform v2.1.2 - Enterprise FMCG Trade Spend Management System
+# Trade AI Platform v2.0.0 - Enterprise FMCG Trade Spend Management System with Advanced Analytics
 
 <div align="center">
   <img src="frontend/public/images/modern-logo-new.svg" alt="Trade AI Logo" width="200"/>
@@ -31,6 +31,7 @@ Trade AI is a comprehensive trade spend management platform designed specificall
 
 ### Key Features
 
+#### Core Platform
 - **🤖 AI-Powered Analytics**: Machine learning models for sales forecasting, anomaly detection, and promotion optimization
 - **💰 Budget Management**: Multi-year budget planning with ML-powered forecasting
 - **📊 Trade Spend Tracking**: Complete lifecycle management for all trade spend types
@@ -39,9 +40,19 @@ Trade AI is a comprehensive trade spend management platform designed specificall
 - **🔄 SAP Integration**: Seamless bi-directional sync with SAP systems
 - **✅ Approval Workflows**: Dynamic, role-based approval chains with SLA tracking
 - **📅 Activity Calendar**: Unified view of all trade activities with conflict detection
-- **🔍 Advanced AI Prediction Models**: Ensemble methods with feature importance analysis for accurate forecasting
+
+#### Advanced Analytics Features (NEW)
+- **📊 Advanced Reporting**: Comprehensive reporting module with PDF, Excel, and CSV export capabilities
+- **🤖 AI Chat Assistant**: Company-specific data insights using internal database for intelligent recommendations
+- **🎯 ML-Based Promotion Analysis**: Machine learning models for promotion success prediction and optimization
+- **💼 Trading Terms Management**: Complex profitability calculations with adhoc and marketing spend analysis
+- **💰 Flexible Marketing Budget Allocation**: Brand and customer-level budget management with proportional allocation
+- **🔍 Combination Analysis**: Long-term volume driver analysis for sustainable growth strategies
+
+#### Technical Features
+- **🏢 Multi-Tenant Architecture**: Complete company data isolation with domain-based routing
+- **🔒 Enhanced Security**: Enterprise-grade security with JWT authentication and role-based access control
 - **📊 Real-time Monitoring**: Comprehensive system monitoring with alerts and performance tracking
-- **🔒 Enhanced Security**: Robust security measures with audit logging and protection against common vulnerabilities
 - **💬 AI Assistant**: Contextual AI chatbot integrated into every feature for instant help and guidance
 - **🚶 Walkthrough Training**: Interactive guided tours for new users to learn the platform
 - **💱 Multi-Currency Support**: Configure different currencies per company with 10 major currencies supported
@@ -205,7 +216,32 @@ The application will be available at:
 
 ### 📱 Current Mode
 
-The system is running in **Mock Mode** for easy development and testing without requiring MongoDB or Redis setup. All data is simulated and perfect for demos.
+The system supports both **Development Mode** (with mock data) and **Production Mode** (with full database integration and advanced analytics features).
+
+## 🚀 Production Deployment
+
+For production deployment with full features including advanced analytics, use the AWS production configuration:
+
+```bash
+# Deploy to production
+chmod +x deploy-aws-production.sh
+./deploy-aws-production.sh
+```
+
+### Production Features
+- **Multi-tenant architecture** with complete company data isolation
+- **MongoDB 7.0** with production-optimized configuration
+- **Redis caching** for improved performance
+- **Nginx reverse proxy** with SSL termination and rate limiting
+- **Automated backups** with AWS S3 integration
+- **Comprehensive monitoring** and health checks
+- **Advanced analytics** with 2+ years of historical data
+
+### Production Credentials
+- **GONXT Company**: admin@gonxt.tech / GonxtAdmin2024!
+- **Test Company**: admin@test.demo / TestAdmin2024!
+
+See [PRODUCTION_DEPLOYMENT_GUIDE.md](PRODUCTION_DEPLOYMENT_GUIDE.md) for complete deployment instructions.
 
 ### 💱 Currency Support
 
