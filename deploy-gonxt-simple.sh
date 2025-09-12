@@ -199,8 +199,10 @@ configure_environment() {
         exit 1
     fi
     
-    # Load environment variables
-    export $(cat $ENV_FILE | grep -v '^#' | xargs)
+    # Load environment variables (only valid variable assignments)
+    set -a  # automatically export all variables
+    source $ENV_FILE
+    set +a  # stop automatically exporting
     
     print_success "Environment configured for $DOMAIN on $SERVER_IP"
 }
