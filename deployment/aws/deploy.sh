@@ -241,6 +241,7 @@ systemctl enable trade-ai.service
 
 # Create backup script
 print_status "Creating backup script..."
+mkdir -p /opt/scripts
 cat > /opt/scripts/backup-trade-ai.sh << 'EOF'
 #!/bin/bash
 
@@ -268,7 +269,6 @@ echo "Backup completed: ${BACKUP_DIR}/${DATE}"
 EOF
 
 chmod +x /opt/scripts/backup-trade-ai.sh
-mkdir -p /opt/scripts
 
 # Set up cron job for backups
 print_status "Setting up automated backups..."
