@@ -1,22 +1,41 @@
-# Trade AI Platform v2.0.0 - Enterprise FMCG Trade Spend Management System with Advanced Analytics
+# SolarNexus - Trade AI Platform
+
+> **Complete Production-Ready Trade Marketing Budget Management Platform**
 
 <div align="center">
-  <img src="frontend/public/images/modern-logo-new.svg" alt="Trade AI Logo" width="200"/>
+  <img src="frontend/public/images/modern-logo-new.svg" alt="SolarNexus Logo" width="200"/>
   
-  **Enterprise-grade FMCG Trade Spend Management with AI-Powered Analytics**
+  **Enterprise-grade Trade Marketing Management with AI-Powered Analytics**
   
-  [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-  [![Node](https://img.shields.io/badge/node-%3E%3D16.0.0-brightgreen.svg)](https://nodejs.org)
-  [![React](https://img.shields.io/badge/react-%5E18.0.0-blue.svg)](https://reactjs.org)
-  [![MongoDB](https://img.shields.io/badge/mongodb-%3E%3D5.0-green.svg)](https://www.mongodb.com)
-  [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
-  [![Test Coverage](https://img.shields.io/badge/coverage-95%25-brightgreen.svg)]()
-  [![Version](https://img.shields.io/badge/version-v2.1.2-blue.svg)]()
+  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+  [![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
+  [![React](https://img.shields.io/badge/React-18+-blue.svg)](https://reactjs.org/)
+  [![MongoDB](https://img.shields.io/badge/MongoDB-7.0+-green.svg)](https://www.mongodb.com/)
+  [![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)](https://www.docker.com/)
+  [![Production](https://img.shields.io/badge/Production-Ready-brightgreen.svg)]()
+  [![Version](https://img.shields.io/badge/version-v2.0.0-blue.svg)]()
 </div>
+
+## 🌟 Overview
+
+SolarNexus is a comprehensive trade marketing budget management platform with AI-powered analytics, multi-tenant architecture, and role-based access control. Built for enterprise-scale deployment with complete production readiness.
+
+### ✨ Key Features
+
+- 🏢 **Multi-Tenant Architecture** - Complete company isolation and management
+- 👥 **Role-Based Access Control** - 8 distinct user roles with granular permissions
+- 💰 **Budget Management** - Comprehensive budget tracking, allocation, and reporting
+- 📊 **AI-Powered Analytics** - Machine learning insights and predictive analytics
+- 🔒 **Enterprise Security** - JWT authentication, encryption, audit logging
+- 🚀 **Production Ready** - Complete Docker deployment with monitoring
+- 📱 **Responsive Design** - Modern React UI with mobile support
+- 🔄 **Real-Time Updates** - WebSocket integration for live data
+- 📈 **Advanced Reporting** - Customizable dashboards and export capabilities
+- 🌐 **API-First Design** - RESTful APIs with comprehensive documentation
 
 ## 🎨 Modern Interface
 
-Trade AI features a modern, animated logo with a sleek design that represents the intersection of AI technology and trading analytics. The logo includes:
+SolarNexus features a modern, animated logo with a sleek design that represents the intersection of AI technology and trading analytics. The logo includes:
 
 - Animated trading chart line showing market movements
 - AI brain network visualization representing intelligent decision-making
