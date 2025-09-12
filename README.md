@@ -1,9 +1,9 @@
-# SolarNexus - Trade AI Platform
+# TRADEAI - Trade AI Platform
 
 > **Complete Production-Ready Trade Marketing Budget Management Platform**
 
 <div align="center">
-  <img src="frontend/public/images/modern-logo-new.svg" alt="SolarNexus Logo" width="200"/>
+  <img src="frontend/public/images/modern-logo-new.svg" alt="TRADEAI Logo" width="200"/>
   
   **Enterprise-grade Trade Marketing Management with AI-Powered Analytics**
   
@@ -18,7 +18,7 @@
 
 ## 🌟 Overview
 
-SolarNexus is a comprehensive trade marketing budget management platform with AI-powered analytics, multi-tenant architecture, and role-based access control. Built for enterprise-scale deployment with complete production readiness.
+TRADEAI is a comprehensive trade marketing budget management platform with AI-powered analytics, multi-tenant architecture, and role-based access control. Built for enterprise-scale deployment with complete production readiness.
 
 ### ✨ Key Features
 
@@ -35,7 +35,7 @@ SolarNexus is a comprehensive trade marketing budget management platform with AI
 
 ## 🎨 Modern Interface
 
-SolarNexus features a modern, animated logo with a sleek design that represents the intersection of AI technology and trading analytics. The logo includes:
+TRADEAI features a modern, animated logo with a sleek design that represents the intersection of AI technology and trading analytics. The logo includes:
 
 - Animated trading chart line showing market movements
 - AI brain network visualization representing intelligent decision-making

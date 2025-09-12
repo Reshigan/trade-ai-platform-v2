@@ -1,6 +1,6 @@
-# Migration to SolarNexus Repository
+# Migration to TRADEAI Repository
 
-## 🚀 Creating the New SolarNexus Repository
+## 🚀 Creating the New TRADEAI Repository
 
 Since the GitHub token doesn't have repository creation permissions, please follow these steps to create the new repository and migrate the codebase:
 
@@ -10,7 +10,7 @@ Since the GitHub token doesn't have repository creation permissions, please foll
 2. Click the "+" icon in the top right corner
 3. Select "New repository"
 4. Fill in the repository details:
-   - **Repository name**: `solarnexus`
+   - **Repository name**: `TRADEAI`
    - **Description**: `Trade AI Platform - Complete production-ready platform for trade marketing budget management with AI-powered analytics and multi-tenant architecture`
    - **Visibility**: Public (or Private if preferred)
    - **Initialize**: Do NOT initialize with README, .gitignore, or license (we'll push our existing code)
@@ -25,19 +25,19 @@ After creating the repository, run these commands:
 cd /path/to/trade-ai-platform-v2
 
 # Add the new remote repository
-git remote add solarnexus https://github.com/Reshigan/solarnexus.git
+git remote add tradeai https://github.com/Reshigan/TRADEAI.git
 
 # Push all branches and tags to the new repository
-git push solarnexus main
-git push solarnexus --tags
+git push tradeai main
+git push tradeai --tags
 
-# Optional: Set solarnexus as the default remote
-git remote set-url origin https://github.com/Reshigan/solarnexus.git
+# Optional: Set TRADEAI as the default remote
+git remote set-url origin https://github.com/Reshigan/TRADEAI.git
 ```
 
 ### Step 3: Update Repository Settings
 
-1. Go to the new repository: `https://github.com/Reshigan/solarnexus`
+1. Go to the new repository: `https://github.com/Reshigan/TRADEAI`
 2. Go to Settings → General
 3. Update the repository description if needed
 4. Enable Issues, Projects, and Wiki if desired
@@ -49,8 +49,8 @@ Once the repository is created and code is pushed:
 
 ```bash
 # Clone the new repository
-git clone https://github.com/Reshigan/solarnexus.git
-cd solarnexus/production
+git clone https://github.com/Reshigan/TRADEAI.git
+cd TRADEAI/production
 
 # Test the deployment script
 ./deploy.sh

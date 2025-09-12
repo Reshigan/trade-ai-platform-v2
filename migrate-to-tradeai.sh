@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# SolarNexus Migration Script
-# This script helps migrate the codebase to the new solarnexus repository
+# TRADEAI Migration Script
+# This script helps migrate the codebase to the new TRADEAI repository
 
 set -e
 
@@ -12,8 +12,8 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-echo -e "${BLUE}🚀 SolarNexus Migration Script${NC}"
-echo -e "${BLUE}================================${NC}"
+echo -e "${BLUE}🚀 TRADEAI Migration Script${NC}"
+echo -e "${BLUE}=============================${NC}"
 echo ""
 
 # Check if we're in the right directory
@@ -55,7 +55,7 @@ echo -e "${YELLOW}=== REPOSITORY CONFIGURATION ===${NC}"
 echo -e "${BLUE}Please create the new repository on GitHub first:${NC}"
 echo -e "${BLUE}1. Go to https://github.com${NC}"
 echo -e "${BLUE}2. Click '+' → 'New repository'${NC}"
-echo -e "${BLUE}3. Repository name: solarnexus${NC}"
+echo -e "${BLUE}3. Repository name: TRADEAI${NC}"
 echo -e "${BLUE}4. Description: Trade AI Platform - Complete production-ready platform${NC}"
 echo -e "${BLUE}5. Make it Public (or Private)${NC}"
 echo -e "${BLUE}6. Do NOT initialize with README${NC}"
@@ -76,16 +76,16 @@ if [ -z "$GITHUB_USER" ]; then
     exit 1
 fi
 
-REPO_URL="https://github.com/$GITHUB_USER/solarnexus.git"
+REPO_URL="https://github.com/$GITHUB_USER/TRADEAI.git"
 echo -e "${GREEN}Repository URL: $REPO_URL${NC}"
 
 # Confirm the migration
 echo ""
 echo -e "${YELLOW}=== MIGRATION CONFIRMATION ===${NC}"
 echo -e "${BLUE}This will:${NC}"
-echo -e "${BLUE}1. Add solarnexus as a new remote${NC}"
-echo -e "${BLUE}2. Push all branches and tags to solarnexus${NC}"
-echo -e "${BLUE}3. Optionally set solarnexus as the default remote${NC}"
+echo -e "${BLUE}1. Add TRADEAI as a new remote${NC}"
+echo -e "${BLUE}2. Push all branches and tags to TRADEAI${NC}"
+echo -e "${BLUE}3. Optionally set TRADEAI as the default remote${NC}"
 echo ""
 
 read -p "Do you want to proceed with the migration? (y/N): " -n 1 -r
@@ -97,34 +97,34 @@ fi
 
 # Add the new remote
 echo ""
-echo -e "${YELLOW}=== ADDING SOLARNEXUS REMOTE ===${NC}"
-if git remote get-url solarnexus &> /dev/null; then
-    echo -e "${YELLOW}⚠️  solarnexus remote already exists, updating URL${NC}"
-    git remote set-url solarnexus "$REPO_URL"
+echo -e "${YELLOW}=== ADDING TRADEAI REMOTE ===${NC}"
+if git remote get-url tradeai &> /dev/null; then
+    echo -e "${YELLOW}⚠️  TRADEAI remote already exists, updating URL${NC}"
+    git remote set-url tradeai "$REPO_URL"
 else
-    git remote add solarnexus "$REPO_URL"
+    git remote add tradeai "$REPO_URL"
 fi
-echo -e "${GREEN}✅ Added solarnexus remote: $REPO_URL${NC}"
+echo -e "${GREEN}✅ Added TRADEAI remote: $REPO_URL${NC}"
 
 # Push to the new repository
 echo ""
-echo -e "${YELLOW}=== PUSHING TO SOLARNEXUS ===${NC}"
+echo -e "${YELLOW}=== PUSHING TO TRADEAI ===${NC}"
 echo -e "${BLUE}Pushing main branch...${NC}"
-git push solarnexus main
+git push tradeai main
 
 echo -e "${BLUE}Pushing tags...${NC}"
-git push solarnexus --tags
+git push tradeai --tags
 
-echo -e "${GREEN}✅ Successfully pushed to solarnexus repository${NC}"
+echo -e "${GREEN}✅ Successfully pushed to TRADEAI repository${NC}"
 
 # Ask about setting as default remote
 echo ""
 echo -e "${YELLOW}=== DEFAULT REMOTE CONFIGURATION ===${NC}"
-read -p "Do you want to set solarnexus as the default remote (origin)? (y/N): " -n 1 -r
+read -p "Do you want to set TRADEAI as the default remote (origin)? (y/N): " -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
     git remote set-url origin "$REPO_URL"
-    echo -e "${GREEN}✅ Set solarnexus as default remote (origin)${NC}"
+    echo -e "${GREEN}✅ Set TRADEAI as default remote (origin)${NC}"
 else
     echo -e "${BLUE}ℹ️  Keeping current origin remote${NC}"
 fi
@@ -147,19 +147,19 @@ echo ""
 
 # Migration summary
 echo -e "${YELLOW}=== MIGRATION COMPLETE ===${NC}"
-echo -e "${GREEN}✅ Successfully migrated to SolarNexus repository${NC}"
+echo -e "${GREEN}✅ Successfully migrated to TRADEAI repository${NC}"
 echo -e "${GREEN}✅ Repository URL: $REPO_URL${NC}"
 echo -e "${GREEN}✅ All branches and tags pushed${NC}"
 echo ""
 
 echo -e "${BLUE}Next steps:${NC}"
-echo -e "${BLUE}1. Visit: https://github.com/$GITHUB_USER/solarnexus${NC}"
+echo -e "${BLUE}1. Visit: https://github.com/$GITHUB_USER/TRADEAI${NC}"
 echo -e "${BLUE}2. Update repository description and settings${NC}"
-echo -e "${BLUE}3. Test deployment: git clone $REPO_URL && cd solarnexus/production && ./deploy.sh${NC}"
+echo -e "${BLUE}3. Test deployment: git clone $REPO_URL && cd TRADEAI/production && ./deploy.sh${NC}"
 echo -e "${BLUE}4. Update team members about the new repository${NC}"
 echo -e "${BLUE}5. Consider archiving the old repository${NC}"
 echo ""
 
-echo -e "${GREEN}🎉 Welcome to SolarNexus!${NC}"
+echo -e "${GREEN}🎉 Welcome to TRADEAI!${NC}"
 echo -e "${GREEN}Your production-ready trade marketing platform is now available at:${NC}"
-echo -e "${GREEN}https://github.com/$GITHUB_USER/solarnexus${NC}"
+echo -e "${GREEN}https://github.com/$GITHUB_USER/TRADEAI${NC}"
