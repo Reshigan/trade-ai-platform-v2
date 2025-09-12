@@ -2,11 +2,18 @@ const mongoose = require('mongoose');
 const mongooseAggregatePaginate = require('mongoose-aggregate-paginate-v2');
 
 const productSchema = new mongoose.Schema({
+  // Company Association - CRITICAL for multi-tenant isolation
+  company: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Company',
+    required: true,
+    index: true
+  },
+  
   // SAP Integration
   sapMaterialId: {
     type: String,
     required: true,
-    unique: true,
     index: true
   },
   
@@ -19,7 +26,6 @@ const productSchema = new mongoose.Schema({
   sku: {
     type: String,
     required: true,
-    unique: true,
     uppercase: true
   },
   barcode: {
@@ -272,7 +278,17 @@ const productSchema = new mongoose.Schema({
   toObject: { virtuals: true }
 });
 
-// Indexes
+// Indexes - Company-specific indexes for multi-tenant isolation
+productSchema.index({ company: 1, sapMaterialId: 1 }, { unique: true });
+productSchema.index({ company: 1, sku: 1 }, { unique: true });
+productSchema.index({ company: 1, barcode: 1 }, { unique: true, sparse: true });
+productSchema.index({ company: 1, 'hierarchy.level1.id': 1 });
+productSchema.index({ company: 1, 'hierarchy.level2.id': 1 });
+productSchema.index({ company: 1, 'hierarchy.level3.id': 1 });
+productSchema.index({ company: 1, productType: 1 });
+productSchema.index({ company: 1, 'brand.name': 1 });
+productSchema.index({ company: 1, vendor: 1 });
+productSchema.index({ company: 1, status: 1 });
 productSchema.index({ sapMaterialId: 1 });
 productSchema.index({ sku: 1 });
 productSchema.index({ barcode: 1 });
@@ -286,10 +302,17 @@ productSchema.index({ status: 1 });
 
 // Compound indexes
 productSchema.index({ 
+  company: 1,
   'hierarchy.level1.id': 1, 
   'hierarchy.level2.id': 1, 
   'hierarchy.level3.id': 1 
 });
+productSchema.index({ 
+  'hierarchy.level1.id': 1, 
+  'hierarchy.level2.id': 1, 
+  'hierarchy.level3.id': 1 
+});
+productSchema.index({ company: 1, productType: 1, status: 1 });
 productSchema.index({ productType: 1, status: 1 });
 
 // Virtual for hierarchy path

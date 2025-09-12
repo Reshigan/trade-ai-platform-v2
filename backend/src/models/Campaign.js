@@ -2,6 +2,14 @@ const mongoose = require('mongoose');
 
 const campaignSchema = new mongoose.Schema({
   // Campaign Identification
+
+  // Company Association - CRITICAL for multi-tenant isolation
+  company: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Company',
+    required: true,
+    index: true
+  },
   campaignId: {
     type: String,
     required: true,

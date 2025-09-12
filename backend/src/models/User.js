@@ -3,10 +3,16 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const userSchema = new mongoose.Schema({
+  // Company Association - CRITICAL for multi-tenant isolation
+  company: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Company',
+    required: true,
+    index: true
+  },
   employeeId: {
     type: String,
     required: true,
-    unique: true,
     trim: true
   },
   email: {
@@ -108,7 +114,12 @@ const userSchema = new mongoose.Schema({
   toObject: { virtuals: true }
 });
 
-// Indexes
+// Indexes - Company-specific indexes for multi-tenant isolation
+userSchema.index({ company: 1, email: 1 }, { unique: true });
+userSchema.index({ company: 1, employeeId: 1 }, { unique: true });
+userSchema.index({ company: 1, role: 1 });
+userSchema.index({ company: 1, department: 1 });
+userSchema.index({ company: 1, isActive: 1 });
 userSchema.index({ email: 1 });
 userSchema.index({ employeeId: 1 });
 userSchema.index({ role: 1 });
@@ -153,7 +164,8 @@ userSchema.methods.generateAuthToken = function() {
       _id: this._id, 
       email: this.email, 
       role: this.role,
-      department: this.department
+      department: this.department,
+      company: this.company
     },
     process.env.JWT_SECRET,
     { expiresIn: process.env.JWT_EXPIRE || '7d' }
@@ -187,8 +199,13 @@ userSchema.methods.changedPasswordAfter = function(JWTTimestamp) {
 };
 
 // Static methods
-userSchema.statics.findByCredentials = async function(email, password) {
-  const user = await this.findOne({ email, isActive: true });
+userSchema.statics.findByCredentials = async function(email, password, companyId = null) {
+  const query = { email, isActive: true };
+  if (companyId) {
+    query.company = companyId;
+  }
+  
+  const user = await this.findOne(query).populate('company');
   if (!user) {
     throw new Error('Invalid login credentials');
   }

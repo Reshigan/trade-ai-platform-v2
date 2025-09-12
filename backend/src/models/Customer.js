@@ -2,11 +2,18 @@ const mongoose = require('mongoose');
 const mongooseAggregatePaginate = require('mongoose-aggregate-paginate-v2');
 
 const customerSchema = new mongoose.Schema({
+  // Company Association - CRITICAL for multi-tenant isolation
+  company: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Company',
+    required: true,
+    index: true
+  },
+  
   // SAP Integration
   sapCustomerId: {
     type: String,
     required: true,
-    unique: true,
     index: true
   },
   
@@ -19,7 +26,6 @@ const customerSchema = new mongoose.Schema({
   code: {
     type: String,
     required: true,
-    unique: true,
     uppercase: true
   },
   
@@ -261,7 +267,16 @@ const customerSchema = new mongoose.Schema({
   toObject: { virtuals: true }
 });
 
-// Indexes
+// Indexes - Company-specific indexes for multi-tenant isolation
+customerSchema.index({ company: 1, sapCustomerId: 1 }, { unique: true });
+customerSchema.index({ company: 1, code: 1 }, { unique: true });
+customerSchema.index({ company: 1, 'hierarchy.level1.id': 1 });
+customerSchema.index({ company: 1, 'hierarchy.level2.id': 1 });
+customerSchema.index({ company: 1, 'hierarchy.level3.id': 1 });
+customerSchema.index({ company: 1, customerType: 1 });
+customerSchema.index({ company: 1, channel: 1 });
+customerSchema.index({ company: 1, status: 1 });
+customerSchema.index({ company: 1, accountManager: 1 });
 customerSchema.index({ sapCustomerId: 1 });
 customerSchema.index({ code: 1 });
 customerSchema.index({ 'hierarchy.level1.id': 1 });
@@ -273,6 +288,12 @@ customerSchema.index({ status: 1 });
 customerSchema.index({ accountManager: 1 });
 
 // Compound indexes for hierarchy queries
+customerSchema.index({ 
+  company: 1,
+  'hierarchy.level1.id': 1, 
+  'hierarchy.level2.id': 1, 
+  'hierarchy.level3.id': 1 
+});
 customerSchema.index({ 
   'hierarchy.level1.id': 1, 
   'hierarchy.level2.id': 1, 

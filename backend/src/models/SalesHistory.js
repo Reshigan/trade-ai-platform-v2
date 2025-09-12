@@ -2,6 +2,14 @@ const mongoose = require('mongoose');
 
 const salesHistorySchema = new mongoose.Schema({
   // Transaction Identification
+
+  // Company Association - CRITICAL for multi-tenant isolation
+  company: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Company',
+    required: true,
+    index: true
+  },
   transactionId: {
     type: String,
     required: true,

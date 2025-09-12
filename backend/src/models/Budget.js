@@ -2,6 +2,14 @@ const mongoose = require('mongoose');
 
 const budgetSchema = new mongoose.Schema({
   // Budget Identification
+
+  // Company Association - CRITICAL for multi-tenant isolation
+  company: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Company',
+    required: true,
+    index: true
+  },
   name: {
     type: String,
     required: true

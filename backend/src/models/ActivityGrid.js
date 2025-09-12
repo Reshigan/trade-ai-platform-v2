@@ -2,6 +2,14 @@ const mongoose = require('mongoose');
 
 const activityGridSchema = new mongoose.Schema({
   // Grid Identification
+
+  // Company Association - CRITICAL for multi-tenant isolation
+  company: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Company',
+    required: true,
+    index: true
+  },
   gridId: {
     type: String,
     required: true,

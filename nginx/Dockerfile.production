@@ -1,0 +1,171 @@
+# Production Nginx Dockerfile with security hardening
+FROM nginx:1.24-alpine AS production
+
+# Set build arguments
+ARG BUILD_DATE
+ARG VERSION
+
+# Install security updates and required packages
+RUN apk update && apk upgrade && \
+    apk add --no-cache \
+    curl \
+    wget \
+    ca-certificates \
+    tzdata \
+    openssl \
+    certbot \
+    certbot-nginx && \
+    rm -rf /var/cache/apk/*
+
+# Create non-root user
+RUN addgroup -g 1001 -S nginx-prod && \
+    adduser -S nginx-prod -u 1001 -G nginx-prod
+
+# Create necessary directories
+RUN mkdir -p /var/cache/nginx/api \
+             /var/cache/nginx/static \
+             /var/log/nginx \
+             /etc/nginx/ssl \
+             /var/www/certbot \
+             /usr/share/nginx/html && \
+    chown -R nginx-prod:nginx-prod /var/cache/nginx \
+                                   /var/log/nginx \
+                                   /etc/nginx/ssl \
+                                   /var/www/certbot \
+                                   /usr/share/nginx/html
+
+# Generate DH parameters for enhanced security
+RUN openssl dhparam -out /etc/nginx/ssl/dhparam.pem 2048
+
+# Create self-signed certificate for initial setup (replace with real certs)
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+    -keyout /etc/nginx/ssl/tradeai.gonxt.tech.key \
+    -out /etc/nginx/ssl/tradeai.gonxt.tech.crt \
+    -subj "/C=AU/ST=NSW/L=Sydney/O=GONXT Technologies/OU=IT Department/CN=tradeai.gonxt.tech"
+
+# Copy custom nginx configuration
+COPY nginx-aws-production.conf /etc/nginx/nginx.conf
+
+# Create custom error pages
+RUN cat > /usr/share/nginx/html/404.html << 'EOF'
+<!DOCTYPE html>
+<html>
+<head>
+    <title>404 - Page Not Found</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        .error { color: #e74c3c; }
+    </style>
+</head>
+<body>
+    <h1 class="error">404 - Page Not Found</h1>
+    <p>The requested page could not be found.</p>
+    <p><a href="/">Return to Home</a></p>
+</body>
+</html>
+EOF
+
+RUN cat > /usr/share/nginx/html/50x.html << 'EOF'
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Service Temporarily Unavailable</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        .error { color: #e74c3c; }
+    </style>
+</head>
+<body>
+    <h1 class="error">Service Temporarily Unavailable</h1>
+    <p>We're experiencing technical difficulties. Please try again later.</p>
+    <p>If the problem persists, please contact support.</p>
+</body>
+</html>
+EOF
+
+# Create maintenance page
+RUN cat > /usr/share/nginx/html/maintenance.html << 'EOF'
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Maintenance Mode</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        .maintenance { color: #f39c12; }
+    </style>
+</head>
+<body>
+    <h1 class="maintenance">System Maintenance</h1>
+    <p>We're currently performing scheduled maintenance.</p>
+    <p>We'll be back online shortly. Thank you for your patience.</p>
+</body>
+</html>
+EOF
+
+# Create health check script
+RUN cat > /usr/local/bin/health-check.sh << 'EOF'
+#!/bin/sh
+# Health check script for nginx
+if nginx -t >/dev/null 2>&1; then
+    if curl -f http://localhost:8090/health >/dev/null 2>&1; then
+        exit 0
+    else
+        exit 1
+    fi
+else
+    exit 1
+fi
+EOF
+
+RUN chmod +x /usr/local/bin/health-check.sh
+
+# Create log rotation script
+RUN cat > /etc/logrotate.d/nginx << 'EOF'
+/var/log/nginx/*.log {
+    daily
+    missingok
+    rotate 30
+    compress
+    delaycompress
+    notifempty
+    create 644 nginx-prod nginx-prod
+    sharedscripts
+    postrotate
+        if [ -f /var/run/nginx.pid ]; then
+            kill -USR1 `cat /var/run/nginx.pid`
+        fi
+    endscript
+}
+EOF
+
+# Set proper permissions
+RUN chown -R nginx-prod:nginx-prod /etc/nginx \
+                                   /var/cache/nginx \
+                                   /var/log/nginx \
+                                   /usr/share/nginx/html \
+                                   /var/www/certbot && \
+    chmod -R 755 /etc/nginx/ssl && \
+    chmod 600 /etc/nginx/ssl/*.key && \
+    chmod 644 /etc/nginx/ssl/*.crt && \
+    touch /var/run/nginx.pid && \
+    chown nginx-prod:nginx-prod /var/run/nginx.pid
+
+# Set security labels
+LABEL maintainer="GONXT Technologies <admin@gonxt.tech>"
+LABEL version="${VERSION}"
+LABEL build-date="${BUILD_DATE}"
+LABEL description="Trade AI Platform Nginx - Production"
+LABEL security.scan="enabled"
+
+# Switch to non-root user
+USER nginx-prod
+
+# Expose ports
+EXPOSE 80 443 8090
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
+    CMD /usr/local/bin/health-check.sh
+
+# Start nginx
+CMD ["nginx", "-g", "daemon off;"]

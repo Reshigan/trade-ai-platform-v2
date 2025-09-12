@@ -2,6 +2,14 @@ const mongoose = require('mongoose');
 
 const vendorSchema = new mongoose.Schema({
   // SAP Integration
+
+  // Company Association - CRITICAL for multi-tenant isolation
+  company: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Company',
+    required: true,
+    index: true
+  },
   sapVendorId: {
     type: String,
     required: true,

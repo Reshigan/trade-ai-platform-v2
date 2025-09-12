@@ -2,6 +2,14 @@ const mongoose = require('mongoose');
 
 const promotionSchema = new mongoose.Schema({
   // Promotion Identification
+
+  // Company Association - CRITICAL for multi-tenant isolation
+  company: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Company',
+    required: true,
+    index: true
+  },
   promotionId: {
     type: String,
     required: true,

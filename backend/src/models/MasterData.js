@@ -2,6 +2,14 @@ const mongoose = require('mongoose');
 
 const masterDataSchema = new mongoose.Schema({
   // Master Data Type
+
+  // Company Association - CRITICAL for multi-tenant isolation
+  company: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Company',
+    required: true,
+    index: true
+  },
   dataType: {
     type: String,
     enum: [

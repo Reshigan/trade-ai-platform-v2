@@ -2,6 +2,14 @@ const mongoose = require('mongoose');
 
 const tradeSpendSchema = new mongoose.Schema({
   // Spend Identification
+
+  // Company Association - CRITICAL for multi-tenant isolation
+  company: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Company',
+    required: true,
+    index: true
+  },
   spendId: {
     type: String,
     required: true,
