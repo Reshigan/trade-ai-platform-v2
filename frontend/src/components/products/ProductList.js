@@ -54,6 +54,10 @@ const ProductList = () => {
       const response = await service.getAll();
       setData(response.data || response);
       setLoading(false);
+    } catch (error) {
+      console.error("Error:", error);
+      setError(error.message || "An error occurred");
+      setLoading(false);
     }
   };
 

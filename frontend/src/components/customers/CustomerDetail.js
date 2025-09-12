@@ -179,6 +179,10 @@ const CustomerDetail = () => {
       const response = await service.getAll();
       setData(response.data || response);
       setLoading(false);
+    } catch (error) {
+      console.error("Error:", error);
+      setError(error.message || "An error occurred");
+      setLoading(false);
     }
   };
 
@@ -222,6 +226,15 @@ const CustomerDetail = () => {
     } catch (err) {
       console.error('Failed to fetch trade spends:', err);
     }
+    } catch (error) {
+      console.error("Error:", error);
+      setError(error.message || "An error occurred");
+      setLoading(false);
+    }
+      console.error("Error:", error);
+      setError(error.message || "An error occurred");
+      setLoading(false);
+    }
   };
 
   // Handle tab change
@@ -257,6 +270,15 @@ const CustomerDetail = () => {
       console.error('Failed to delete customer:', err);
       setDeleteLoading(false);
     }
+    } catch (error) {
+      console.error("Error:", error);
+      setError(error.message || "An error occurred");
+      setLoading(false);
+    }
+      console.error("Error:", error);
+      setError(error.message || "An error occurred");
+      setLoading(false);
+    }
   };
 
   // Handle form submit
@@ -270,6 +292,15 @@ const CustomerDetail = () => {
       setOpenEditForm(false);
     } catch (err) {
       console.error('Error updating customer:', err);
+    }
+    } catch (error) {
+      console.error("Error:", error);
+      setError(error.message || "An error occurred");
+      setLoading(false);
+    }
+      console.error("Error:", error);
+      setError(error.message || "An error occurred");
+      setLoading(false);
     }
   };
 

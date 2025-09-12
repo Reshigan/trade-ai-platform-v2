@@ -86,7 +86,7 @@ const TradeSpendDetail = () => {
       const response = await service.getAll();
       setData(response.data || response);
       setLoading(false);
-    }
+    } catch (error) {
   };
 
   // Fetch budgets from API
@@ -155,7 +155,7 @@ const TradeSpendDetail = () => {
       setOpenEditForm(false);
     } catch (err) {
       console.error('Error updating trade spend:', err);
-    }
+    } catch (error) {
   };
 
   // Format currency

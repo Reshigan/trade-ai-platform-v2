@@ -98,7 +98,7 @@ const PromotionDetail = () => {
       const response = await service.getAll();
       setData(response.data || response);
       setLoading(false);
-    }
+    } catch (error) {
   };
 
   // Fetch customers from API
@@ -167,7 +167,7 @@ const PromotionDetail = () => {
       setOpenEditForm(false);
     } catch (err) {
       console.error('Error updating promotion:', err);
-    }
+    } catch (error) {
   };
 
   // Format currency

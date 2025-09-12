@@ -94,6 +94,10 @@ const AnalyticsDashboard = () => {
       const response = await service.getAll();
       setData(response.data || response);
       setLoading(false);
+    } catch (error) {
+      console.error('Error loading data:', error);
+      setError(error.message || 'Failed to load data');
+      setLoading(false);
     }
   };
 

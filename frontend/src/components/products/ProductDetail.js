@@ -152,7 +152,7 @@ const ProductDetail = () => {
       const response = await service.getAll();
       setData(response.data || response);
       setLoading(false);
-    }
+    } catch (error) {
   };
 
   // Fetch promotions from API
@@ -194,7 +194,7 @@ const ProductDetail = () => {
       setSalesData(mockSalesData);
     } catch (err) {
       console.error('Failed to fetch sales data:', err);
-    }
+    } catch (error) {
   };
 
   // Handle tab change
@@ -229,7 +229,7 @@ const ProductDetail = () => {
     } catch (err) {
       console.error('Failed to delete product:', err);
       setDeleteLoading(false);
-    }
+    } catch (error) {
   };
 
   // Handle form submit
@@ -243,7 +243,7 @@ const ProductDetail = () => {
       setOpenEditForm(false);
     } catch (err) {
       console.error('Error updating product:', err);
-    }
+    } catch (error) {
   };
 
   // Format currency - South African Rand

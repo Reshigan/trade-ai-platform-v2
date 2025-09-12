@@ -57,6 +57,10 @@ const BudgetForm = ({ open, onClose, onSubmit, budget = null }) => {
       const response = await service.getAll();
       setData(response.data || response);
       setLoading(false);
+    } catch (error) {
+      console.error('Error loading customers:', error);
+      setError(error.message || 'Failed to load customers');
+      setLoading(false);
     }
   };
 
